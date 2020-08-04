@@ -193,7 +193,7 @@ toc:
   auto_open: true # auto open the sidebar
 
 post_copyright:
-  enable: flase
+  enable: false
   decode: false
   license: CC BY-NC-SA 4.0
   license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
