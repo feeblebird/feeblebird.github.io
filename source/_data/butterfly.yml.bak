@@ -88,7 +88,7 @@ mathjax:
 # KaTeX
 katex:
   enable: true
-  per_page: false
+  per_page: true
   hide_scrollbar: true
 
 # Image (圖片設置)
@@ -136,8 +136,6 @@ cover:
   position: both
   # When cover is not set, the default cover is displayed (當沒有設置cover時，默認的封面顯示)
   default_cover:
-    - https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg
-    - https://i.loli.net/2020/08/03/JoXKqDNm7GCepFd.jpg
     - https://i.loli.net/2020/08/03/GLqDjwVRg3xvkp1.jpg
     - https://i.loli.net/2020/08/03/46YZfuTL5RmeWvl.jpg
     - https://i.loli.net/2020/08/03/5RjsypCQVPoltIH.jpg
@@ -145,6 +143,8 @@ cover:
     - https://i.loli.net/2020/08/03/MrkwY71tBNL5f6y.jpg
     - https://i.loli.net/2020/08/03/cAsW6uovCd78OfI.jpg
     - https://i.loli.net/2020/08/03/UrEu8Zcjb7CReX6.jpg
+    - https://i.loli.net/2020/08/05/GRYrANb2noBKXMh.jpg
+    - https://i.loli.net/2020/08/05/S9tDOx7hiKQmCqa.png
 
 # Replace Broken Images (替換無法顯示的圖片)
 error_img:
