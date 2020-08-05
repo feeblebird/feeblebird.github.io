@@ -13,6 +13,11 @@ categories: markdown
 # markdown表示数学公式
 
 * 首先在设置中勾选内联公式选项
+
+* 多个符号的嵌套，之际$ $ 之间多个 \ 就可以
+
+  ![image-20200805090624532](C:\Users\liwei\AppData\Roaming\Typora\typora-user-images\image-20200805090624532.png)
+比如\$\\lfloor \\sqrt{n} \\rfloor\$  表示的就是$\lfloor \sqrt{n} \rfloor$ 
 * 符号及其表示
 
 ![](https://i.loli.net/2020/08/05/OnRY2D3HVZWx8oM.png)
