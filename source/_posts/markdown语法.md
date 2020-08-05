@@ -4,6 +4,7 @@ date: 2020-08-05 08:40:54
 tags:
 	- markdown语法
 categories: markdown
+katex: true
 ---
 # 上下角标
 
