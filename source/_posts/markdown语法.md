@@ -16,7 +16,7 @@ categories: markdown
 
 * 多个符号的嵌套，之际$ $ 之间多个 \ 就可以
 
-  ![image-20200805090624532](C:\Users\liwei\AppData\Roaming\Typora\typora-user-images\image-20200805090624532.png)
+  ![](https://i.loli.net/2020/08/05/DJlX1icYnmQyEtp.png)
 比如\$\\lfloor \\sqrt{n} \\rfloor\$  表示的就是$\lfloor \sqrt{n} \rfloor$ 
 * 符号及其表示
 
