@@ -8,7 +8,7 @@
 
 menu:
 	首页: / || fas fa-home
-  # Archives: /archives/ || fas fa-archive
+  Archives: /archives/ || fas fa-archive
   标签: /tags/ || fas fa-tags
   分类: /categories/ || fas fa-folder-open
   # List||fas fa-list:
@@ -109,7 +109,7 @@ index_img:
 default_top_img: https://i.loli.net/2020/08/02/mcWUI589pbTLSYn.png
 
 # the banner image of archive page
-archive_img:
+archive_img: https://i.loli.net/2020/08/07/BMQmi25yfNgILhv.jpg
 
 # the banner image of tag page
 # note: tag page, not tags page (子標籤頁面的 top_img)

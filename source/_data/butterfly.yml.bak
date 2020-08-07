@@ -8,7 +8,7 @@
 
 menu:
 	首页: / || fas fa-home
-  # Archives: /archives/ || fas fa-archive
+  Archives: /archives/ || fas fa-archive
   标签: /tags/ || fas fa-tags
   分类: /categories/ || fas fa-folder-open
   # List||fas fa-list:
@@ -162,6 +162,7 @@ cover:
     - https://i.loli.net/2020/08/07/ANUDZTzxelKj9EP.jpg
     - https://i.loli.net/2020/08/07/r2GkzyFiXj1oH5C.jpg
     - https://i.loli.net/2020/08/07/nQSopPseaXdDTEF.jpg
+    - https://i.loli.net/2020/08/07/fwyroBA2uklajJX.jpg
 
 # Replace Broken Images (替換無法顯示的圖片)
 error_img:
