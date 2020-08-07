@@ -7,5 +7,9 @@
       descr: 
     - name: Armin's Blog
       link: http://x-armin.com/
-      avatar: https://i.loli.net/2020/05/14/TLJBum386vcnI1P.png
-      descr: 
+      avatar: 
+      descr:
+    - name: icecream's Blog
+      link: https://www.cnblogs.com/fate-/
+      avatar:
+    	descr: 
