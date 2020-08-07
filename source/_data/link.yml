@@ -1,0 +1,11 @@
+- class_name: 博客网站
+  class_desc: 一些分析
+  link_list:
+    - name: 吴佬
+      link: https://on-99.top/
+      avatar: 
+      descr: 
+    - name: Armin's Blog
+      link: http://x-armin.com/
+      avatar: 
+      descr: 

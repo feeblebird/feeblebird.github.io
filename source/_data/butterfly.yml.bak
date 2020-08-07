@@ -47,7 +47,7 @@ social:
 	fas fa-cloud-upload-alt: https://sm.ms || tuchuan
 	fas fa-paperclip: https://fontawesome.com || icon
 	fas fa-toilet-paper: https://wallhaven.cc || paper
-	fas fa-crown: https://on-99.top
+	#fas fa-crown: https://on-99.top
 	
 # search (搜索)
 # --------------------------------------
@@ -145,6 +145,7 @@ cover:
     - https://i.loli.net/2020/08/03/UrEu8Zcjb7CReX6.jpg
     - https://i.loli.net/2020/08/05/GRYrANb2noBKXMh.jpg
     - https://i.loli.net/2020/08/05/S9tDOx7hiKQmCqa.png
+  	#- https://i.loli.net/2020/08/05/sT1Fg3eLWdiXqGu.png
 
 # Replace Broken Images (替換無法顯示的圖片)
 error_img:
