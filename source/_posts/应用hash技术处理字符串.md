@@ -147,4 +147,205 @@ int judge()
 
 * #### 题目
 
-  Ellie Arroway博士与一个外星文明建立了联系。然而，所有破解外星人讯息的努力都失败了，因为他们遇上了一群口吃的外星人。Ellie的团队发现，在每一条足够长的讯息中，最重要的单词都会以连续字符的顺序出现一定次数的重复，甚至出现在其他单词的中间；而且，有时讯息会以一种模糊的方式缩写；例如，如果外星人要说bab两次，他们可能会发送讯息babab，该讯息已被缩写，在第一个单词中第二个b被重用为第二个单词中的第一个b
+  * Ellie Arroway博士与一个外星文明建立了联系。然而，所有破解外星人讯息的努力都失败了，因为他们遇上了一群口吃的外星人。Ellie的团队发现，在每一条足够长的讯息中，最重要的单词都会以连续字符的顺序出现一定次数的重复，甚至出现在其他单词的中间；而且，有时讯息会以一种模糊的方式缩写；例如，如果外星人要说bab两次，他们可能会发送讯息babab，该讯息已被缩写，在第一个单词中第二个b被重用为第二个单词中的第一个b
+
+  * 因此，一条讯息可能包含重复的相同单词一遍又一遍。现在，Ellie向您，S.R.Hadden，寻求帮助，以确定一条讯息的要点。
+  * 给出一个整数*m*和一个表示讯息的字符串*s*，请您查找至少出现*m*次的*s*的最长子字符串。例如，在讯息baaaababababbababbab中，长度为5个单词的babab包含3次，即在位置5、7和12处（其中下标索引从零开始），出现3次或更多次的子字符串不会比5更长（请参见样例输入中的第1个样例）；而且，在这条讯息中，没有子串出现11次或更多次（请参见第2个样例）。如果存在多个解决方案，则首选出现最右的子字符串（请参见第3个样例）。
+  
+* #### 输入
+
+  输入包含若干测试用例。每个测试用例在第一行给出一个整数*m*（*m*$\geq$1），表示最小重复次数；接下来的一行给出一个长度介于*m*和40000之间（包括*m*和40000）的字符串*s*。在*s*中，所有字符都是从“a”到“z”的小写字符。最后一个测试用例由*m*=0标识，程序不用处理。
+
+* #### 输出
+
+  对每个测试用例输出一行。如果无解，则输出none；否则，在一行中输出两个用空格分隔的整数，第一个整数表示至少出现*m*次的子串的最大长度；第二个整数表示此子字符串的最右起始位置。
+
+* #### 分析
+
+  
+
+* #### 代码
+
+```cpp
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <map>
+using namespace std;
+#define N 40005
+typedef unsigned long long ll;
+ll has[N];   //下标从1开始
+char str[N];
+ll mi[N];
+ll p = 131;               //这道题没有用mod，p取的值也很小。
+map<ll,int> mapint;
+int lenstr;
+int m;
+bool check(int mid);
+int confir(int mid);
+int main()
+{
+    mi[0] = 1;
+    for(int i = 1;i <= 40000;i ++)
+    {
+        mi[i] = mi[i-1]*p;
+    }
+    while(true)
+    {
+        scanf("%d",&m);
+        if(m==0)
+        {
+            break;
+        }
+        scanf("%s",str);
+        lenstr = strlen(str);
+        for(int i = 1;i <= lenstr;i ++)
+        {
+            has[i] = has[i-1]*p+str[i-1]-97+1;
+        }
+        int lef = 1,rig = lenstr;
+        int mid;
+        int fir;
+        while(lef <= rig)
+        {
+            mapint.clear();
+            mid = (lef + rig)>>1;
+            if(check(mid))
+            {
+                lef = mid + 1;
+            }else
+            {
+                rig = mid - 1;
+            }
+        }
+        if(rig==0)
+        {
+            printf("none\n");
+        }else
+        {
+            fir = confir(rig);
+            if(fir==-1)
+            {
+                printf("none\n");
+            }else
+            {
+                printf("%d %d\n",rig,fir);
+            }
+        }
+    }
+    return 0;
+}
+bool check(int mid)
+{
+    mapint.clear();
+    for(int i = 0;i <= lenstr - mid;i ++)
+    {
+        int tem = has[i+mid] - has[i]*mi[mid];
+        if(++mapint[tem]>=m)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+int confir(int mid)
+{
+    mapint.clear();
+    int ans = -1;
+    for(int i = 0;i <= lenstr - mid;i ++)
+    {
+        int tem = has[i+mid] - has[i]*mi[mid];
+        if(++mapint[tem]>=m)
+        {
+            ans = i;
+        }
+    }
+    return ans;
+}
+```
+
+# 从上题TLE中学到的东西
+
+* ```cpp
+  for(int i = 0;i <= lenstr - mid;i ++)
+  {
+      tem = has[i+mid] - has[i]*mi[mid];
+      mapint[tem]++;
+      if(mapint[tem]>=m)
+      {
+          ans = i;
+      }
+  }
+  ```
+  > 这里注意那个mapint[tem]++; 应该合并到if语句中，改后代码如下。
+  
+  ```cpp
+  for(int i = 0;i <= lenstr - mid;i ++)
+  {
+      tem = has[i+mid] - has[i]*mi[mid];
+      if(++mapint[tem]>=m)
+      {
+          ans = i;
+      }
+  }
+  ```
+  
+* 我之前学习的字符串的hash技术中，用到了p和mod，p和mod都推荐使用较大的素数，p推荐使用6位到8位的素数，mod推荐10<sup>9</sup>+7等等。
+
+  但是这道题中如果用了这个以及那个取模的公式，就会超时。
+
+* 除以二等等的运算可以用位运算，能快一点。
+
+# STLmap的简单用法
+
+* #include \<map\>
+
+* map是模板类，需要关键字和存储对象两个模板参数：std:map\<int ,string\> personnel;
+
+  这样就定义了又给用int作为索引，并拥有相关联的指向string的指针。
+
+* 数据的插入：
+
+  * mapStudent.insert(pair<int,string>(1,"studeng_one"));
+
+  * mapStudent.insert(map<int,string>::value_type(2,"student_two"));
+
+  * mapStudent[3] = "student_three";
+
+* 通过size()成员函数得到map的大小
+
+* 通过find()成员函数查找元素，找到则返回元素的所在位置的**迭代器**，找不到则返回**迭代器**end()。
+
+  ```cpp
+  map<int,string>::iterator iter;
+  iter = mapStudent.find(1);
+  if(iter!=mapStudent.end())
+  {
+      cout<<"Find it, the value is "<<iter->second<<endl;
+  }else
+  {
+      cout<<"Not find"<<endl;
+  }
+  ```
+
+* 用迭代器遍历
+
+  ```cpp
+  map<int,string>::iterator iter;
+  for(iter = mapStudent.first();iter < mapStudent.end();iter ++)
+  {
+      cout<<iter->first<<' '<<iter->second<<endl;
+  }
+  ```
+
+* 删除元素
+
+  * mapStudent.erase(iter);  //指向要删除元素的迭代器作为参数
+  * mapStudent.erase(key); //用要删除元素的键值作为参数
+
+* 删除区间元素
+
+  * mapStudent.erase(mapStudent.begin(),mapStudent.end());//把整个区间删除
+
+    注意删除区间是**前闭后开**
+
