@@ -350,3 +350,109 @@ int confir(int mid)
 
     注意删除区间是**前闭后开**
 
+# String(HDOJ 4821)
+
+* #### 题目描述
+
+  * 给定一个字符串S和两个整数L和M，我们称S是一个子串是"可恢复的"，当且仅当
+
+  * (i)子串的长度位M*L;
+
+  * (ii)这一子串通过串联S的M个"多样化"子串来构造:其中每个子串的长度L；而且这些子串不能又两个完全一样的串。
+  * 如果S的两个子串是从S的不同部分切下来的，则它们被认为是“不同的”。例如，字符串"aa"有3个不同的子串"aa","a"和"a"。
+  * 请您计算S的不同的”可恢复”子字符串的数量。
+  
+* #### 输入
+
+  * 输入包含多个测试用例，以EOF结束
+
+  * 每个测试用例的第一行给出两个用空格分隔的整数M和L
+
+  * 每个测试用例的第二行给出一个字符串S,它只包含小写字母
+
+  * S的长度不大于10<sup>^</sup>5,而且1 $\leq$ M*L $\leq$ S的长度
+
+* #### 输出
+
+  对每个测试用例，在一行中输出答案。
+  
+* #### 分析
+
+  通过字符串的hash，求出任意一个长度为*L*的子串的hash值。枚举字符串起始位置，从0枚举到*L*\-1。然后，在这个位置开始，每*L*个字符作为一块，首先将前*M*块插入到*map*中，同时记录不相同字符串的个数，如果不相同字符串的个数是*M*，则满足要求。然后，**将这个区间向右移**，删掉第1块，加入第*M*+1块，同样记录不相同字符串的个数。
+
+* #### 注意的点
+
+  unsigned long long会自动取模，所以可以不用mod这个变量了。
+
+* #### 代码
+
+```cpp
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <map>
+using namespace std;
+#define N 100005
+typedef unsigned long long ll;   //unsigned long long会自动取模
+ll p = 31;
+char str[N];
+ll has[N]; //下标从1开始
+ll mi[N];
+int m,l;
+int ans = 0;
+int main()
+{
+    mi[0] = 1;
+    for(int i = 1;i <= N;i ++)
+    {
+        mi[i] =  mi[i-1]* p;
+    }
+    while(scanf("%d%d",&m,&l)!=EOF)
+    {
+        scanf("%s",str);
+        ans = 0;
+        int lenstr = strlen(str);
+        for(int i = 1;i <= lenstr;i ++)
+        {
+            has[i] = has[i-1]*p+str[i-1]-97+1;
+        }
+        for(int i = 0;i <= l-1;i ++)
+        {
+            map<ll,int> mapint;
+            int lenstr2 = strlen(str+i);
+            int tem = lenstr2 / l;
+            ll k;
+            for(int j = 1;j <= m;j ++)
+            {
+                k = has[i+j*l]-has[i+(j-1)*l]*mi[l];
+                mapint[k]++;
+            }
+            int siz = mapint.size();
+            if(siz==m)
+            {
+                ans++;
+            }
+            for(int j = 1;j <= tem - m;j++)
+            {
+                k = has[i+j*l]-has[i+(j-1)*l]*mi[l];
+                mapint[k]--;
+                if(mapint[k]==0){mapint.erase(k);}
+                k = has[i+(m+j)*l]-has[i+(m+j-1)*l]*mi[l];
+                mapint[k]++;
+                int siz = mapint.size();
+                if(siz==m)
+                {
+                    ans++;
+                }
+            }
+        }
+        printf("%d\n",ans);
+    }
+    return 0;
+}
+```
+# 通过上面这道题学到的东西
+
+* #### unsigned long long 会自动取模
+
+* #### 这也就是为什么上上题不用mod也能保证做对
