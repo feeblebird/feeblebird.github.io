@@ -266,8 +266,7 @@ int confir(int mid)
 ```
 
 # 从上题TLE中学到的东西
-
-* ```cpp
+```cpp
   for(int i = 0;i <= lenstr - mid;i ++)
   {
       tem = has[i+mid] - has[i]*mi[mid];
@@ -277,10 +276,10 @@ int confir(int mid)
           ans = i;
       }
   }
-  ```
-  > 这里注意那个mapint[tem]++; 应该合并到if语句中，改后代码如下。
+```
+> 这里注意那个mapint[tem]++; 应该合并到if语句中，改后代码如下。
   
-  ```cpp
+```cpp
   for(int i = 0;i <= lenstr - mid;i ++)
   {
       tem = has[i+mid] - has[i]*mi[mid];
@@ -289,7 +288,7 @@ int confir(int mid)
           ans = i;
       }
   }
-  ```
+```
   
 * 我之前学习的字符串的hash技术中，用到了p和mod，p和mod都推荐使用较大的素数，p推荐使用6位到8位的素数，mod推荐10<sup>9</sup>+7等等。
 
