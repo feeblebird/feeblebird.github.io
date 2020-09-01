@@ -182,7 +182,7 @@ void Dijkstra(int sta)
 #include <cstring>
 #include <queue>
 using namespace std;
-#define MAX 100005*2  //因为这里是有向图，添加边的时候会添加两次，注意这里，不然会RE
+#define MAX 100005*2  //因为这里是无向图，添加边的时候会添加两次，注意这里，不然会RE
 struct Edge
 {
     int to;
