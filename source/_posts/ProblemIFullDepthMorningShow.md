@@ -5,7 +5,7 @@ tags:
 categories: 2019NCNARegionalContest
 ---
 
-* #### 尝试用了Dijkstra，TLE了
+* #### 尝试用了Dijkstra，TLE了（还没做完）
 ```cpp
 #include <iostream>
 #include <cstdio>
@@ -105,65 +105,54 @@ void Dijkstra(int sta)
 ```cpp
 #include <iostream>
 #include <cstdio>
+#include <vector>
 using namespace std;
-const int maxn=1e5+10;
-
-struct node
+#define MAX 100005
+typedef long long ll;
+int t[MAX];
+int de[MAX];
+int si[MAX],sit[MAX];
+ll si_lu[MAX],si_ye[MAX];
+ll ans[MAX];
+ll sum = 0; //统计所有节点的权值和
+vector<pair<int,ll> > ve[MAX];
+void dfs1(int fa,int u);
+void dfs2(int fa,int u);
+int mian()
 {
-	int next;
-    int to;
-    int len;
-}e[maxn<<1];
-int head[maxn];
-int siz = 0;
-int n,size[maxn],sum[maxn],dp[maxn];
-int t[maxn];
-inline void add_edge(int from,int to,int val){
-    siz++;
-    e[siz].to = to;
-    e[siz].val = val;
-    e[siz].next = head[from];
-    head[from] = siz;
-}
-
-void dfs1(int u,int fa){
-	size[u]=1;
-	for(int i=head[u];i;i=e[i].nxt){
-		int v=e[i].to;if(v==fa)continue;
-		sum[v]=sum[u]+1;
-		dfs1(v,u);
-		size[u]+=size[v];
-	}
-	dp[1]+=sum[u];
-}
-
-void dfs2(int u,int fa){
-	for(int i=head[u];i;i=e[i].nxt){
-		int v=e[i].to;if(v==fa)continue;
-		dp[v]=dp[u]+n-(size[v]<<1);
-		dfs2(v,u);
-	}
-}
-
-void solve(){
-	dfs1(1,0),dfs2(1,0);
-	for(int i=1;i<=n;i++)printf("%d\n",dp[i]);
-}
-
-int main(){
+    int n;
     scanf("%d",&n);
     for(int i = 1;i <= n;i ++)
     {
         scanf("%d",&t[i]);
+        sum += t[i];
     }
-    for(int i = 1;i <= n-1;i ++)
+    int x,y,z;
+    for(int i = 1;i < n;i ++)
     {
-        scanf("%d%d",&from,&to);
-        addedge(from,to,1);
-        addedge(to,from,1);
+        scanf("%d%d%d",&x,&y,&z);
+        ve[x].push_back(pair<int,ll>{y,z});
+        ve[y].push_back(pair<int,ll>{x,z});
     }
-	solve();
-	return 0;
+    dfs1(0,1); //进行第一次dfs 找出以 1 为根节点的所有相关数据
+    dfs2(0,1); //求答案
+    return 0;
+}
+void dfs1(int fa,int u)
+{
+    for(auto i:ve[u])
+    {
+        int x = i.first;
+        ll y = i.second;
+        if(x != fa)
+        {
+             
+        }
+    }
+}
+void dfs2(int fa,int u)
+{
+    
 }
 ```
 

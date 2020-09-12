@@ -9,7 +9,7 @@ categories: 图论
 
 * #### Dijkstra算法的使用条件
 
-  该算法的条件是该图所有边的权值非负。
+  该算法的条件是该图所有边的权值非负，而且式**无环**图。
 
 * #### 基本做法(邻接表)
 
@@ -132,7 +132,10 @@ int main()
     for(int i = 1;i <= m;i ++)
     {
         scanf("%d%d%d",&from,&to,&val);
-        addedge(from,to,val);
+        if(from!=to)    //避免出现自环
+        {
+            addedge(from,to,val);
+        }
     }
     Dijkstra(sta);
     printf("%d",dist[n]);
@@ -210,8 +213,11 @@ int main()
     {
         scanf("%d%d",&from,&to);
         val = 1;
-        addEdge(from,to,val);
-        addEdge(to,from,val);
+        if(from != to) //避免出现自环
+        {
+            addEdge(from,to,val);
+        	addEdge(to,from,val);
+        }
     }
     Dijkstra(sta);
     printf("%d",dist[n]-1);
