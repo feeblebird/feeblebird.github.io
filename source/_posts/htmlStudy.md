@@ -235,7 +235,7 @@ categories: Web前端
     <!--同一个name的单选互斥,checked属性默认勾选这个选项-->
     ```
 
-  * 复选框
+  * 复选框 
 
     ```html
     <input type = "checkbox" name = "名字" />
@@ -263,10 +263,10 @@ categories: Web前端
 * #### label标签 实现点击文字即可输入文本的效果
 
   ```html
-  <label>输入:<input type = "txt" /></label>
+  <label>输入:<input type = "text" /></label>
   <label for = "two">
-     	输入:<input type = "txt" />
-  	输入:<input type = "txt" id = "two"/>
+     	输入:<input type = "text" />
+  	输入:<input type = "text" id = "two"/>
   </label>
   ```
 
@@ -276,7 +276,7 @@ categories: Web前端
   <textarea></textarea>
   ```
 
-* #### 下拉菜单 双标签
+* #### 下拉菜单 双标签 可悲datalist代替使用
 
   ```html
   <select>
@@ -288,5 +288,203 @@ categories: Web前端
   </select>
   ```
 
-  
+* #### 表单域
 
+  ```html
+  <form action = "xxx.php" metho = "post" name = "user">
+      <input /><!--等等-->
+  <!--
+  action:将数据提交到某某后台,此时提交和充值按钮都开始起作用
+  method:提交方式 
+  -->
+  </form>
+  ```
+
+* #### html发展大概历史
+
+  ![](https://i.loli.net/2020/09/13/EkCtWfVA64lUK39.png)
+
+# 手册参考网站
+
+[网址](https://www.w3school.com.cn)
+
+# html5常用新标签
+
+* #### header 定义页眉 双标签
+
+  ```html
+  <header></header>
+  ```
+
+* #### 导航栏 nav 双标签
+
+  ```html
+  <nav></nav>
+  ```
+
+* #### 页面底部 footer 双标签
+
+  ```html
+  <footer></footer>
+  ```
+
+* #### 定义文章 article 双标签
+
+  ```html
+  <article></article>
+  ```
+
+* #### section 定义文章中的小节、区、块 双标签
+
+  ```html
+  <section></section>
+  ```
+
+* #### aside 定义侧边块 双标签
+
+  ```html
+  <aside></aside>
+  ```
+
+* #### datalist 定义选项列表，与input元素配合使用，可替代select
+
+  显示效果为输入某个字时，会提示已有结果
+
+  ```html
+  <input type = "text" value = "输入明星" list = "star"/>
+  <datalist id = "star">
+      <option>刘德华</option>
+      <option>刘德华</option>
+      <option>刘德华</option>
+      <option>刘德华</option>
+  </datalist>
+  ```
+
+* #### fieldset元素可将表单内的相关元素分组，打包与legend搭配使用
+
+  ```html
+  <fieldset>
+      <legend>
+          用户登录
+          用户名:<input type = "text"/>
+          密码:<input type = "password"/>
+      </legend>
+  </fieldset>
+  ```
+
+# html5新增input属性
+
+![](https://i.loli.net/2020/09/13/JcBowEYOzCfDjtV.png)
+
+* #### type
+
+  ```html
+  <form>
+      邮箱:<input type = "email" />
+      手机:<input type = "tel" />
+      数字:<input type = "number" />
+      url:<input type = "url" />
+      搜索:<input type = "search" />
+      拖动滑块:<input type = "range" />
+  </form>
+  ```
+
+* #### 时间属性
+
+  ```html
+  <form>
+      时间:<input type = "time" />
+      date:<input type = "date" />
+      datetime:<input type = "datetime" />
+  </form>
+  ```
+
+* #### 搜索框默认文本默认内容，输入又消失，占位符
+
+  ```html
+  <input type = "text" placeholder = "请输入"/>
+  ```
+
+* #### 页面加载自动获得焦点，即加载后光标自动选择
+
+  ```html
+  <input type = "text" placeholder = "请输入" autofocus />
+  <input type = "text" placeholder = "请输入" autofocus = "autofocus" />
+  ```
+
+* #### 上传多个文件
+
+  ```html
+  <input type = "file" multiple />
+  <input type = "file" multiple = "multiple" />
+  ```
+
+* #### 自动记录
+
+  ```html
+  <form action = "">
+      <!--使用自动记录，首先需要提交按钮，然后需要给表单name值-->
+      <input type = "text" autocomplete name = "username"/>
+      <input type = "text" autocomplete = "autocomplete" name = "username"/>
+      <input type = "text" autocomplete = "on" name = "username" />
+      <input type = "text" autocomplete = "off" name = "username" >
+      <!--关闭自动记录功能-->
+      <input type = "submit" />
+  </form>
+  ```
+
+* #### 必填项
+
+  ```html
+  <form action = "">
+      <input type = "text" required />
+  </form>
+  ```
+
+* #### accesskey自动跳转
+
+  ```html
+  <form action = "">
+      <input type = "text" accesskey = "s" />
+      <!--按下alt + s 则自动跳转到这个文本框进行输入-->
+  </form>
+  ```
+
+# 多媒体标签
+
+* #### 插入音频
+
+  ```html
+  <audio src = "xxx.mp3"></audio> <!--不自动播放-->
+  <audio src = "xxx.mp3" autoplay = "autoplay"></audio><!--自动播放-->
+  <audio src = "xxx.mp3" autoplay = "autoplay" controls></audio>
+  <!--显示控制组件-->
+  <audio src = "xxx.mp3" loop = "2"></audio>
+  <!--loop = n循环唱n次 等于-1时，无限安循环-->
+  ```
+
+* #### 为了不同浏览器的兼容，上传两种格式
+
+  ```html
+  <audio autoplay = "autoplay" controls>
+  	<source src = "xxx.mp3" />
+      <source src = "xxx.ogg" />
+  </audio>
+  ```
+
+* #### 插入小视频
+
+  ```html
+  <video src = "xxx.mp4/xxx.ogg/xxx.WebM" autoplay controls width = "" ></video>
+  ```
+
+* #### 为了不同浏览器的兼容
+
+  ```html
+  <video controls autoplay>
+  	<source src = "xxx.mp4"/>
+      <source src = "xxx.ogg"/>
+  </video>
+  ```
+
+  
