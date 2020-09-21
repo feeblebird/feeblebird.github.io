@@ -53,14 +53,14 @@ categories: Web前端
 
 * #### 字体效果标签
 
-  * 加粗
+  * 加粗 bold
 
     ```html
-    <s></s>
+    <b></b>
     <strong></strong>
     ```
 
-  * 斜体
+  * 斜体 italic
 
     ```html
     <i></i>
@@ -487,4 +487,7 @@ categories: Web前端
   </video>
   ```
 
-  
+
+# meta标签
+
+* #### meta标签没有结束标签
