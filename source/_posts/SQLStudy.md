@@ -204,5 +204,38 @@ categories: SQL
   //只复制myemployee库中的employees表中的last_name,department字段的结构，不包括具体数据
   ```
 
-  
+
+# select from where 语句
+
+```sql
+SELECT *
+FROM drinkers
+WHERE trim(NAME) LIKE '% % %';
+--去掉前后的空格，中间的空格不去,选出名字由三部分组成
+```
+
+# 转义字符 \
+
+# NULL
+
+* 与其他进行运算值都是NULL
+
+* 与其他值比较结果为unknow
+
+* 判断是否为空
+
+  where is now; / where is not null;
+
+
+# 多表查询，多关系查询
+
+```sql
+SELECT l1.drinker
+FROM likes l1,likes l2,likes l3
+WHERE l1.drinker = l2.drinker AND l1.drinker = l3.drinker
+AND l1.beer < l2.beer AND l2.beer < l3.beer;SELECT l1.drinker
+FROM likes l1,likes l2,likes l3
+WHERE l1.drinker = l2.drinker AND l1.drinker = l3.drinker
+AND l1.beer < l2.beer AND l2.beer < l3.beer;
+```
 

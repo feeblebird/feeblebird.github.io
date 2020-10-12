@@ -5,6 +5,50 @@ tags: css
 categories: Web前端第三个第四个
 ---
 
+# CSS上课实例
+
+```css
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset = "utf-8">
+	<title>css学习</title>
+	<style type = "text/css">
+		a:link{color :#ff0000;text-decoration :none;}
+		a:visited{color : #00ff00;}
+		a:hover {color : #ff00ff; font-size : 140px;text-decoration : underline;}
+		<!--hover要放在link，visited后面-->
+		a:active {color : #0000ff;}
+		.zuoye{
+			font-size : 12pt;
+			color : green;
+			text-align : center;
+			font-weight : bold;
+			background-color : black;
+		}
+		h2,h3,h4,h5,h6{
+			color : white;
+			background-color : blue;
+		}
+		#left{
+			color : black;
+			background-color : green;
+			font-size : 30px;
+		}
+		.red{
+			color : red;
+		}
+	</style>
+</head>
+<body>
+	<h1 style = "color : white;background-color : black;">我的css页面</h1>
+	<h1 ><a target = "_blank" href = "http://www.runoob.com">我的css页面</a></h1>
+	<div>哈哈哈哈</div>
+	<div>hehhehehehe</div>
+</body>
+</html>
+```
+
 # Css(Cascading Style Sheet)作用
 
 Cascading Style Sheet 层叠样式表，是用于控制网页样式并允许将样式信息与网页内容分离的一种标记性语言。Css是用来美化html实现的结构的
@@ -40,6 +84,10 @@ selector{
 * 属性和属性值被冒号分开。
 * 后面以分号结束。
 * 花括号里面都是以小写去写。
+
+# css中的注释
+
+不管是单行还是多行都是/\* \*/
 
 # 引用方式
 
@@ -173,7 +221,7 @@ css引用方式：行间样式、内部样式、外部样式、导入外部样�
 
 # 选择符
 
-* 选择符通常是通配选择符、标记选择符、包含选择符、ID选择符、类选择符和选择符分组。
+* 选择符通常是 **通配选择符**、**标记选择符**、**包含选择符**、**ID选择符**、**类选择符** 和 **选择符分组**。
 
 * #### 通配选择符
 
@@ -214,4 +262,168 @@ css引用方式：行间样式、内部样式、外部样式、导入外部样�
   }
   ```
 
+  * id选择器的使用方法与class选择器基本相同，不同指出在于 **id选择器只能在HTML页面中使用一次**，针对性更强。
   
+* #### ID选择器与包含选择器
+
+  在现代布局中，id选择器常常用于建立 **包含选择器**
+
+  ```css
+  #sidebar p{
+      font-style : italic;
+      text-align : right;
+      margin-top : 0.5em;
+  }
+  //id="sidebar"的元素中的p标签的样式是这样设置的
+  ```
+
+* #### 类选择符
+
+  写法如下：.name
+
+  类选择符的语法格式是"."加上自定义的类名称。
+
+  ```css
+  .name{
+      font-size : 12px;
+  }
+  //所有调用类名为name页面元素中，文本的字体大小为12个像素。名称不唯一，可通过定义相同的类名来调用同一个样式。
+  ```
+
+  ```html
+  .center{
+  	text-align : center;
+  }
+  <h1 class = "center">
+      this heading will be center-aligned
+  </h1>
+  <p class = "center">
+      this paragraph will also be center-aligned
+  </p>
+  ```
+
+  * 类选择器与id选择器一样，class也可被用作 **包含选择器** 
+
+  ```css
+  .fancy td{
+      color : #f60;
+      background : #666;
+  }
+  //调用了这个类的元素中的td标签的样式为这样设置的
+  ```
+
+* #### 选择符分组
+
+  当多个选择符应用相同的样式，可以将选择符用英文逗号分隔的方式，合并为一组。
+
+  ```css
+  p,div,td{
+      text-align : center;
+  }
+  ```
+
+* #### 伪类和伪元素
+
+  伪类和伪元素也是一种选择符，在页面元素中，用来定义超出结构所能标识的样式。伪类是能被支持CSS的浏览器自动识别的特殊选择符。
+
+  ```css
+  //语法结构如下:
+  //选择符:伪类{属性:属性值;}
+  //例: a:hover{font-size : 12px;}
+  //说明:当鼠标讲过带有链接的文本上时，文本字体大小12像素。
+  //伪类和伪元素的写法，一般以:开头，与类不同的是，伪类和伪元素在CSS中是指定的，不能随意的命名和定义。
+  ```
+
+* #### 伪类选择器
+
+  ```css
+  //锚伪类-链接的不同状态:未被访问状态、已被访问状态、鼠标悬停状态、活动状态
+  a:link{color : #ff0000;} /*unvisited link*/
+  a:visited{color : #00ff00;} /*visited link*/
+  a:hover{color : #ff00ff;} /*mouse over link hover盘旋、靠近*/
+  a:active{color : #0000ff;} /*selected link*/
+  ```
+
+  > 1.在css定义中，a:hover必须被置于a:link 和 a:visited之后，才是有效的
+  >
+  > 2.在css定义中，a:active 必须被置于a:hover 之后，才是有效的
+  >
+  > 3.伪类名称对大小写不敏感
+
+* #### CSS属性
+
+  ​        常用的属性有:字体属性、文本属性、背景属性、定位属性、尺寸属性、布局属性、边界属性、边框属性、补白属性、列表项目属性、表格属性。
+
+  ​		其中，某些属性只有部分浏览器支持，这使得属性的应用变得相当的复杂，属性的知识和应用，是css的应用主体部分。
+
+* #### CSS代码书写规范
+
+  * 基本书写规范
+
+    建议先书写类型选择符和重复使用的样式，然后是伪类，最后是自定义的选择符。除了重复使用的选择符，其它选择符按照使用的先后书写，这样便于修改时查找。
+
+  * 命名参考
+
+    ![](https://i.loli.net/2020/09/21/UFCDAxgoKjvzTtc.png)
+
+  * 样式表书写顺序
+
+    ![](https://i.loli.net/2020/09/21/izy9dp7wshOWVot.png)
+
+
+
+# css border 属性设置
+
+```html
+<html>
+    <head>
+        <title></title>
+        <style type = "text/css">
+            div{
+                border : 1px solid #000000;
+            }
+        </style>
+    </head>
+    <body>
+        
+    </body>
+</html>
+```
+
+```css
+border : 边框厚度 边框样式 边框颜色
+//写成border是设置边框的四个边为统一格式，也可以分开设置
+//border-top 上边框 border-bottom 下边框 border-left左边框 border-right 右边框
+//边框样式:
+//none : 无边框。与任何指定的border-width值无关
+//dotted : 点线
+//dashed : 虚线
+//solid : 实线
+//double : 双线边框
+```
+
+> 默认的边框颜色是元素本身的前景色。如果没有为边框声明颜色，它将与元素的文本颜色相同。另一方面，如果元素没有任何文本，假设它是一个表格，其中只包含图像，那么该表的边框颜色就是其父元素的文本颜色（因为 color 可以继承）。这个父元素很可能是 body、div 或另一个 table
+
+# css margin 属性
+
+* margin属性设置外边距
+
+[做完题来补笔记](https://www.w3school.com.cn/cssref/index.asp)
+
+# css font 属性(一定写在color属性前)
+
+* 可以按照顺序设置如下属性:
+  * font-style
+  * font-variant
+  * font-weight
+  * font-size/line-height
+  * font-family
+
+# css padding 属性
+
+* padding设置内边距
+
+# css position属性
+
+* 设置元素的定位方式
+* [here](https://www.w3school.com.cn/cssref/pr_class_position.asp)

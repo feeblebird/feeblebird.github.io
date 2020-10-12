@@ -276,7 +276,7 @@ categories: Web前端
   <textarea></textarea>
   ```
 
-* #### 下拉菜单 双标签 可悲datalist代替使用
+* #### 下拉菜单 双标签 可用datalist代替使用
 
   ```html
   <select>
@@ -355,7 +355,7 @@ categories: Web前端
   <datalist id = "star">
       <option>刘德华</option>
       <option>刘德华</option>
-      <option>刘德华</option>
+      <option>刘德华</option>F
       <option>刘德华</option>
   </datalist>
   ```
