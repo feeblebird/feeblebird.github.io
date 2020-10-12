@@ -173,9 +173,10 @@ categories: php
 
   用变量值作为变量名
 
+```php
   $var_name = "myvar";
-
   $$var_name = 10;
+```
 
 # 常量
 
@@ -262,7 +263,7 @@ categories: php
 
 > 当php周围代码很复杂的时候，可以这样写
 
-```php
+```php+HTML
 <html>
     <head>
         <tithle></tithle>
@@ -348,5 +349,43 @@ foreach($b as $key => $value){
 }
 ```
 
+# 数组排序函数
 
+* sort()：以升序对数组排序
+* rsort()：以降序对数组排序
+
+> 用sort()和rsort()进行的排序，输出下表时会只输出0，1，2，...不会输出自定义的下标
+>
+> 如果要输出自定义的下标，要使用下面的这四个排序函数
+
+* asort()：根据值，以升序对关联数组进行排序
+* ksort()：根据键，以升序对关联数组进行排序
+* arsort()：根据值，以降序对关联数组进行排序
+* krsort()：根据键，以降序对关联数组进行排序
+
+```php+HTML
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<?php
+		$arr = array("bill"=>"a","steve"=>"b","elon"=>"c");
+		asort($arr);
+		echo "根据值进行升序排序<br />";
+		foreach($arr as $key => $value)
+		{
+			echo "key: ".$key." value:".$value."<br />";
+		}
+		ksort($arr);
+		echo "<br />根据键进行升序排序<br />";
+		foreach($arr as $key => $value)
+		{
+			echo "key: ".$key." value:".$value."<br />";
+		}
+	?>
+</body>
+</html>
+```
 

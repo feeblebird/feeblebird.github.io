@@ -1,7 +1,9 @@
 ---
 title: SQLServerStudy
 date: 2020-10-12 19:47:16
-tags:Transact SQL(sql在microsoft sql server上的加强版本)
+tags:
+	-Transact SQL(sql在microsoft sql server上的加强版本)
+	-SQL
 ---
 
 # SQLServer中修改列表属性的语句
@@ -49,6 +51,15 @@ creat table tablename
 ```sql
 alter table tablename
 add check(num>0);
+```
+
+# SQL 设置约束名称
+
+```sql
+create table test
+(
+	num int constraint PK_num primary key 
+);
 ```
 
 
