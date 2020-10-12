@@ -356,12 +356,25 @@ foreach($b as $key => $value){
 
 > 用sort()和rsort()进行的排序，输出下表时会只输出0，1，2，...不会输出自定义的下标
 >
+> 本函数会为排序的数组中的单元赋予新的键名，这将删除原有的键名而不仅是重新排序。
+>
 > 如果要输出自定义的下标，要使用下面的这四个排序函数
 
 * asort()：根据值，以升序对关联数组进行排序
+
 * ksort()：根据键，以升序对关联数组进行排序
+
 * arsort()：根据值，以降序对关联数组进行排序
+
 * krsort()：根据键，以降序对关联数组进行排序
+
+* #### sort()、ksort()、asort()、rsort()的异同点
+
+> 相同点：sort、ksort、asort都能对数组进行升序排序
+>
+> 不同点：sort排序会重新给键赋值，赋给数字下标而ksort、asort都会保留原来的键值
+>
+> rsort是降序排序，与sort类似
 
 ```php+HTML
 <!DOCTYPE html>
@@ -389,3 +402,39 @@ foreach($b as $key => $value){
 </html>
 ```
 
+# php实现随机显示7张图片中的三张图
+
+```php+HTML
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		#pics img{
+			width : 200px;
+		}
+		#pics div{
+			float : left;
+			margin : 10px;
+			padding : 5px;
+		}
+	</style>
+</head>
+<body>
+	<div id = "pics">
+		<?php
+			$arr = array("1.jpg","2.png","3.png","4.png","5.png","6.jpg","7.jpg");
+			shuffle($arr);
+			for($i = 0;$i < 3;$i ++)
+			{
+		?>
+				<div><img src = "myimages/<?php echo "$arr[$i]"; ?>"kj/></div>
+		<?php
+			}
+		?>	
+	</div>
+</body>
+</html>
+```
+
+> 图片放在本地的myimages目录下
