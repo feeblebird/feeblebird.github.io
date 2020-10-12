@@ -148,41 +148,45 @@ categories: SQL
 
   ```sql
     alter table tbname
-    rename to newtbname; //改表名
+    rename to newtbname; --改表名
   ```
 
   ```sql
     alter table tbname
-    add column bir datetime not null; //添加属性
+    add column bir datetime not null; --添加属性
   ```
 
   ```sql
     alter table tbname
-    change column bir birthday datetime; //修改属性名，类型必须要加，可以认为这里的修改就是删除原来的属性而添加一个新的属性，约束也可以改变。  
+    change column bir birthday datetime; --修改属性名，类型必须要加，可以认为这里的修改就是删除原来的属性而添加一个新的属性，约束也可以改变。  
   ```
 
   ```sql
     alter table tbname
-    modify column bir timestamp; //修改属性类型
-  ```
-
-  ```sql
-    alter table tbname
-    drop column bir; //删除属性
-  ```
-
-  ```sql
-    alter table tbname
-    drop primary key; //删除主键
-  ```
-
-  ```sql
-    alter table tbname
-    change column bir bir datetime unique;//添加约束
-    change column bir bir datetime primary key;//如果此时该属性的值为not null则可以，否则应该先设置为not null,因为primary key默认not null
+    modify column bir timestamp; --修改属性类型
     
     alter table tbname
-    modify column bir bir datetime primary key; //若非空则可以设置称主键
+    modify column bir timestamp not null;
+    --可以修改属性从空变为不空，或反之，相当于重新设置了一个属性
+  ```
+
+  ```sql
+    alter table tbname
+    drop column bir; --删除属性
+  ```
+
+  ```sql
+    alter table tbname
+    drop primary key; --删除主键
+  ```
+
+  ```sql
+    alter table tbname
+    change column bir bir datetime unique;--添加约束
+    change column bir bir datetime primary key;--如果此时该属性的值为not null则可以，否则应该先设置为not null,因为primary key默认not null
+    
+    alter table tbname
+    modify column bir bir datetime primary key; --若非空则可以设置称主键
   ```
 
 * #### 删除表
