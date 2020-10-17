@@ -5,6 +5,14 @@ tags: SQL
 categories: SQL
 ---
 
+# SQL不区分大小写
+
+> sql是大小写无关的，他把大写和小写字母看作相同的字母。举个例子，对于保留字FROM，无论写成FROM、From或者FrOm都是正确的。
+>
+> 关系名、属性名和别名都同样是大小写无关的。
+>
+> 只有引号里面的字符才是区分大小写的。
+
 # 语法
 
 * #### 进入mysql(dos窗口中)
@@ -119,11 +127,6 @@ categories: SQL
   );
   ```
 
-* #### 转义字符
-
-  ```sql
-  'i''m liwei' => i'm liwei
-  ```
 
 * #### unique约束和primary key约束
 
@@ -218,7 +221,81 @@ WHERE trim(NAME) LIKE '% % %';
 --去掉前后的空格，中间的空格不去,选出名字由三部分组成
 ```
 
-# 转义字符 \
+# AS 关键字
+
+* #### 给关系起别名
+
+  ```sql
+  //给关系起别名，可认为原来是原名 as 原名
+  SELECT bar,beer
+  from bars [as] ba,beers [as] be //as可省略    
+  where ba....   be....;
+  ```
+
+* #### 给属性起别名
+
+  ```sql
+  //给属性起别名
+  SELECT bar,beer,price as priceInYen
+  from sells;
+  ```
+
+* #### 属性可以被表达式替代
+
+  ```sql
+  //属性可以被表达式替代
+  SELECT bar,beer,price*14 as priceInYen
+  from sells;
+  ```
+  
+* #### 将常量作为表达式在SELECT语句中列出
+
+  ```sql
+  SELECT title,length,'hrs.' AS inHours
+  from movies
+  where studioname = 'Disney' AND year = 1990;
+  
+  //则结果中会出现一列属性名为inHours的列，值都为'hrs.'
+  ```
+
+  > 可以理解为查询时，每次都是将关系中的元组赋值给select-from-where语句中的select中的属性，然后判断条件是否满足，所以那个常量就一直是这个而且保留了下来。
+
+# where语句中的运算符
+
+* #### 算术运算符
+
+   有+ - * /
+
+* #### 字符串连接符
+
+  ```sql
+  'foo'||'bar'相当于'foobar'
+  ```
+
+* #### 比较运算符
+
+  ```sql
+  >
+  <
+  >=
+  <=
+  =
+  <>
+  ```
+
+* #### 逻辑运算符
+
+  ```sql
+  AND
+  OR
+  NOT
+  //可以对返回值为布尔值的表达式进行取非
+  ```
+# 单引号中使用单引号
+
+```sql
+'i''m liwei' => i'm liwei
+```
 
 # NULL
 
@@ -230,6 +307,57 @@ WHERE trim(NAME) LIKE '% % %';
 
   where is now; / where is not null;
 
+# 字符串比较
+
+* #### 注意这里进行字符串比较的时候会忽略SQL为了保证字符串长度而填充的填充字符，而SQL串的模式匹配中不会忽略。
+
+* #### 在SQL模式匹配中使用trim函数取出字符串两端的空格。
+
+# 字符串模式匹配
+
+```sql
+S LIKE P
+S NOT LIKE P
+```
+
+* S是字符串
+
+* P是模式(pattern)
+
+* #### 模式匹配中的特殊字符
+
+  * %，能匹配任意长度的串
+  * _ ，能匹配s中任何一个字符
+
+* #### 模式匹配中使用%和_，使用转义字符
+
+  > like表达式中的转移字符
+  >
+  > like表达式中没有固定的转移字符，而是通过 escape关键字指定转义字符。
+  >
+  > 比如：WHERE beer LIKE 'x%x%' ESCAPE 'x';就是指定x为转义字符。
+
+# 输出排序
+
+```sql
+ORDER BY <list of attributes>
+select *
+from movies
+where studioName = 'Disney' AND year = 1990
+ORDER BY length,title ASC;
+//ORDER BY length,title DESC;
+```
+
+* #### ASC DESC指定是升序还是降序
+
+* #### ORDER语句后面也可以是表达式
+
+```sql
+SELECT *
+FROM R
+ORDER BY A+B DESC;
+```
+
 
 # 多表查询，多关系查询
 
@@ -237,9 +365,694 @@ WHERE trim(NAME) LIKE '% % %';
 SELECT l1.drinker
 FROM likes l1,likes l2,likes l3
 WHERE l1.drinker = l2.drinker AND l1.drinker = l3.drinker
-AND l1.beer < l2.beer AND l2.beer < l3.beer;SELECT l1.drinker
-FROM likes l1,likes l2,likes l3
-WHERE l1.drinker = l2.drinker AND l1.drinker = l3.drinker
 AND l1.beer < l2.beer AND l2.beer < l3.beer;
 ```
 
+# 元组变量
+
+* #### 通俗来讲就是给关系起个别名
+
+* #### 在一个select-from-where语句中，要将同一个关系中的不同元组进行比较的时候
+
+  ```sql
+  select *
+  from likes l1,likes l2
+  where l1.name = l2.name and l1.beer <> l2.beer;
+  ```
+
+# 查询的结果是一个Bag，即没有不重复性
+
+* #### 但是当进行查询的并、交、差的时候会先去重，转换成一个集合，因为这样效率高。
+
+* 理论上的方法是先对两个查询结果进行一个排序，然后遍历一遍去重，然后在遍历进行集合运算。
+
+# Controlling Duplicate Elimination控制重复消除
+
+* #### 强制去重
+
+  ```sql
+  select distinct price
+  from sells;
+  ```
+
+* #### 强制将集合转换为Bag(在子查询关系运算中使用ALL关键字)
+
+  ```sql
+  (select drinker from frequents)
+  union all
+  (select drinker from likes);
+  
+  (select drinker from frequents)
+  intersect all
+  (select drinker from likes);
+  
+  (select drinker from frequents)
+  except all
+  (select drinker from likes);
+  ```
+
+# 查询的并、交、差
+
+* #### intersect 交
+
+* #### union 并
+
+* #### except 差
+
+  >  这三个运算都是查询结果与查询结果之间进行的。两个subquery用小括号括起来，中间用这三个运算符连接。
+
+# 使用子查询(subquery)的情况
+
+* #### 出现在from中
+
+  > 若出现在from中则在子查询后面应该紧跟该子查询结果对应的元组变量(tuple variable)
+
+  ```sql
+  select likes.name
+  from (slect * from bars) B,likes
+  where B.beer = likes.beer and b.bar = likes.bar;
+  ```
+
+* #### 出现在where中
+
+  * 若子查询结果为一个元组，则这个元组的具体属性值就可以用来进行比较
+  * 若子查询结果为一个关系，则可以在where以不同的方式使用，就和普通的关系类似。
+
+# 关系的条件表达式(值与关系之间)
+
+* #### EXISTS
+
+  * EXISTS R 若R不为空，则该值为true，反之为假
+  * NOT EXISTS R
+
+* #### IN
+
+  * IN R
+  * NOT IN R
+
+* #### ANY
+
+  * s > ANY R
+  * NOT s > ANY R
+
+* #### ALL
+
+  * s > ALL R
+  * NOT s > ALL R
+
+# 元组的条件表达式(元组与关系之间)
+
+* #### 如果元组与该关系的元组之间有相同的组成分量(component)个数，那么这个比较是有意义的
+
+```sql
+select name
+from MovieExec
+where cert# IN
+(select producerC#
+from Movies
+where (title,year) IN
+ 	(select movieTitle,movieYear
+    from StarsIn
+     Where starName = 'Harrison Ford'
+    )
+);
+```
+
+# 关联子查询，相关子查询(correlated subquery)
+
+* #### 在子查询过程中要用到子查询外部关系的元组
+
+  ```sql
+  select title 
+  from movies Old
+  where year < any
+  (
+  	select year
+      from movies
+      where title = Old.title
+  );
+  ```
+
+  > 属性名子的作用范围，即就近原则，近的找不到关系中有该属性，则去远处找
+
+# SQL连接表达式
+
+# cross join 笛卡尔乘积
+
+```sql
+select *
+from likes cross join sells;
+```
+
+> 列数相加，行数相乘
+
+# 自然连接Natural Join
+
+```sql
+select likes.beer,drinker,bar,price
+from likes,sells
+where likes.beer = sells.beer;
+//先是做一个笛卡尔乘积，然后两个表中相同的属性值相同的元组成为连接结果，且同名属性值相同的合并。
+//下面这三种写法是等价的，只是nutural join结果会合并属性列
+SELECT *
+FROM likes NATURAL JOIN sells;
+SELECT *
+FROM likes JOIN sells ON likes.beer = sells.beer;
+SELECT *
+FROM likes CROSS JOIN sells
+WHERE likes.beer = sells.beer;
+```
+
+> 先做一个 **笛卡尔乘积** 
+>
+> 如果有多个同名的属性，则保留下来的成为结果的元组中的这些属性值都要相同。
+>
+> **且进行了合并**
+
+# Theta Join
+
+```sql
+select *
+from drinkers [inner] join frequents on name = drinker
+[where ...]
+;
+//就是先做笛卡尔成绩，然后根据这个条件筛选,还可以继续根where
+//相当于与
+select *
+from drinkers,frequents
+where name = drinker;
+```
+
+# XXX Outer joins
+
+> 注意outer join 是针对前面的natural join 和 join on的
+>
+> 所以分为
+
+```sql
+natural left outer join
+natural right outer join
+natural full outer join
+
+left outer join on
+right outer join on
+full outer join on
+```
+```sql
+natural LEFT OUTER JOIN
+//连接关键字左边的表中的所有的元组都会列出来，如果该元组不满足条件则列出NULL
+natural RIGHT OUTER JOIN
+natural FULL OUTER JOIN
+```
+
+* #### natural left outer join
+
+  >  **包含nutural join的结果，如果查询结果中没有包含关键词左边的关系中的某个元素，则会把这个元素加入结果，没有和右边关系匹配上的属性值由NULL补全。**
+
+* #### natural right outer join
+
+  > **包含nutural join的结果，如果查询结果中没有包含关键词右边的关系中的某个元素，则会把这个元素加入结果，没有和左边关系匹配上的属性值由NULL补全。**
+
+* #### natural full outer join
+
+  > **包含nutural join的结果，如果查询结果中没有包含关键词左边或右边的关系中的某个元素，则会把这个元素加入结果，没有和右边或左边关系匹配上的属性值由NULL补全。**
+
+> 如果A natural join B的结果中，A 和 B的同名属性为attribute1，则如果结果中包含A中attribute1(转换成set)的所有值，且包含B中attribute1(转换成set)的所有值，则上面三种outer join查询出来的结果都一样。
+
+# 给关系起别名后不能再from这个别名
+
+```sql
+SELECT likes.drinker
+FROM likes,(((select name from bars)UNION(select name from beers))UNION(select name from drinkers))R
+WHERE likes.beer IN
+(
+	SELECT name
+	FROM R
+);
+```
+
+> 不能这样子
+
+# 例题
+
+* 找出具有相同口径火炮的船只中火炮数量最多的船只的名字
+
+```sql
+SELECT NAME
+FROM Ships
+WHERE CLASS IN
+(
+	SELECT CLASS
+	FROM Classes c1
+	WHERE numGuns >= ALL
+	(
+		SELECT numGuns
+		FROM Classes c2
+		WHERE c1.bore = c2.bore
+	);
+);
+
+SELECT NAME
+FROM Ships
+WHERE CLASS = ANY
+(
+	SELECT class
+	FROM Classes c1
+	WHERE NOT exists
+	(
+		SELECT *
+		FROM Classes c2
+		WHERE c1.bore = c2.bore AND c1.numGuns < c2.numGuns
+	)
+);
+```
+
+# 习题
+
+* 6.3.1
+
+  * (1)
+
+    ```sql
+    SELECT maker
+    FROM Product
+    WHERE model IN
+    (
+    	SELECT model
+    	FROM PC
+    	WHERE speed >= 3
+    );
+    
+    
+    SELECT maker
+    FROM Product,(SELECT * FROM PC WHERE speed >= 3) high
+    WHERE Product.model = high.model;
+    ```
+
+  * (2)
+
+    ```sql
+    SELECT model
+    FROM Printer
+WHERE price >= ALL 
+    (
+    	SELECT price
+    	FROM Printer
+    );
+    
+    
+    SELECT model
+    FROM Printer l1
+    WHERE NOT EXISTS
+    (
+    	SELECT *
+    	FROM Printer l2
+    	WHERE l2.price > l1.price
+    );
+    ```
+    
+  * (3)
+  
+    ```sql
+    SELECT model
+    FROM Laptop
+    WHERE speed < ALL
+    (
+    	SELECT speed
+    	FROM PC
+    	WHERE speed <= All
+    	(
+    		SELECT speed
+    		FROM PC
+    	)
+    );
+    
+    
+    SELECT model
+    FROM Laptop l1
+    WHERE NOT EXISTS
+    (
+    	SELECT *
+    	FROM PC
+    	WHERE speed <= l1.speed
+    );
+    ```
+  
+  * (4)
+  
+    ```sql
+    SELECT Product.model
+    FROM Product
+  WHERE model IN
+    (
+    	SELECT model
+    	FROM (((select price from pc)UNION(select price from Laptop))UNION(select price from Printer)) R
+    	WHERE price >= ALL
+    	(
+    		SELECT price
+    		FROM (((select price from pc)UNION(select price from Laptop))UNION(select price from Printer))
+    	)
+    );
+    
+    
+    SELECT Product.model
+    FROM Product
+    WHERE model IN
+    (
+    	SELECT model
+    	FROM (pc NATURAL FULL OUTER JOIN Laptop)NATURAL FULL OUTER JOIN Printer
+    	WHERE price >= ALL
+    	(
+    		SELECT price
+    		FROM (pc NATURAL FULL OUTER JOIN Laptop)NATURAL FULL OUTER JOIN Printer
+    	)
+    );
+    ```
+    
+  * （5）
+  
+    ```sql
+    SELECT maker
+    FROM product
+    WHERE model IN
+    (
+    	SELECT model
+    	FROM Printer
+    	WHERE price <= all
+    	(
+    		SELECT price
+    		FROM Printer
+    	)
+    );
+    
+    
+    SELECT maker
+    FROM product
+    WHERE model=ANY
+    (
+    	SELECT model
+    	FROM Printer p1
+    	WHERE NOT exists
+    	(
+    		SELECT *
+    		FROM Printer p2
+    		WHERE p2.price < p1.price
+    	)
+    )
+    ```
+  
+  * (6)
+  
+    ```sql
+    SELECT maker
+    FROM product
+    WHERE model IN
+    (
+    	SELECT model
+    	FROM PC
+    	WHERE ram <= ALL(SELECT ram FROM PC) AND speed >= ALL(SELECT speed FROM PC)
+    );
+    
+    
+    SELECT maker
+    FROM product
+    WHERE model =ANY
+    (
+    	SELECT model
+    	FROM PC p1
+    	WHERE NOT EXISTS (SELECT ram FROM PC p2 WHERE p2.ram < p1.ram ) AND NOT EXISTS (SELECT speed FROM PC p2 WHERE p2.speed > p1.speed)
+    );
+    ```
+  
+* 习题6.3.2
+
+  * (1)
+
+    ```sql
+    SELECT country
+    FROM Classes
+    WHERE numGuns >= ALL
+    (
+    	SELECT numGuns
+    	FROM Classes
+    );
+    
+    
+    SELECT country
+    FROM Classes c1
+    WHERE NOT EXISTS 
+    (
+    	SELECT *
+    	FROM Classes c2
+    	WHERE c2.numGuns > c1.numGuns
+    );
+    ```
+
+  * （2）
+
+    ```sql
+    SELECT DISTINCT CLASS
+    FROM Ships
+    WHERE NAME IN
+    (
+    	SELECT ship
+    	FROM Outcomes
+    	WHERE RESULT = sunk
+    );
+    
+    
+    SELECT DISTINCT CLASS
+    FROM Ships s1
+    WHERE NOT EXISTS
+    (
+    	SELECT *
+    	FROM Outcomes o1
+    	WHERE s1.ship = o1.name AND o1.result = 'ok'
+    );
+    ```
+
+  * (3)
+
+    ```sql
+    SELECT NAME 
+    FROM Ships
+    WHERE CLASS IN
+    (
+    	SELECT class
+    	FROM Classes
+    	WHERE bore = 16
+    );
+    
+    
+    SELECT NAME
+    FROM Ships s1
+    WHERE NOT EXISTS
+    (
+    	SELECT *
+    	FROM Classes c1
+    	WHERE s1.class = c1.class AND c1.bore <> 16
+    );
+    ```
+
+  * (4)
+
+    ```sql
+    SELECT DISTINCT battle
+    FROM Outcomes
+    WHERE ship IN
+    (
+    	SELECT name
+    	FROM Ships
+    	WHERE CLASS = 'Kongo'
+    );
+    
+    SELECT DISTINCT battle
+    FROM Outcomes o1
+    WHERE EXISTS
+    (
+    	SELECT *
+    	FROM Ships s1
+    	WHERE o1.ship = s1.name AND CLASS = 'Kongo'
+    );
+    ```
+
+  * (5)
+
+    ```sql
+    SELECT NAME
+    FROM Ships
+WHERE CLASS IN
+    (
+    	SELECT CLASS
+    	FROM Classes c1
+    	WHERE numGuns >= ALL
+    	(
+    		SELECT numGuns
+    		FROM Classes c2
+    		WHERE c1.bore = c2.bore
+    	);
+    );
+    
+    SELECT NAME
+    FROM Ships
+    WHERE CLASS = ANY
+    (
+    	SELECT class
+    	FROM Classes c1
+    	WHERE NOT exists
+    	(
+    		SELECT *
+    		FROM Classes c2
+    		WHERE c1.bore = c2.bore AND c1.numGuns < c2.numGuns
+    	)
+    );
+    ```
+    
+
+# homework1
+
+>  
+>
+>   **Homework**  
+>
+>   Consider the following schema:  
+>
+>   Supplier(sid: integer, sname: string, address: string)  
+>
+>   Part(pid: integer, pname: string, color: string)
+>
+>   Catalog(sid: integer, pid: integer, cost: real) 
+>
+>  The relation Supplier stores suppliers and the key of that relation is sid.
+>
+>  The relation Part  stores parts,  and pid is the key of that relation.
+>
+>  Finally, Catalog stores which  supplier  supplies which part at which cost.  The key is the combination of the two attributes sid  and pid.  
+>
+>   **Write queries in SQL.**  
+>
+> 1. Find the names of suppliers who supply  some red part.  
+> 2.  Find the IDs  of suppliers who supply some  red part and some green part. 
+> 3. Find pairs of IDs such that the supplier with the first ID charges more for some part  than the supplier  with the second ID.  
+>4. Find the IDs  of suppliers who supply  only red parts.  
+> 5.  Find the IDs  of suppliers who supply every part.  
+
+* 1
+
+  ```sql
+  SELECT distinct sname
+  FROM Supplier
+  WHERE sid IN
+  (
+  	SELECT sid
+  	FROM CATALOG 
+  	WHERE pid in
+  	(
+  		SELECT pid
+  		FROM Part
+  		WHERE color = 'red'
+  	)
+  );
+  
+  SELECT distinct sname
+  FROM Supplier
+  WHERE sid IN
+  (
+  	SELECT sid
+  	FROM CATALOG c1
+  	WHERE EXISTS 
+  	(
+  		SELECT *
+  		FROM Part p1
+  		WHERE p1.pid = c1.pid AND color = 'red'
+  	)
+  );
+  
+  SELECT distinct Supplier.sname
+  FROM Supplier s,CATALOG c,part p
+  WHERE s.sid = c.sid AND p.pid = c.pid AND p.color = 'red';	
+  
+  SELECT distinct sname
+  FROM ((Supplier NATURAL JOIN CATALOG)NATURAL JOIN Part)n
+  WHERE n.color = 'red';
+  ```
+
+* 2
+
+  ```sql
+  SELECT distinct sid
+  FROM Supplier
+  WHERE sid IN
+  (
+  	SELECT sid
+  	FROM Catalog
+  	WHERE pid IN (SELECT pid FROM Part WHERE color = 'red') AND pid IN (SELECT pid FROM Part WHERE color = 'green')
+  );
+  
+  (
+  		SELECT c.sid FROM CATALOG c,Part p WHERE c.pid = p.pid AND color = 'red'
+  )
+  INTERSECT
+  (
+  		SELECT c.sid FROM CATALOG c,Part p WHERE c.pid = p.pid AND color = 'green'
+  )
+  
+  
+  SELECT distinct n1.sid
+  FROM (Catalog NATURAL JOIN Part)n1 JOIN (Catalog NATURAL JOIN Part)n2 ON n1.sid = n2.sid
+  WHERE n1.color = 'red' AND n2.color = 'green';
+  ```
+
+* 3
+
+  ```sql
+  SELECT c1.sid,c2.sid
+  FROM CATALOG c1,CATALOG c2
+WHERE c1.pid = c2.pid AND c1.sid <> c2.sid AND c1.cost > c2.pid;
+  
+  SELECT c1.sid,c2.sid
+  FROM CATALOG c1 JOIN CATALOG c2 ON (c1.pid = c2.pid AND c1.sid <> c2.sid)
+  WHERE c1.cost > c2.cost;
+  ```
+  
+* 4
+
+  ```sql
+  SELECT sid
+  FROM (CATALOG NATURAL join Part)n3
+  WHERE NOT EXISTS
+  (
+  	(CATALOG NATURAL JOIN Part)n1 JOIN (CATALOG NATURAL JOIN Part)n2 ON (n3.sid = n1.sid AND n1.sid = n2.sid AND (n1.color <> 'red' OR n2.color <> 'red'))
+  );
+  
+  SELECT sid
+  FROM (CATALOG NATURAL JOIN Part)n1
+  WHERE NOT EXISTS
+  (
+  	SELECT *
+  	FROM (CATALOG NATURAL JOIN Part)n2
+  	WHERE n1.sid = n2.sid AND (n1.color <> 'red' OR n2.color <> 'red')
+  );
+  ```
+
+* 5
+
+  ```sql
+  SELECT sid
+  FROM Supplier s1
+WHERE NOT EXISTS 
+  (
+  	(
+  		SELECT pid
+  		FROM Part
+  	)
+  	except
+  	(
+  		SELECT pid
+  		FROM CATALOG c1
+  		WHERE c1.pid = s1.pid
+  	)
+  );
+  ```
+  
+  

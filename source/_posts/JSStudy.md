@@ -5,6 +5,8 @@ tags: JS
 categories: JS
 ---
 
+# [参考手册](https://www.w3school.com.cn/js/js_examples.asp)
+
 # 什么是JavaScript Script(脚本)
 
 * JavaScript是一种基于对象的解释型脚本语言

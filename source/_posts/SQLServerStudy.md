@@ -4,6 +4,7 @@ date: 2020-10-12 19:47:16
 tags:
 	-Transact SQL(sql在microsoft sql server上的加强版本)
 	-SQL
+categories: SQL
 ---
 
 # SQLServer中修改列表属性的语句

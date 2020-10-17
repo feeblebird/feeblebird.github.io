@@ -1,9 +1,11 @@
 ---
-title: phpStudy
+otitle: phpStudy
 date: 2020-09-22 08:36:55
 tags: php
 categories: php
 ---
+
+# [参考手册](https://www.w3school.com.cn/php/php_intro.asp)
 
 # php文件放入xampp中htdoc目录下
 
@@ -372,9 +374,13 @@ foreach($b as $key => $value){
 
 > 相同点：sort、ksort、asort都能对数组进行升序排序
 >
-> 不同点：sort排序会重新给键赋值，赋给数字下标而ksort、asort都会保留原来的键值
+> 不同点：sort排序在输出的时候会重新给键赋值为0~n-1，而原来的键值对没有变还能继续赋值等等，而ksort、asort在输出时都会输出原来的键值对。
 >
 > rsort是降序排序，与sort类似
+>
+> 都由第二个参数sortingtype指定排序类型，ksort默认把键值转换为int型来排序，asort默认把值转换为字符串类型来排序。
+>
+> 
 
 ```php+HTML
 <!DOCTYPE html>
@@ -438,3 +444,284 @@ foreach($b as $key => $value){
 ```
 
 > 图片放在本地的myimages目录下
+
+# 函数
+
+与其他语言类似。
+
+# 引用文件--require()和include()
+
+```php
+require 'prepend.php';
+require $somefile;
+require('.txt');
+```
+
+* 两个函数对于错误处理
+  * require会生成致命错误并停止脚本，用@屏蔽错误提示后，后面一片空白，上面的内容还能解释。
+  * include只会生成一个警告，后面的内容还会解释。
+
+```php+HTML
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type = "text/css">
+		#footer{
+			width : 100%;
+			height : 30px;
+			background : #25506b;
+			text-align : center;
+			font-size : 12px;
+			padding : 8px;
+		}
+	</style>
+</head>
+<body>
+    <h1>
+        这是一个示例
+    </h1>
+	<?php
+		include "shangke.php";
+	?>
+</body>
+</html>
+```
+
+* shangke.php文件
+
+```php+HTML
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id = "footer">
+		<p>Copyright &copy; 2005-2020 兰州大学 All Rights Reserved</p>
+	</div>
+</body>
+</html>
+```
+
+# 超全局变量
+
+* _SERVER数组
+
+  * 里面存放了很多服务器和用户信息
+
+  ```PHP+HTML
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<title></title>
+  </head>
+  <body>
+  	<?php
+  		$_SERVER["NAME"] = "兰州大学";//只会在当前进程中的所有数组插入该键值对，包括对引入文件中的该数据也起作用
+  		echo "<pre>";
+  		print_r($_SERVER);
+  		echo "</pre>";
+  		echo "您来自于".$_SERVER["REMOTE_ADDR"];
+      	include "shangke.php";
+  	?>
+  </body>
+  </html>
+  ```
+
+  * shangke.php中的内容
+
+  ```php+HTML
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<title></title>
+  </head>
+  <body>
+  	<?php
+  		echo "<pre>";
+  		print_r($_SERVER);
+  		echo "</pre>";
+  	?>
+  </body>
+  </html>
+  ```
+
+* _GET数组
+
+  * 通过URL里面的参数来传递数据
+
+  ```php+HTML
+  $_GET['id']和$_GET['name']访问GET数据
+  //注意中文乱码问题，使用urlencode编码
+  
+  //study.html文件
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<title></title>
+  </head>
+  <body>
+  	<a href = "study.php?id=3">information</a>
+  </body>
+  </html>
+  
+  //shangke.php文件
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<title></title>
+  </head>
+  <body>
+  	<?php
+  		include "study.html";
+  	?>
+  </body>
+  </html>
+  
+  //study.php文件
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<title></title>
+  	<style type = "text/css">
+  		#footer{
+  			width : 100%;
+  			height : 30px;
+  			background : #25506b;
+  			text-align : center;
+  			font-size : 12px;
+  			padding : 8px;
+  		}
+  	</style>
+  </head>
+  <body>
+  	<?php
+  		$_SERVER["NAME"] = "兰州大学";
+  		echo "<pre>";
+  		print_r($_SERVER);
+  		echo "</pre>";
+  		echo "您来自于".$_SERVER["REMOTE_ADDR"];	
+  		include "shangke.php";
+  				echo "<pre>";
+  		print_r($_GET);
+  		echo "</pre>";
+  	?>
+  </body>
+  </html>
+  ```
+
+  * 判断是否为空
+
+  ```php+HTML
+  if(empty($_GET))
+  {
+  	echo "no information";
+  }
+  //防止其他用于直接访问该网页，而url中没有参数而出现错误
+  ```
+
+  * get不适用表单传递，因为敏感信息会出现在地址栏中
+  * get适合于收藏夹情况，因为把具体的参数都保存了，不然每次都是去首页
+
+  ```php+HTML
+  //study.html
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<title></title>
+  </head>
+  <body>
+  	<a href = "study.php?id=3">information</a>
+  	<form action = "study.php" method = "get">
+  		用户: <input type = "text" name = "username"/>
+  		<br />
+  		密码: <input type = "password" name = "password"/>
+  		<br />
+  		<input type = "submit" name = "sub" />
+  	</form>
+  </body>
+  </html>
+  
+  //shangke.php
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<title></title>
+  </head>
+  <body>
+  	<?php
+  		include "study.html";
+  	?>
+  </body>
+  </html>
+  
+  //study.php
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<title></title>
+  	</style>
+  </head>
+  <body>
+  	<?php
+  		echo "<pre>";
+  		print_r($_GET);
+  		echo "</pre>";
+  	?>
+  </body>
+  </html>
+  ```
+
+* 表单传递用_POST数组，信息不会出现在地址栏中
+
+  ```php+HTML
+  //study.html
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<title></title>
+  </head>
+  <body>
+  	<a href = "study.php?id=3">information</a>
+  	<form action = "study.php" method = "post">
+  		用户: <input type = "text" name = "username"/>
+  		<br />
+  		密码: <input type = "password" name = "password"/>
+  		<br />
+  		<input type = "submit" name = "sub" />
+  	</form>
+  </body>
+  </html>
+  
+  //shangke.php
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<title></title>
+  </head>
+  <body>
+  	<?php
+  		include "study.html";
+  	?>
+  </body>
+  </html>
+  
+  //study.php
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<title></title>
+  	</style>
+  </head>
+  <body>
+  	<?php
+  		echo "<pre>";
+  		print_r($_POST);
+  		echo "</pre>";
+  	?>
+  </body>
+  </html>
+  ```
+
+  
