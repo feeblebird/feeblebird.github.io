@@ -429,3 +429,26 @@ border : 边框厚度 边框样式 边框颜色
 
 * 设置元素的定位方式
 * [here](https://www.w3school.com.cn/cssref/pr_class_position.asp)
+
+# css设置div居中
+
+```css
+<style type="text/css">
+		div{
+			margin :0 auto;//居中
+			text-align : center;//div中内容居中
+			border : 1px solid;//设置边框厚度及边框样式
+			width : 700px;//设置边框的宽度
+            height:200px;//设置边框的高度
+		}
+	</style>
+```
+
+# css控制该区域内输出样式和代码一致
+
+```css
+<div style="white-space:pre"; id = "main">
+	//即保留该区域内的空格，回车等等	
+</div>
+```
+

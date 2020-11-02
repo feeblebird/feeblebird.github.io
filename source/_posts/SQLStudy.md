@@ -388,7 +388,7 @@ AND l1.beer < l2.beer AND l2.beer < l3.beer;
 
 # Controlling Duplicate Elimination控制重复消除
 
-* #### 强制去重
+* #### 强+/制去重
 
   ```sql
   select distinct price
@@ -940,19 +940,25 @@ WHERE CLASS IN
 * 1
 
   ```sql
+  SELECT distinct s.sname
+  FROM Supplier s,Catalog c,part p
+  WHERE s.sid = c.sid AND p.pid = c.pid AND p.color = 'red';	
+  
+  
   SELECT distinct sname
   FROM Supplier
   WHERE sid IN
   (
   	SELECT sid
-  	FROM CATALOG 
-  	WHERE pid in
+  	FROM Catalog 
+  	WHERE pid IN
   	(
   		SELECT pid
   		FROM Part
   		WHERE color = 'red'
   	)
   );
+  
   
   SELECT distinct sname
   FROM Supplier
@@ -968,33 +974,26 @@ WHERE CLASS IN
   	)
   );
   
-  SELECT distinct Supplier.sname
-  FROM Supplier s,CATALOG c,part p
-  WHERE s.sid = c.sid AND p.pid = c.pid AND p.color = 'red';	
   
   SELECT distinct sname
-  FROM ((Supplier NATURAL JOIN CATALOG)NATURAL JOIN Part)n
+  FROM ((Supplier NATURAL JOIN Catalog)NATURAL JOIN Part)n
   WHERE n.color = 'red';
   ```
 
 * 2
 
   ```sql
-  SELECT distinct sid
-  FROM Supplier
-  WHERE sid IN
-  (
-  	SELECT sid
-  	FROM Catalog
-  	WHERE pid IN (SELECT pid FROM Part WHERE color = 'red') AND pid IN (SELECT pid FROM Part WHERE color = 'green')
-  );
+  SELECT sid
+  FROM Catalog
+  WHERE pid IN (SELECT pid FROM Part WHERE color = 'red') AND pid IN (SELECT pid FROM Part WHERE color = 'green')
+  
   
   (
-  		SELECT c.sid FROM CATALOG c,Part p WHERE c.pid = p.pid AND color = 'red'
+  		SELECT c.sid FROM Catalog c,Part p WHERE c.pid = p.pid AND color = 'red'
   )
   INTERSECT
   (
-  		SELECT c.sid FROM CATALOG c,Part p WHERE c.pid = p.pid AND color = 'green'
+  		SELECT c.sid FROM Catalog c,Part p WHERE c.pid = p.pid AND color = 'green'
   )
   
   
@@ -1007,31 +1006,32 @@ WHERE CLASS IN
 
   ```sql
   SELECT c1.sid,c2.sid
-  FROM CATALOG c1,CATALOG c2
+  FROM Catalog c1,Catalog c2
 WHERE c1.pid = c2.pid AND c1.sid <> c2.sid AND c1.cost > c2.pid;
   
+  
   SELECT c1.sid,c2.sid
-  FROM CATALOG c1 JOIN CATALOG c2 ON (c1.pid = c2.pid AND c1.sid <> c2.sid)
-  WHERE c1.cost > c2.cost;
+  FROM Catalog c1 JOIN Catalog c2 ON (c1.pid = c2.pid AND c1.sid <> c2.sid AND c1.cost > c2.cost);
   ```
   
 * 4
 
   ```sql
   SELECT sid
-  FROM (CATALOG NATURAL join Part)n3
-  WHERE NOT EXISTS
-  (
-  	(CATALOG NATURAL JOIN Part)n1 JOIN (CATALOG NATURAL JOIN Part)n2 ON (n3.sid = n1.sid AND n1.sid = n2.sid AND (n1.color <> 'red' OR n2.color <> 'red'))
-  );
-  
-  SELECT sid
-  FROM (CATALOG NATURAL JOIN Part)n1
+  FROM Catalog c1
   WHERE NOT EXISTS
   (
   	SELECT *
-  	FROM (CATALOG NATURAL JOIN Part)n2
-  	WHERE n1.sid = n2.sid AND (n1.color <> 'red' OR n2.color <> 'red')
+  	FROM Part p1
+  	WHERE p1.sid = c1.sid AND p1.color <> 'red'
+  );
+  
+  
+  SELECT sid
+  FROM Supplier s1
+  WHERE NOT EXISTS
+  (
+  	(Catalog NATURAL JOIN Part)n1 JOIN (Catalog NATURAL JOIN Part)n2 ON (s1.sid = n1.sid AND n1.sid = n2.sid AND (n1.color <> 'red' OR n2.color <> 'red'))
   );
   ```
 
@@ -1049,10 +1049,272 @@ WHERE NOT EXISTS
   	except
   	(
   		SELECT pid
-  		FROM CATALOG c1
+  		FROM Catalog c1
   		WHERE c1.pid = s1.pid
   	)
   );
   ```
+
+# SQL修改表中元组中元素
+
+```sql
+update tablename
+set attribute1=value1,attribute2=value2,....
+where 更新条件表达式;
+```
+
+# SQL删除表中元组
+
+```sql
+delete from tablename
+where 删除条件表达式;
+```
+# 聚合函数（将多个值聚合成一个值）
+
+```sql
+sum(attribute) avg(attribute) count(attribute) min(attribute) max(attribute)
+count()--不会数null
+count(*) --查找的是元组的数量
+```
+
+# 若使用聚合函数，select中 其他属性要么使用聚合函数，要么使用group by   
+
+* 错误代码
+
+```sql
+SELECT bar, MIN(price)
+FROM Sells
+WHERE beer = '喜力';
+--这个代码是错误的
+```
+
+* 正确代码
+
+```sql
+SELECT bar, price FROM Sells
+WHERE beer = '喜 力' 
+AND price = ( 
+	SELECT MIN(price) FROM Sells
+	WHERE beer = '喜力');
+
+```
+
+# GROUP BY分组
+
+* 对查询结果中的元组的性质有限制的话，在where语句中进行限制
+* 对group by分组的整体的性质有限制的话，在group by语句后面加上having限制
+
+* 分完组后select对每一组分别进行统计。
+
+> 一个关系中任何一个属性使用了聚合函数，则其他属性要么也使用聚合函数，要么使用Group by
+
+> 使用group by后，select的作用对象就成了**每个分组**
+
+#  having 只能对分组整体进行限制
+
+* 若出现having 则必须放在group by后面，对每个分组进行判断，将分组当成一个整体，不是一个一个元组判断。
+* 
+
+# 聚合函数不能出现在where语句中
+
+*  因为where中式 **一个一个元组 **带进去判断条件的，但是聚合函数用到了整个属性
+
+# 聚合函数和分组中的NULL值
+
+* NULL对平均值、求和、最大值、最小值、计数都不做贡献
+* 分组中对NULL值没有要求，可以出现NULL
+* 如果对空包(只有null)计数，则为零，其他聚合运算结果为null
+
+# 属性的默认值
+
+```sql
+create table tablename
+(
+	attribute1 type1 default defaultvalue
+);
+```
+
+# 表的更新
+
+* insert
+
+  ```sql
+  insert into likes(beer,drinker)
+  values();
+  ```
+
+  > 忘记表中attribute的顺序，可以指定插入值对应的属性
+
+  ```sql
+  insert into drinkers(name)
+  values();
+  ```
+
+  > 插入部分的值
+
+  ```sql
+  insert into tablename
+  (
+  	subquery
+  )
+  ```
+
+  > 插入多个元组
+
+* delete
+
+  ```sql
+  delete 
+  from tablename
+  where condition;
+  ```
+
+  ```sql
+  DELETE *
+  FROM Beers b
+  WHERE EXISTS (
+  			SELECT name FROM Beers
+  			WHERE manf = b.manf AND
+  			name <> b.name);
+  ```
+
+  > 删除时先给满足条件的元组进行标记，而不是边删边查
+
+* update
+
+  ```sql
+  update tablename
+  set attribute1 = value
+  where conditions;
+  ```
+
+# (views)视图和(indexes)索引
+
+* a view is a relation defined in terms of stored tables(called base tables) and other views
+
+> 视图依赖于其它的表或者其它的视图，所以 必须要有表
+
+* two kinds:
+
+  * virtual = not stored in the database;(默认情况)
+
+    just a query for constructing the relation
+
+    >  不会创建表，一个表中有敏感信息，要提供有选择性的服务，这时候就能提供视图，通过视图进行部分信息展示。
+    >
+    > 对多个表的复杂查询定义成一个视图，然后之后的复杂查询可直接对这个视图进行查询
+
+    ```sql
+    --virtual
+    create view <name> [attributes](可省略，否则用query中的属性)
+    as
+    	<query>;
+    	
+    --materialized
+    create materialized view <viewname>[attributes]
+    as 
+    	<query>;
+    ```
+
+    ```sql
+    create view CanDrink(drinker,beer)--没有指定属性，则用query中的drinker,beer属性
+    as
+    	select drinker,beer
+    	from frequents,sells
+    	where frequents.bar = sells.bar;
+    ```
+
+  * materialized(物化的) = actually constructed and stored
+
+* 对视图的查询
+
+  ```sql
+  select beer 
   
+  from CanDrink
   
+  where drinker = 'Tony Hoare';
+  
+  --相当于
+  select beer 
+  
+  from 
+  (
+  	select drinker,beer
+  	from frequents,sells
+  	where frequents.bar = sells.bar
+  ) CanDrink
+  
+  where drinker = ' ';
+  
+  --系统优化成
+  
+  select beer
+  
+  from frequents,sells
+  
+  where frequents.bar = sells.bar and drinker = ' ';
+  ```
+
+* 对视图的修改
+
+  > 类似于对视图的查询
+  >
+  > opengauss中禁止对视图的修改，因为视图的目的就是给客户进行信息的展示
+  >
+  > sqlserver中支持
+
+* 删除视图
+
+  ```sql
+  drop view viewname;
+  ```
+
+* 物化的视图
+
+  > 物化的视图查询快，但是
+  >
+  > 如果数据源的表改变了，视图应该保持一致(阶段性更新)
+  >
+  > 但是如果表变化的频率太快，则不太适合
+
+# 索引
+
+* 加速数据的访问
+
+  数据结构使用的是B-tree
+
+* 创建索引
+
+  ```sql
+  --一个索引对应很多值
+  create index indname on realtion(attribute);  
+  create index indname on realtion(attribute1,attribute2,...);
+  
+  --一个索引对应一个值
+  create unique index indname on relation(attribute);
+  ```
+
+* 索引使用
+
+  * 只有当数据量很大的时候，定义索引后才会使用
+
+    ```sql
+    create index beerind on beers(manf);  
+    create index sellind on sells(bar,beer);  
+    
+    select price
+    from beers,sells
+    where manf = 'pete''s'  --根据索引查找
+    and beers.name = sells.beer --根据索引查找
+    and bar = 'joe''s bar'; --根据索引查找
+    ```
+
+    > 运算符只能使用=
+
+* 我们定义了索引后
+
+  如果经常进行更新操作，索引会降低速率，因为更新后索引也要更新
+
+* 如果不进行查询，则建立索引会降低效率
+* 创建primary key或unique key后会自动创建索引

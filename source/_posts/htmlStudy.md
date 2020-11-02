@@ -219,6 +219,8 @@ categories: Web前端
   <input />
   ```
 
+  * > 注意reset按钮必须放在\<form\>\</form\>中才起作用
+
   * 属性值
 
     ![input空间属性值](https://i.loli.net/2020/09/13/MTJ7Ddug2AtrwLG.png)
@@ -276,6 +278,11 @@ categories: Web前端
 
   ```html
   <textarea></textarea>
+  隐藏调节大小的按钮
+  <textarea style = "resize:none"></textarea>
+  用css的内容
+  
+  文本域不填写内容是空字符串""，不是位null
   ```
 
 * #### 下拉菜单 双标签 可用datalist代替使用
@@ -306,9 +313,6 @@ categories: Web前端
 
   ![](https://i.loli.net/2020/09/13/EkCtWfVA64lUK39.png)
 
-# 手册参考网站
-
-[网址](https://www.w3school.com.cn)
 
 # html5常用新标签
 
@@ -435,7 +439,7 @@ categories: Web前端
   </form>
   ```
 
-* #### 必填项
+* #### 必填项(内容不为空)
 
   ```html
   <form action = "">

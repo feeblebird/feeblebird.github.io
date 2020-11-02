@@ -668,10 +668,22 @@ require('.txt');
   		echo "<pre>";
   		print_r($_GET);
   		echo "</pre>";
+      	echo ($_GET["username"]);
+      	//或者  "$_GET[username]"
   	?>
   </body>
   </html>
   ```
+
+  > 这里有个小问题，就是但就取get数组的值的时候，就是$_GET["username"]。
+  >
+  > 但是再后面的数据库插入$_POST数组的值的时候就是
+
+  ```php
+  $is = $conn->query("INSERT INTO `user`(`username`, `pwd`, `age`, `Gender`, `email`) VALUES ('$_POST[username]','$_POST[pawd]','$_POST[age]','$_POST[sex]','$_POST[email]')");
+  ```
+
+  
 
 * 表单传递用_POST数组，信息不会出现在地址栏中
 
@@ -724,4 +736,405 @@ require('.txt');
   </html>
   ```
 
+
+# post传递复选框的内容
+
+* 要给复选框的name取名位name[]，才能正确传递。
+
+# 从_POST数组中，输出复选框内容
+
+```sql
+echo "最不满意的食品 : ";
+foreach ($_POST["food2"] as $key => $value) {
+	echo "$value ";
+}
+echo "<br />";
+```
+
+# 判断表单中内容
+
+```sql
+<script type="text/javascript">
+		function check()
+		{
+			if(tellsome.value == "")
+			{
+				tellsome.value = "无建议";
+			}
+		}
+</script>
+```
+
+# _request数组(不建议初学者使用)
+
+* 既可以接受post数据，也可以接受get数据
+* 即可以在action加上参数，也可以接受表单提交的数据(method = "post")
+* 且容易被别人利用漏洞攻击，所以实际中根据实际情况使用get和post
+
+# web数据库工作原理
+
+* 用户web浏览器发出http请求
+* web服务器接受请求，读取文件并发送给php引擎处理(对接数据库的操作是在php中进行的)
+* php引擎解析脚本
+* mysql数据库接受并执行数据库指令、返回结果给php引擎
+* php执行脚本结束，格式化查询结果，发送html至web服务器
+* web服务器将html返回给浏览器
+
+# php的mysql数据库函数
+
+* 实现连接数据库、执行sql语句、返回查询结果
+* 即下面这些
+
+# php_mysql扩展库
+
+* mysql扩展库已经停用，因为不能满足最新要求
+* 先使用php_mysqli.dll,php_pdo_mysql等
+
+# mysqli(增强版扩展库)
+
+* 面向对象接口
+* 面向过程接口
+
+> 为了面向不同的使用习惯
+
+* 连接数据库
+
+  ```php+HTML
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<title></title>
+  </head>
+  <body>
+  	<?php
+  		$mysqli = new mysqli('localhost','my_user','my_password','my_db');
+  		$mysqli = new mysqli(数据库地址，用户名，密码，数据库名);
+  	?>
+  </body>
+  </html>
+  ```
   
+  ```php+HTML
+  <!DOCTYPE html>
+  <html>
+  <head >
+  	<title></title>
+  </head>
+  <body>
+  	<?php
+  		$host = "localhost";
+  		$username = "root";
+  		$password = "li33092728li";
+  		$database = "test";
+      	$port = "13140";//尤其是更换过默认端口的需要自己指定端口
+  		$conn = @new 
+          mysqli($host,$username,$password,$database,$port);
+      //@符号位忽略报错信息
+  		if($conn->connect_errno){
+  			die("数据库连接错误".$conn->connect_error);
+  		}else{
+  			echo "数据库连接成功";
+  		}
+  	?>
+  </body>
+  </html>
+  ```
+
+# 三码合一:数据库、页面、PHP代码
+
+* 存储的编码问题
+* 通信的编码问题（可能默认情况下不是utf-8编码）
+
+```php+HTML
+<!DOCTYPE html>
+<html>
+	<head >
+		<title></title>
+		<meta charset="utf-8" />
+	</head>
+	<body>
+        <?php
+        	header("Content-type: text/html;charset = utf-8");
+        	$host = "localhost";
+            $username = "root";
+            $password = "li33092728li";
+            $database = "test";
+            $port = "13140";//尤其是更换过默认端口的需要自己指定端口
+            $conn = @new 
+            mysqli($host,$username,$password,$database,$port);
+        //@符号位忽略报错信息
+            if($conn->connect_errno){
+                die("数据库连接错误".$conn->connect_error);
+            }else{
+                echo "数据库连接成功";
+            }
+        	$conn->query("set names utf8");//注意这里是utf8，不是utf-8
+        //而且这个编码的设置针对写库的操作的，所以要放在插入数据语句的前面
+        ?>
+	</body>
+</html>
+```
+
+# php向数据库插入数据
+
+```php+HTML
+<!DOCTYPE html>
+<html>
+<head >
+	<title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+	<?php
+		header("Content-type: text/html;charset = utf-8");
+		$host = "localhost";
+		$username = "root";
+		$password = "li33092728li";
+		$database = "test";
+		$port = "13140";
+		$conn = @new mysqli($host,$username,$password,$database,$port);
+		if($conn->connect_errno){
+			die("数据库连接错误".$conn->connect_error);
+		}else{
+		?>
+			<script type="text/javascript">
+				alert("数据库连接成功");
+			</script>
+		<?php
+		}
+		$conn->query("set names utf8");
+		$is = $conn->query("INSERT INTO `user`(`ID`, `username`, `pwd`, `age`, `Gender`, `email`) VALUES ('1','liwei','111',12,'男','20113@qq.com')");
+    	if($is)
+        {
+            ?>
+    			<script type="text/javascript">
+    				alert("插入数据成功");
+    			</script>
+    		<?php
+        }else
+        {
+        	?>
+    			<script type="text/javascript">
+    				alert("插入数据失败");
+    			</script>
+    		<?php
+        }
+	?>
+</body>
+</html>
+```
+
+> 数据表用反引号，字段名用反引号括起来
+
+# 向数据库中插入表单中收集的信息
+
+* 表单内容
+
+```php+HTML
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8" />
+	<style type="text/css">
+		div{
+			margin :0 auto;
+			text-align : center;
+			border : 1px solid;
+			width : 700px;
+		}
+	</style>
+	<script type = "text/javascript">
+		function judge()
+		{
+			var v1 = document.getElementById("2");
+			var v2 = document.getElementById("3");
+			if(v1.value != v2.value)
+			{
+				window.alert("两次密码不一致");
+			}
+		}
+		function rese()
+		{
+			alert("输入的数据将被清空，你确定吗？")
+		}
+	</script>
+</head>
+<body>
+	<div style="white-space:pre"; id = "main">
+		<h2>用户注册</h2>
+		<form action = "study.php" method = "post">
+		用  户  名：	<input type = "text" name = "username" required="required" placeholder="请输入用户名" />
+		<br/>
+		密       码：	<input type = "password" id = "2" name = "pawd" required="required"/>
+		<br/>
+		确认密码：	<input type = "password" id = "3" name = "pawd" required="required"/>
+		<br/>
+		性       别：	<select name = "sex">
+			<option>男</option>
+			<option>女</option>
+		</select>
+		<br />
+		年       龄：       <input type = "number" name = "age" />
+		
+		<bt />
+		邮       件：       <input type = "email" name = "email" required="required"/>
+
+		<input type = "submit"  onclick = "judge()" value = "注册"/>                                        <input type = "reset"  onclick = "rese()" />
+		</form>
+	</div>
+</body>
+</html>
+```
+
+* 连接数据库进行插入操作
+
+```php+HTML
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+	<style type="text/css">
+		div{
+			margin :0 auto;
+			text-align : center;
+			border : 1px solid;
+			width : 700px;
+		}
+	</style>
+</head>
+<body>
+	<?php
+	header("Content-type: text/html;charset = utf-8");
+		if(empty($_POST))
+		{
+			echo "NoInformation";
+		}else
+		{
+			header("Content-type: text/html;charset = utf-8");
+			$host = "localhost";
+			$username = "root";
+			$password = "li33092728li";
+			$database = "test";
+			$port = "13140";
+			$conn = @new mysqli($host,$username,$password,$database,$port);
+			}
+			if($conn->connect_errno){
+	?>
+				<script type="text/javascript">
+					alert("数据库连接错误");
+				</script>
+	<?php
+			die($conn->connect_error);
+			}
+			$conn->query("set names utf8");
+			$is = $conn->query("INSERT INTO `user`(`username`, `pwd`, `age`, `Gender`, `email`) VALUES ('$_POST[username]','$_POST[pawd]','$_POST[age]','$_POST[sex]','$_POST[email]')");
+	?>
+	<div>
+	<?php
+			if($is)
+			{
+				echo("<h2>注册成功!</h2><br/>注册的数据如下：<br /><br />");
+
+				echo("username:".$_POST["username"]."<br /><br />");
+
+				echo("age:".$_POST["age"]."<br /><br />");
+
+				echo("sex:".$_POST["sex"]."<br /><br />");
+
+				echo("email:".$_POST["email"]."<br /><br />");
+
+				$id = $conn->query("select last_insert_id()");
+
+				$row = $id->fetch_row();
+				echo("您的ID号为：".$row[0]."<br /><br />请记住此ID号，以便下次登录");
+			}else
+			{
+				echo("<br/>注册失败");
+			}
+	?>
+	</div>
+</body>
+</html>
+```
+
+
+
+# php获得数据源中的数据条数，返回int型
+
+```php+HTML
+mysqli_num_rows(数据资源);//面向过程写法
+mysqli->num_rows()//面向对象写法
+```
+
+# php关闭数据库
+
+```php+html
+mysql_close(数据资源);
+```
+
+# php删除数据库内容
+
+* 再query()语句中执行delete语句即可
+
+# php查询数据库内容
+
+```php+html
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<?php
+		$mysqli = new mysqli('localhost','my_user','my_password','my_db');
+		$mysqli = new mysqli(数据库地址，用户名，密码，数据库名);
+    	$sql = "select * from `user`";
+    	$result = $conn->query($sql);
+    	$row = $result -> fetch_row();
+    	var_dump($row);
+    	echo "id:".$row[0];
+    	while($row = $result->fetch_row()){
+            echo "id:".row[0]; //显示所有行
+        }
+	?>
+</body>
+</html>
+```
+
+# php返回刚刚自增创建的id
+
+* 三种方法
+
+* 用以下语句
+
+  ```php+HTML
+  $id = $conn->query("select max(id) from user");
+  ```
+
+  > 但是这种方法不适合多线程
+
+* 用以下函数
+
+  ```php+HTML
+  $id = mysql_insert_id();
+  ```
+
+  > 当系统执行完INSERT后，再执行SELECT时，可能已经被分发到了不同的后端服务器，如果你使用的编程语言是PHP的话，此时应该通过 mysql_insert_id()来得到最新插入的id，每次INSERT结束后，其实对应的autoincrement值就已经计算好返回给PHP 了，你无需再发出一次独立的查询，直接用mysql_insert_id()就可以了这个函数很好用 当我们插入一条语句时 它自动返回了 最后的id值并且此函数 仅对当前链接有用 也就是说 它是多用户安全型的所以我们经常用此函数；
+  >
+  > 但此函数有一个问题 就是 当id 为bigint 型时 就不在起作用了 所以 现在 正在用此函数的请小心了不过 我们平时很少遇到这样的问题，所以可以不用管它。
+  >
+  > 但是我的用不了，字符集有问题
+
+* 用以下查询
+
+  ```php+HTML
+  $result = $conn->query("select last_insert_id()");
+  $id = $result->fetch_row();
+  echo($id[0]);
+  ```
+
+  > 这个查询等同于第二种方法，而且解决了bigint的问题
+  >
+  > 这个我这里可以使用，没有字符集的问题
