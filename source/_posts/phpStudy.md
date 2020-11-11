@@ -43,17 +43,21 @@ categories: php
 ?>
 ```
 
-> print使用方法与echo相同，不同的地方是print有返回值，返回值始终为1。
->
-> 所以使用过程中echo比print稍快，因为没有返回值
+* print和echo的区别
 
-> print_r输出数组
->
-> var_dump输出数据类型和变量的值
+  print使用方法与echo相同，不同的地方是print有返回值，返回值始终为1。
 
-> echo 和 print 打印不出boolean的"true"和"false"
->
-> true会打印出1,false会被认为是空
+  所以使用过程中echo比print稍快，因为没有返回值
+
+* print_r和var_dump的区别
+
+  print_r输出数组
+
+  var_dump输出数据类型和变量的值
+
+ * echo 和 print 打印不出boolean的"true"和"false"
+
+    true会打印出1,false会被认为是空
 
 # 大小写问题
 
@@ -86,7 +90,7 @@ categories: php
 
 * #### 单引号括起来就是字符串
 
-  * 含有单引号的话，就知识被认为是字符串
+  * 含有单引号的话，就只是被认为是字符串
 
 * #### 双引号括起来
 
@@ -332,7 +336,7 @@ categories: php
 # 二维数组
 
 ```php
-$a = array(
+$b = array(
 	"地支" => array("子","丑","鄚"),
     "天干" => array()
 );
@@ -350,6 +354,149 @@ foreach($b as $key => $value){
 			echo "<br />";
 }
 ```
+
+## 输出二维数组元素中的问题
+
+```php+HTML
+$a = "地支";
+$c = 0;
+echo "$b[$a][$c]";//不能得到我们想要的结果
+```
+
+> 这里的解决方法就和下面这个数组下标问题一样
+
+```php+HTML
+$a = '地支'; //这里**为单引号**
+$c = 0;
+echo "{$b[$a][$c]}";
+echo $b[$a][$c];
+
+$a = 地支;
+$c = 0;
+echo "{$b[$a][$c]}";//地支被解析为常量，若没有定义这个常量则会报错
+echo $b[$a][$c];//地支被当作常量来处理，若没有定义这个常量则当作字符串处理
+```
+
+> 注意二维数组不能直接通过`echo "$b[name][name2]"; ` 输出的。
+>
+> 会报错，而一维数组可以
+
+# 数组下标问题
+
+* 数组的下标是不加引号、还是使用单引号、还是使用双引号
+
+  * 不加引号：如果是数字下标就可，如果是字符串下标则还需要类型转换，影响效率
+  * 加单引号：就是字符串
+  * 加双引号：还要判断有无变量以及特殊字符转义，比单引号效率低一些
+
+  ## 在双引号中有数组元素的访问时
+
+  * [参考](https://blog.csdn.net/u012143455/article/details/50516965)
+
+  * 当在双引号中有数组元素的访问的时候，如下的写法是 **错误** 的
+
+    ```php+HTML
+    echo "$_GET['name']";
+    echo "$myarr['one']";
+    ```
+
+  * **正确做法** 如下，有三种：
+
+    * 第一种：索引字符串不加引号
+
+      ```php+HTML
+      echo "$_GET[name]";
+      ```
+
+    * 第二种：索引字符串不加引号，且数组元素用花括号括起来
+
+      ```php+HTML
+      define ('name','age');
+      echo "{$_GET[name]}";
+      ```
+
+      > 此时用花括号括起来的数组元素中的name就会被当作字符常量来处理，所以实际输出的相当于echo "$_GET[age]";
+      >
+      > 如果没有定义该常量，则会 **报错** 
+
+    * 第三种：索引字符串加单引号，且数组元素用花括号括起来
+
+      ```php+HTML
+      echo "{$_GET('name')}";
+      ```
+
+      > 效果和第一种方法相同
+
+  ## 数组元素下标是否加单引号(未使用双引号)
+
+  * 加单引号
+
+    ```php+HTML
+    echo $_GET['name']; ==>echo $_GET["name"];
+    ```
+
+    > 即输出该输出的内容，name当作字符串处理
+
+  * 未加单引号
+
+    ```php+HTML
+    echo $_GET[name];
+    ```
+
+    > 此时name被当作常量处理，如果没有定义常量name则当作字符串处理。即name不是常量时就和echo $_GET['name']效果相同。
+
+  ## 数组元素下标是否加单引号和花括号(使用双引号)
+
+  * 不加单引号，不加花括号
+
+    ```php+HTML
+    echo "$_GET[name]";
+    ```
+
+    > name被当作字符串处理，即输出我们想要的内容
+
+  * 加花括号，不加单引号
+
+    ```php+HTML
+    echo "{$_GET[name]}";
+    ```
+
+    > name被当作字符常量处理，如果没有定义该常量，则会 **报错** 。
+
+  * 加花括号，加单引号
+
+    ```php+HTML
+    echo "{$_GET['name']}";
+    ```
+
+    > name被当作字符串处理
+  
+  ## 数组下标被当作常量的情况
+  
+  * ```php+HTML
+    echo "{$myarr[name]}";
+    ```
+  
+    > 若常量不存在则会报错
+  
+  * ```php+HTML
+    echo $myarr[name];
+    ```
+  
+    > 若常量不存在则会将name解析成字符串
+  
+  ## 双引号中使用单引号
+  
+  ```php+HTML
+  echo "'$myarr[name]'";
+  相当于echo "'"."$myarr[name]"."'";
+  ```
+  
+  > 但是
+  
+  ```php+HTML
+  二维数组中就不能这样用
+  ```
 
 # 数组排序函数
 
@@ -410,6 +557,8 @@ foreach($b as $key => $value){
 
 # php实现随机显示7张图片中的三张图
 
+* shuffle();函数，将数组 **随机排序** 
+
 ```php+HTML
 <!DOCTYPE html>
 <html>
@@ -457,7 +606,7 @@ require $somefile;
 require('.txt');
 ```
 
-* 两个函数对于错误处理
+* 两个函数对于错误处理( **主要区别** )
   * require会生成致命错误并停止脚本，用@屏蔽错误提示后，后面一片空白，上面的内容还能解释。
   * include只会生成一个警告，后面的内容还会解释。
 
@@ -550,6 +699,8 @@ require('.txt');
 * _GET数组
 
   * 通过URL里面的参数来传递数据
+
+  * > **通过表单传递的参数是放在url(放在报文头)中，会覆盖原来url中的参数**
 
   ```php+HTML
   $_GET['id']和$_GET['name']访问GET数据
@@ -670,8 +821,10 @@ require('.txt');
   		echo "</pre>";
       	echo ($_GET["username"]);
       	//或者  "$_GET[username]"
+     		//或者  $_GET[username] $_GET["username"]
+      	//或者  "{$_GET['username']}" 
   	?>
-  </body>
+  </body>	
   </html>
   ```
 
@@ -683,10 +836,14 @@ require('.txt');
   $is = $conn->query("INSERT INTO `user`(`username`, `pwd`, `age`, `Gender`, `email`) VALUES ('$_POST[username]','$_POST[pawd]','$_POST[age]','$_POST[sex]','$_POST[email]')");
   ```
 
-  
+  > php双引号中的单引号会被当作单纯的单引号，所以会吧变量转化为对应的值，此时转化完之后这些值都被单引号括起来，成为了sql中的字符串。
 
 * 表单传递用_POST数组，信息不会出现在地址栏中
 
+  > 表单的信息不会出现在地址栏(放在报文体中)中，所以不会覆盖url中原来的参数
+  >
+  > 所以可以在method=post中在url中加参数，统一也就get数组中传递了参数
+  
   ```php+HTML
   //study.html
   <!DOCTYPE html>
@@ -736,6 +893,11 @@ require('.txt');
   </html>
   ```
 
+# get方法传递参数，post方法传递参数，get和post方法一起传递参数
+
+* get方法传递的表单的参数会放在url中(放在报文头中)，且表单的参数会覆盖原来的参数
+* post方法传递的表单的参数不再url中(在报文体中)，且原来url中的参数不会被覆盖
+* 所以可以在post方法中在url中加上参数，也通过get数组传递了参数。
 
 # post传递复选框的内容
 
@@ -763,6 +925,7 @@ echo "<br />";
 			}
 		}
 </script>
+推荐使用document.getElementById();
 ```
 
 # _request数组(不建议初学者使用)
@@ -850,11 +1013,12 @@ echo "<br />";
 <html>
 	<head >
 		<title></title>
-		<meta charset="utf-8" />
+		<meta charset="utf-8" /> --客户端的编码方式
 	</head>
 	<body>
         <?php
         	header("Content-type: text/html;charset = utf-8");
+        	//设置页面内容为html，变法方式为utf-8
         	$host = "localhost";
             $username = "root";
             $password = "li33092728li";
@@ -870,6 +1034,10 @@ echo "<br />";
             }
         	$conn->query("set names utf8");//注意这里是utf8，不是utf-8
         //而且这个编码的设置针对写库的操作的，所以要放在插入数据语句的前面
+       	//相当于
+        //set character_set_client = 'utf8'
+        //set character_set_connection = 'utf8'
+        //set character_set_results = 'utf8'
         ?>
 	</body>
 </html>
@@ -1080,6 +1248,12 @@ mysql_close(数据资源);
 
 # php查询数据库内容
 
+* 返回值为资源类型的结果集
+* 处理有效资源类型数据，返回数组类型
+  * fetch_row() //获取结果集中的一行记录，返回索引数组(下标为1,2,3,4..)，取到一行后下标增一,即可以用一个循环输出所有行
+  * fetch_array()//返回索引和关联数组，即返回下标(0,1,2,...)也返回数据库字段为下标
+  * fetch_assoc()//直接返回以数据库字段为下标的数组
+
 ```php+html
 <!DOCTYPE html>
 <html>
@@ -1138,3 +1312,346 @@ mysql_close(数据资源);
   > 这个查询等同于第二种方法，而且解决了bigint的问题
   >
   > 这个我这里可以使用，没有字符集的问题
+
+# sql语句中value中变量应该加' '
+
+* 双引号中使用单引号
+
+# header(locatoin:xxx.php)
+
+* 执行跳转
+
+# 实例:实现评论功能，可以修改，删除。
+
+# die语句
+
+* 停止后面的语句运行并输出语句
+
+# fetch_row() fetch_assoc()
+
+* `$result = $conn->query($sql)` 返回值为一个资源型结果集
+
+* `$row = $result->fetch_row()` 将结果集中的下标对应的行取出来给$row
+
+  没取出一个下标加一，所以可以用一个循环取出结果集中的所有行
+
+* `$row = $result->fetch_assoc()`  一样的只是取出来的下标不同，区别如下：
+
+  * fetch_row() //获取结果集中的一行记录，返回索引数组(下标为0,1,2,3,4..)，取到一行后下标增一,即可以用一个循环输出所有行
+  * fetch_array()//返回索引和关联数组，即返回下标(0,1,2,...)也返回数据库字段为下标
+  * fetch_assoc()//直接返回以数据库字段为下标的数组
+
+# 分页技术
+
+* 首页   上一页   下一页   尾页
+
+* 首页:show.php?page=1
+
+* 上一页:show.php?page =n-1(当前页为n)
+
+* 下一页:show.php?page=n+1
+
+* 尾页:show.php?page= 总页数
+
+* 总页数=ceil(总记录条数/每页显示记录)
+
+* ceil()函数：小数点舍掉并加一
+
+* 从指定位置开始查询指定条数的记录
+
+  ```sql
+  select * from message limit sart,rows
+  --start:起始位置(默认值为0)
+  --rows:每次取几条记录
+  第一页:select * from message limit 0,3
+  第二页:select * from message limit 3,3
+  第三页:select * from message limit 6,3
+  ...
+  第n页:select * from message limit 3*(n-1),3
+  
+  每页显示条数:$pagesize
+  总页数:$totalPage = ceil(总记录条数/$pagesize)
+  当前页码:$page
+  select * from message limit ($page-1)*$pagesize,$pagesize
+  ```
+
+# 一个php文件中的多个php代码块
+
+* 相当于一个代码块，然后代码进行合并
+
+# php实现评论功能
+
+* conn.php
+
+  ```php+HTML
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<title></title>
+  </head>
+  <body>
+  	<?php
+  		header("Content-type: text/html;charset = utf-8");
+  		$ip = 'localhost';
+  		$user = 'root';
+  		$password = 'li33092728li';
+  		$database = 'test';
+  		$port = '13140';
+  		$conn = @new mysqli($ip,$user,$password,$database,$port);
+  		if($conn->connect_errno)
+  		{
+  			die("数据库连接错误".$conn->connect_error);
+  		}
+  		$conn->query("set names utf8");	 
+  	?>
+  </body>
+  </html>
+  ```
+
+* show.php
+
+  ```php+HTML
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<meta charset = "utf-8" />
+  	<title></title>
+  	<style type="text/css">
+  		a{
+  				text-decoration: none;
+  		}
+  		.mya{
+  				text-decoration:underline;
+  		}
+  		textarea{
+  			resize:none;
+  			border:0;
+  			border-radius:18px;
+  			background-color:rgba(241,241,241,.98);
+  			width: 355px;
+  			height: 100px;
+  			padding: 10px;
+  		}
+  	</style>
+  	<script type="text/javascript">
+  		function judge()
+  		{
+  			var name = document.getElementById("name2");
+  			var title = document.getElementById("title2");
+  			if(name.value == "")
+  			{
+  				name.value = "匿名用户";
+  			}
+  			if(title.value == "")
+  			{
+  				title.value = "无标题";
+  			}
+  		}
+  		function do_del(id)
+  		{
+  			if(window.confirm('确定要删除吗'))
+  			{
+  				window.location.href = "delete.php?id="+id;
+  			}
+  		}
+  	</script>
+  </head>
+  </head>
+  <body>
+  	<form style = "white-space:pre" action = "show.php" method = "post">
+  		昵称:<input type = "text" placeholder = "请输入你的昵称" name = "name1" id = "name2" />
+  
+  		标题:<input type = "text" placeholder = "请输入标题" name = "title1" id = "title2" />
+  
+  		<textarea name = "content" placeholder = "留下些什么，证明你来过" required="required" ></textarea>
+  
+  		<input type = "submit" name = "sub" onclick="judge()" />
+  	</form>
+  	<?php
+  		header("Content-type: text/html;charset = utf-8");
+  		if(!empty($_POST))
+  		{
+  			require "conn.php";
+  			$sql = "INSERT INTO `message`(`ID`,`Title`, `Author`, `Content`, `IP`, `Ptime`) VALUES (null,'$_POST[title1]','$_POST[name1]','$_POST[content]','$_SERVER[REMOTE_ADDR]',now())";
+  			$is = $conn->query($sql);
+  			if(!$is)
+  			{
+  				echo "插入失败";
+  			}
+  			header("location:show.php");
+  		}
+  	?>
+  	<form method="get" action="">
+  		<input type="text" name="key" /><input type="submit" name="sub" />
+  	</form>
+  	<?php
+  		header("Content-type:text/html;charset=utf-8");
+  		require "conn.php";
+  		if(!empty($_GET['key']))
+  		{
+  			$key = $_GET['key'];
+  			$k = "`Title` like '%$key%'";
+  		}else
+  		{
+  			$k = "1";
+  			$key = "";//不加这句如果url参数中没有key则没有这个变量，会出错
+  		}
+  		$pagesize = 3;
+  		$sql = "select * from message where $k";
+  		$result = $conn->query($sql);
+  		$rows = $result->num_rows;//取出记录的总条数
+  		//num_rows是结果集的属性，所以不加括号
+  		$totalpage = ceil($rows/$pagesize);
+  		if(!empty($_GET['page']))
+  		{
+  			$page = $_GET['page'];
+  		}else
+  		{
+  			$page = 1;
+  		}
+  		$start=($page-1)*$pagesize;
+  		$sql = "select * from `message` where $k order by `Ptime` DESC limit $start,$pagesize";
+  		$result = $conn->query($sql);
+  		while($row = $result->fetch_assoc())
+  		{
+  	?>
+  			<hr />
+  			<h3>标题：<?php echo $row['Title']; ?></h3>
+  			<p>昵称：<?php echo $row['Author']; ?> | from: <?php echo $row['IP']; ?></p>
+  			<p>留言内容(<?php echo $row['Ptime']; ?>)：<br />
+  			<?php echo $row['Content']; ?></p>
+  			<p>
+  			<a href = edit.php?id=<?php echo $row['ID']; ?>>编辑</a> | <a href = "javascript:do_del(<?php echo $row['ID']; ?>)">删除</a>
+  			</p>
+  	<?php
+  		}
+  	?>
+  	<p>
+  	<?php
+  		if($page>1)
+  		{
+  			echo '<a href = "show.php?page=1&key='.$key.'">首页</a> ';
+  			echo '<a href = "show.php?page='.($page-1).'&key='.$key.'">上一页</a>';
+  		}
+  		for($i = 1;$i <= $totalpage;$i ++)
+  		{
+  			if($page!=$i)
+  			{
+  				echo '<a class="mya" href="show.php?page='.$i.'&key='.$key.'" >'.$i."</a>|";
+  			}else
+  			{
+  				echo "$i|";		
+  			}
+  		}
+  		if($page<$totalpage)
+  		{
+  			echo '<a href = "show.php?page='.($page+1).'&key='.$key.'">下一页</a> ';
+  			echo '<a href = "show.php?page='.$totalpage.'&key='.$key.'">尾页</a>';
+  		}
+  	?>
+  	</p>
+  </body>
+  </html>
+  ```
+
+* edit.php
+
+  ```php+HTML
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<meta charset = "utf8" />
+  	<title></title>
+  	<script type="text/javascript">
+  		function judge()
+  		{
+  			var name = document.getElementById("name2");
+  			var title = document.getElementById("title2");
+  			if(name.value == "")
+  			{
+  				name.value = "匿名用户";
+  			}
+  			if(title.value == "")
+  			{
+  				title.value = "无标题";
+  			}
+  		}
+  	</script>
+  	<style type="text/css">
+  		textarea{
+  			resize:none;
+  			border:0;
+  			border-radius:18px;
+  			background-color:rgba(241,241,241,.98);
+  			width: 355px;
+  			height: 100px;
+  			padding: 10px;
+  		}
+  	</style>
+  </head>
+  <body>
+  	<?php 
+  		if(!empty($_GET))
+  		{
+  			require "conn.php";
+  			$id = $_GET['id'];
+  			$sql = "select * from `message` where `ID` = $id";
+  			$result = $conn->query($sql);
+  			$row = $result->fetch_assoc();
+  			$title = $row['Title'];
+  			$name = $row['Author'];
+  			$content = $row['Content'];
+  		}
+  	?>
+  	<form style = "white-space:pre" action = "edit.php" method = "post">
+  		昵称:<input type = "text" placeholder = "请输入你的昵称" name = "name1" id = "name2" value = <?php echo '"'.$name.'"'; ?> />
+  
+  		标题:<input type = "text" placeholder = "请输入标题" name = "title1" id = "title2" value = <?php echo '"'.$title.'"'; ?> />
+  
+  		<textarea name = "content" placeholder = "留下些什么，证明你来过" required="required" ><?php echo $content; ?> </textarea>
+  
+  		<input type = "hidden" name = "id" value = <?php echo $id; ?> />
+  
+  		<input type = "submit" name = "sub" onclick="judge()" />
+  	</form>
+  	<?php
+  		header("Content-type: text/html;charset = utf-8");
+  		if(!empty($_POST))
+  		{
+  			require "conn.php";
+  			$sql = "UPDATE `message` SET `Title`='$_POST[title1]',`Author`='$_POST[name1]',`Content`='$_POST[content]',`Ptime`=now() WHERE `ID` = $_POST[id]";
+  			$conn->query($sql);
+  			header("location:show.php");
+  		}
+  	?>
+  </body>
+  </html>
+  ```
+
+* delete.php
+
+  ```php+HTML
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<title></title>
+  	
+  </head>
+  <body>
+  	<?php 
+  		if(!empty($_GET))
+  		{
+  			require "conn.php";
+  			$id = $_GET['id'];
+  			$sql = "delete from `message` where `ID` = $id";
+  			$is = $conn->query($sql);
+  		}
+  		header("location:show.php");
+  	?>
+  </body>
+  </html>
+  ```
+
+
+# 
+

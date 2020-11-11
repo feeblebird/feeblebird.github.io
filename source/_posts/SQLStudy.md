@@ -1206,7 +1206,7 @@ create table tablename
 
     ```sql
     --virtual
-    create view <name> [attributes](可省略，否则用query中的属性)
+    create view <name> [attributes](为select选择的内容重命名，可省略，否则用query中的属性名)
     as
     	<query>;
     	
@@ -1264,6 +1264,12 @@ create table tablename
   >
   > sqlserver中支持
 
+  * 重命名视图
+
+    ```sql
+    rename view viewname1 to viewname2;--sql中
+    ```
+
 * 删除视图
 
   ```sql
@@ -1317,4 +1323,189 @@ create table tablename
   如果经常进行更新操作，索引会降低速率，因为更新后索引也要更新
 
 * 如果不进行查询，则建立索引会降低效率
-* 创建primary key或unique key后会自动创建索引
+
+* 创建primary key或unique key后会自动创建索引，故我们要自己创建索引时要先把主键或者unique key删除掉
+
+# 实体关系模型(Entity-Relation Model)
+
+* 包含约束，不包含操作
+
+* 
+
+# 实体集Entity
+
+* 类似于面向对象中的类
+* 包含简单的属性(属性不能是集合)
+
+# 联系relationship(二元)
+
+![image-20201103164015576.png](https://i.loli.net/2020/11/11/IOCKgjGbWM3ZLsD.png)
+
+# 联系集(relationship set)
+
+* 两个有联系的实体集的集合
+
+# 多元联系(多路联系)(Multiway relationshiops)
+
+![image-20201103164640201.png](https://i.loli.net/2020/11/11/KfivRtzYW1MCcAS.png)
+
+# 多对多联系(many-many relationships)
+
+* 联系关联的任一实体集中的一个实体对应其它实体集中的多个实体
+
+# 多对一联系(many-one relationships)
+
+* 一个实体集中的多个实体对应另一个实体集中的一个实体
+
+# 一对一联系(one-one relationships)
+
+* 一对一
+
+# 联系的多样性(mltiplicity)
+
+* 再E/R图中表示联系的多样性
+
+* 多对多
+
+  ![image-20201103165501064.png](https://i.loli.net/2020/11/11/tEYbOUDJGv78Zfi.png)
+
+  或者在横线上加m,n
+
+* 多对一
+
+  ![image-20201103165522220.png](https://i.loli.net/2020/11/11/YV5isDBduEX4fKG.png)
+
+  或者在横线上加m,1
+
+  > 如果是尖尖的箭头，则每个人之多有一个最喜欢的啤酒，可以没有
+  >
+  > 可以为空
+  >
+  > 如果是圆的箭头，则每个人必须有一个最喜欢的啤酒
+  >
+  > not null
+
+* 一对一
+
+  ![image-20201103170031650.png](https://i.loli.net/2020/11/11/DHBsgyJhz5Zxe4C.png)
+
+  > 该联系中，每个厂商必须有销售最好的啤酒，而啤酒不一定能对应上厂商
+  >
+  > 所以指向Beer的箭头是圆圆的箭头，表示每个厂商必须要有，而指向厂商的箭头是尖尖的箭头
+
+
+# 联系上可能有属性(attribute on relationship)
+
+![image-20201103170329104.png](https://i.loli.net/2020/11/11/uC84gqTfRi6K9ZA.png)
+
+* 可以将联系的属性做成一个实体集
+
+  ![image-20201103170437300.png](https://i.loli.net/2020/11/11/QzdowAFmRgPTNSq.png)
+
+> 上图是多对多对一的联系，应该指出哪个是联系对应属性的实体
+>
+> 推荐使用上面不变成实体集的
+
+# roles(tabels of one way relationships)
+
+![image-20201103170734067](C:\Users\liwei\AppData\Roaming\Typora\typora-user-images\image-20201103170734067.png)
+
+* 一元联系的标签
+
+![image-20201103171437911.png](https://i.loli.net/2020/11/11/3A9jGDOPMB16zaU.png)
+
+> 对称的联系
+
+# 子类(sub classes)
+
+![image-20201103171521797.png](https://i.loli.net/2020/11/11/u4ObFKoJaZRYLS6.png)
+
+* 一个对象可以属于好几个类
+
+  ![image-20201103173139102.png](https://i.loli.net/2020/11/11/NbkOSD5hr1U4p3u.png)
+
+# E/R图中的主键(keys)
+
+* 在属性下面加下划线
+
+  ![image-20201103173257755.png](https://i.loli.net/2020/11/11/lYkWxSViDm8AsqB.png)
+
+  > 所有子类继承父类的属性包括约束
+
+* multi-attributes key
+
+  ![image-20201103173349216.png](https://i.loli.net/2020/11/11/sxM7YDIqnuAlciw.png)
+
+  
+# 度的约束(degree constaint)
+
+* 一个酒吧最多销售10种啤酒
+
+  ![image-20201103173528095.png](https://i.loli.net/2020/11/11/WeNzrZdjCu79xfp.png)
+
+# 弱实体集(weak entity set)
+
+* 要唯一识别E中的实体，要借助从E出发的联系的相关联的实体集的主键
+
+  ![image-20201103174056411.png](https://i.loli.net/2020/11/11/wX6gZydfIjCBl1T.png)
+
+> 队员中的name和number都不能作为主键，因为不同队伍的不同队员可能有相同名字和编号，所以要借助队伍这个实体集来帮助区分
+>
+> 这个联系称为支撑联系，且这个联系必须是多对一的，每个队员必须属于一个队伍，所以为圆圆箭头。
+>
+> 支撑联系可以有多个
+>
+> 弱实体集用双边框矩形来表示，联系也是双框
+>
+> 从弱实体集出发的联系不一定都是支撑联系
+>
+> 弱实体集的主键为：自身的属性和支撑联系对应的实体的主键联合形成主键
+
+# 设计技巧
+
+* 避免冗余
+
+  saying the same thing in two different ways
+
+  * 可能会造成数据不一致
+
+    描述同一种东西的两个描述如果只改了一个不改另一个，会造成
+
+    ![image-20201110163419938.png](https://i.loli.net/2020/11/11/R7Yh6tqLcXVr81x.png)
+
+  * 浪费空间
+
+* 避免使用弱实体集
+
+* 能用属性就不用实体集
+
+  * 实体集应该包含很多属性，除了key以外还有很多不是key的属性
+  * 多对多联系和多对一联系中的“多”的一方，则用实体集
+
+# 从E/R图到数据库
+
+* 实体集到关系
+
+* 联系转换成关系，联系的属性为相关联的实体集的key
+  * 多对多联系，联合主键
+  * 多对一联系，多的实体集的key为主键，从而联系的关系和多的那个关系合并
+  * 一对一联系，一个为主键，另一个unique约束
+    * 可看成多对一的特殊情况，有时候可以将联系和关系合并，而有时候不能合并，看具体情况。
+    * 一般来说联系所关联的两个实体集中那个属性少，那个和联系进行合并
+
+* 处理若实体集
+
+  * 支撑联系不用转换，除非有属性
+
+* 子类转换(三种方法)
+
+  * 面向对象的方式：每个子类都转换成一个关系，这个关系包含子类所有的属性(包括从父类继承来的)
+
+  * use nulls：父类转换成关系，也包括所有子类的属性，有些元组不包含该属性则值为null
+
+    可能空值会比较多
+
+  * E/R style：子类全部转换成关系，包括子类的key和特有的属性
+  
+  > 不同的转换方式，可能有的查询不利，有的查询有利，看具体情况
+

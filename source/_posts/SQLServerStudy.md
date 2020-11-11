@@ -7,6 +7,111 @@ tags:
 categories: SQL
 ---
 
+# T-SQL简介
+
+* **SQL Server** 用于操作数据库的编程语言为**Transaction-SQL** ，简称 **T-SQL**
+
+* SQL和T-SQL的区别
+
+  **SQL** 作为结构化查询语言，是标准的关系型数据库通用的标准语言；**T-SQL**是在 **SQL** 基础上扩展了延伸的函数、系统预存程序以及**程序设计** 结构的 **SQL Server** 中使用的语言
+
+# T-SQL常量
+
+* 字符串常量
+
+  ```sql
+  'sql','数据库'
+  ```
+
+* 时间值常量
+
+  ```sql
+  '2020-11-09'
+  ```
+
+* 货币常量
+
+  ```sql
+  $124.5
+  ```
+
+* 数值型常量
+
+  ```sql
+  123,1.2,3
+  ```
+
+# T-SQL变量
+
+* 局部变量
+
+  ```sql
+  @var
+  ```
+
+* 全局变量
+
+  ```sql
+  @@var
+  ```
+
+# T-SQL日期函数
+
+* 返回相应字段的整数值
+
+  * 方式1
+
+  ```sql
+  day(date_expression)
+  month(date_expression)
+  year(date_expression)
+  --返回日期常量中的相应字段的整数值
+  ```
+
+  * 方式2
+
+  ```sql
+  datepart(<datepart>,<date>)
+  datepart(dd,date)--等同于day(date)
+  datepart(mm,date)--等同于month(date)
+  datepart(yy,date)--等同于year(date)
+  ```
+
+  > 注意方式一和方式二的返回值都为整数值
+
+* 返回相应字符的字符串形式
+
+  ```sql
+  datename(<datepart>,<date>)
+  --形式和datepart一样
+  ```
+
+* 返回当前的日期和时间
+
+  ```sql
+  getdate()
+  ```
+  
+* 通过加减日期和时间间隔来计算并显示日期和时间
+
+  ```sql
+  dateadd(datepart,number,datecolumnname)
+  --datepart计算的单位，为day,month,year还是其它
+  --number相应值
+  --datecolumnname就是基准时间
+  --例如
+  select dateadd(day,10,getdate());
+  --返回当前日期时间后10天的日期和时间
+  ```
+
+* 返回两个指定时间之间的间隔，返回值为一个带正负号的整数
+
+  ```sql
+  datediff(datepart,startdate,enddate);
+  --例如
+  select datediff(year,'2015',getdate());
+  ```
+
 # SQLServer中修改列表属性的语句
 
 ```sql
@@ -314,3 +419,35 @@ order by attribute1 ASC,attribute DESC;
 ![image.png](https://i.loli.net/2020/11/02/1X8kEVZcdGLNPuI.png)
 
 > 包含(b1,c2),(b2,c1),(b2,c3)的集合R中的只有a1，则R÷S的结果就为a1
+
+# 视图的修改
+
+* 视图或表的重命名
+
+  ```sql
+  alter table tbname
+  rename to newtbname; --改表名
+  --这是sql中的语句，sql server中没有rename关键字
+  EXEC sp_rename '原表名','新表名';
+  ```
+
+* 视图或表的属性重命名
+
+  ```sql
+  alter table tbname
+  change column bir birthday datetime; --修改属性名，类型必须要加，可以认为这里的修改就是删除原来的属性而添加一个新的属性，约束也可以改变。  
+  --上面是sql中的修改列名
+  --sql server中为
+  修改列名：EXEC sp_rename ‘表名.[原有列名]’, ‘新列名' , 'COLUMN';
+  EXEC sp_rename 'ASYR_Dispatch.[OrderId]', 'Order_Id' , 'COLUMN
+  ```
+
+
+# SQL SERVER中的视图
+
+
+
+# SQL SERVER中的索引
+
+
+

@@ -452,3 +452,63 @@ border : 边框厚度 边框样式 边框颜色
 </div>
 ```
 
+# css border-radius使用
+
+* [参考](https://www.cnblogs.com/happymental/p/7891725.html)
+* 通过设置元素的border-radius值，可以轻松给元素设置圆角边框，甚至实现绘制圆、半圆、四分之一的圆等各种圆角图形
+
+* 三种使用方法：
+
+  * px
+  * %
+  * em
+
+* 只设置一个值，即给四个边框设置统一的值
+
+  * ```css
+    #test1 {
+        border: 3px solid red;
+        height: 100px;
+        width: 200px;
+        border-radius: 30px;
+    }
+    ```
+
+    ![image.png](https://i.loli.net/2020/11/04/dpNCuqaPhZQjG9Y.png)
+
+  * ```css
+    #test2 {
+    　  border: 3px solid red;
+    　　 height: 100px;
+    　　width: 100px;
+    　　border-radius: 53px;
+    }
+    ```
+
+    ![image.png](https://i.loli.net/2020/11/04/aweMGNOJQqnPTvy.png)
+
+  * 还可以单独设置每个角上边框的值
+
+* 使用px表示数值的情况
+
+  * 使用px的时候，圆角的弧度一般都是一个圆形的部分弧形
+
+    > 假设一个长200px，高150px的div对象，设置它的border-radius的值为30px，那么实际呈现的圆角，其实就是一个以30px为半径的圆顶格放置在四个边角后所呈现的弧度
+
+* 使用%表示数值的情况
+
+  * 使用%来表示圆角值的时候，如果对象的宽和高是一样的，那判断方法与第一点一致，只不过想象的时候，需要将宽高乘以百分数换算一下
+  * 如果宽高不一致，那产生的效果，其实就是以对象的宽高乘以百分数后得到的值r1和r2，作为两条半径绘制出来的椭圆产生的弧度
+
+# text-decoration属性
+
+```css
+h1{text-decoration:overline;}
+h2{text-decoration:line-through;}
+h3{text-decoration:underline;}
+h4{text-decoration:blink;}
+```
+
+* 效果如下：
+
+![image.png](https://i.loli.net/2020/11/11/cLqpTCzktai8f1J.png)

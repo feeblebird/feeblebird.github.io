@@ -1024,3 +1024,51 @@ document.write("嗨！你好吗？")
 </html>
 ```
 
+# js伪协议的几种调用方法
+
+* `a href = "javascript:js_method();"` 
+
+  > 这是最常用的方法，但是这种方法在传递this等参数的时候很容易出现问题，而且javascript:协议作为a的href属性的时候不仅会导致不必要的触发
+  >
+  > w3c标准不推荐在href里面执行javascript语句
+
+* `a href = "javascript:void(0);" onclick = "js_method()"` 
+
+  > 这种方法是很多网站最常用的方法，也是最周全的方法，onclick方法负责执行Js函数，而void是一个操作符，void(0)返回undefined，地址不发生跳转。而且这种方法不会像第一种方法一样直接将js方法暴露在浏览器的状态栏。
+
+* `a href = "javascript:;" onclick="js_method()"` 
+
+  > 这种方法和第二种类似，区别只是执行了一条空的js代码。
+
+* `a href = "#" onclick = "js_method()"` 
+
+  > 这种方法也是网上很常见的代码，#是标签内置的一个方法，代表top的作用。所以用这种方法点击后网页返回到页面的最顶端。
+
+* `a href = "#" onclick = "js_method(); return false;"` 
+
+  > 这种方法点击执行了js函数后return false，页面不发生跳转，执行后还是在页面的当前位置。
+
+* 推荐使用的方法为:
+
+  ```js
+  <a href="javascript:void(0);" onclick="js_method()"></a>
+  <a href="javascript:;" onclick="js_method()"></a> 
+  <a href="#" onclick="js_method();return false;"></a>
+  ```
+
+# href ="URL"的作用
+
+* URL为绝对URL
+
+  指向另一个站点，点击后就会直接跳转到这个链接的页面
+
+* URL为相对URL
+
+  指向站点内的某个文件，比如`href="/test.doc"` 那么点击时就会直接下载文件
+
+* 锚URL
+
+  此时指向页面中的锚，比如`href="#top"` 那么点击时就会到当前页面中`id="ttip"` 的这个锚点，实现当前页面的所谓跳转。用的最多的就是在可滚动页面中，添加菜单，可以直接回到页面中的某个部分的内容。
+
+  `href="#"` 的时候就是回到顶部
+
