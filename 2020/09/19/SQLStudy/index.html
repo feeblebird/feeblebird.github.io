@@ -1,0 +1,1016 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SQLStudy | Komorebi</title><meta name="description" content="SQL不区分大小写  sql是大小写无关的，他把大写和小写字母看作相同的字母。举个例子，对于保留字FROM，无论写成FROM、From或者FrOm都是正确的。 关系名、属性名和别名都同样是大小写无关的。 只有引号里面的字符才是区分大小写的。   语法    进入mysql(dos窗口中) 12345mysql -h localhost -u root -p password&#x2F;&#x2F;-h 为ip地址,"><meta name="keywords" content="SQL"><meta name="author" content="komorebi"><meta name="copyright" content="komorebi"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://feeblebird.github.io/2020/09/19/SQLStudy/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="SQLStudy"><meta property="og:url" content="http://feeblebird.github.io/2020/09/19/SQLStudy/"><meta property="og:site_name" content="Komorebi"><meta property="og:description" content="SQL不区分大小写  sql是大小写无关的，他把大写和小写字母看作相同的字母。举个例子，对于保留字FROM，无论写成FROM、From或者FrOm都是正确的。 关系名、属性名和别名都同样是大小写无关的。 只有引号里面的字符才是区分大小写的。   语法    进入mysql(dos窗口中) 12345mysql -h localhost -u root -p password&#x2F;&#x2F;-h 为ip地址,"><meta property="og:image" content="https://i.loli.net/2020/08/03/UrEu8Zcjb7CReX6.jpg"><meta property="article:published_time" content="2020-09-19T11:09:02.000Z"><meta property="article:modified_time" content="2020-11-17T09:40:26.654Z"><meta name="twitter:card" content="summary"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: {"limitCount":50,"languages":{"author":"作者: komorebi","link":"链接: ","source":"来源: Komorebi","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-11-17 17:40:26'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="https://i.loli.net/2020/08/02/WuXQnAJZ6twj5HU.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">32</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">35</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">16</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div id="body-wrap"><div id="web_bg" data-type="photo"></div><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sql%E4%B8%8D%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99"><span class="toc-number">1.</span> <span class="toc-text"> SQL不区分大小写</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text"> 语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5mysqldos%E7%AA%97%E5%8F%A3%E4%B8%AD"><span class="toc-number">2.0.0.1.</span> <span class="toc-text"> 进入mysql(dos窗口中)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#help%E5%91%BD%E4%BB%A4"><span class="toc-number">2.0.0.2.</span> <span class="toc-text"> help命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86"><span class="toc-number">2.0.0.3.</span> <span class="toc-text"> 数据库管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%9F%90%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">2.0.0.4.</span> <span class="toc-text"> 使用某一个数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%AE%A1%E7%90%86"><span class="toc-number">2.0.0.5.</span> <span class="toc-text"> 数据表管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.0.0.6.</span> <span class="toc-text"> sql数据类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.0.0.7.</span> <span class="toc-text"> 约束类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E8%A1%A8"><span class="toc-number">2.0.0.8.</span> <span class="toc-text"> 创建数据表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#unique%E7%BA%A6%E6%9D%9F%E5%92%8Cprimary-key%E7%BA%A6%E6%9D%9F"><span class="toc-number">2.0.0.9.</span> <span class="toc-text"> unique约束和primary key约束</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-number">2.0.0.10.</span> <span class="toc-text"> 插入数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E8%A1%A8%E6%9C%80%E5%A5%BD%E5%9C%A8%E5%8A%A0%E5%85%A5%E6%95%B0%E6%8D%AE%E5%89%8D%E4%BF%AE%E6%94%B9%E8%A1%A8"><span class="toc-number">2.0.0.11.</span> <span class="toc-text"> 修改表(最好在加入数据前修改表)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E8%A1%A8"><span class="toc-number">2.0.0.12.</span> <span class="toc-text"> 删除表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E8%A1%A8"><span class="toc-number">2.0.0.13.</span> <span class="toc-text"> 复制表</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#select-from-where-%E8%AF%AD%E5%8F%A5"><span class="toc-number">3.</span> <span class="toc-text"> select from where 语句</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#as-%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-number">4.</span> <span class="toc-text"> AS 关键字</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%99%E5%85%B3%E7%B3%BB%E8%B5%B7%E5%88%AB%E5%90%8D"><span class="toc-number">4.0.0.1.</span> <span class="toc-text"> 给关系起别名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%99%E5%B1%9E%E6%80%A7%E8%B5%B7%E5%88%AB%E5%90%8D"><span class="toc-number">4.0.0.2.</span> <span class="toc-text"> 给属性起别名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E5%8F%AF%E4%BB%A5%E8%A2%AB%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%9B%BF%E4%BB%A3"><span class="toc-number">4.0.0.3.</span> <span class="toc-text"> 属性可以被表达式替代</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%86%E5%B8%B8%E9%87%8F%E4%BD%9C%E4%B8%BA%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%9C%A8select%E8%AF%AD%E5%8F%A5%E4%B8%AD%E5%88%97%E5%87%BA"><span class="toc-number">4.0.0.4.</span> <span class="toc-text"> 将常量作为表达式在SELECT语句中列出</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#where%E8%AF%AD%E5%8F%A5%E4%B8%AD%E7%9A%84%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">5.</span> <span class="toc-text"> where语句中的运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">5.0.0.1.</span> <span class="toc-text"> 算术运算符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%9E%E6%8E%A5%E7%AC%A6"><span class="toc-number">5.0.0.2.</span> <span class="toc-text"> 字符串连接符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">5.0.0.3.</span> <span class="toc-text"> 比较运算符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">5.0.0.4.</span> <span class="toc-text"> 逻辑运算符</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%95%E5%BC%95%E5%8F%B7%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%8D%95%E5%BC%95%E5%8F%B7"><span class="toc-number">6.</span> <span class="toc-text"> 单引号中使用单引号</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">7.</span> <span class="toc-text"> NULL</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%AF%94%E8%BE%83"><span class="toc-number">8.</span> <span class="toc-text"> 字符串比较</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E8%BF%99%E9%87%8C%E8%BF%9B%E8%A1%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%AF%94%E8%BE%83%E7%9A%84%E6%97%B6%E5%80%99%E4%BC%9A%E5%BF%BD%E7%95%A5sql%E4%B8%BA%E4%BA%86%E4%BF%9D%E8%AF%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6%E8%80%8C%E5%A1%AB%E5%85%85%E7%9A%84%E5%A1%AB%E5%85%85%E5%AD%97%E7%AC%A6%E8%80%8Csql%E4%B8%B2%E7%9A%84%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E4%B8%AD%E4%B8%8D%E4%BC%9A%E5%BF%BD%E7%95%A5"><span class="toc-number">8.0.0.1.</span> <span class="toc-text"> 注意这里进行字符串比较的时候会忽略SQL为了保证字符串长度而填充的填充字符，而SQL串的模式匹配中不会忽略。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8sql%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E4%B8%AD%E4%BD%BF%E7%94%A8trim%E5%87%BD%E6%95%B0%E5%8F%96%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%A4%E7%AB%AF%E7%9A%84%E7%A9%BA%E6%A0%BC"><span class="toc-number">8.0.0.2.</span> <span class="toc-text"> 在SQL模式匹配中使用trim函数取出字符串两端的空格。</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D"><span class="toc-number">9.</span> <span class="toc-text"> 字符串模式匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E4%B8%AD%E7%9A%84%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6"><span class="toc-number">9.0.0.1.</span> <span class="toc-text"> 模式匹配中的特殊字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%92%8C_%E4%BD%BF%E7%94%A8%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6"><span class="toc-number">9.0.0.2.</span> <span class="toc-text"> 模式匹配中使用%和_，使用转义字符</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%8E%92%E5%BA%8F"><span class="toc-number">10.</span> <span class="toc-text"> 输出排序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#asc-desc%E6%8C%87%E5%AE%9A%E6%98%AF%E5%8D%87%E5%BA%8F%E8%BF%98%E6%98%AF%E9%99%8D%E5%BA%8F"><span class="toc-number">10.0.0.1.</span> <span class="toc-text"> ASC DESC指定是升序还是降序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#order%E8%AF%AD%E5%8F%A5%E5%90%8E%E9%9D%A2%E4%B9%9F%E5%8F%AF%E4%BB%A5%E6%98%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">10.0.0.2.</span> <span class="toc-text"> ORDER语句后面也可以是表达式</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2%E5%A4%9A%E5%85%B3%E7%B3%BB%E6%9F%A5%E8%AF%A2"><span class="toc-number">11.</span> <span class="toc-text"> 多表查询，多关系查询</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%83%E7%BB%84%E5%8F%98%E9%87%8F"><span class="toc-number">12.</span> <span class="toc-text"> 元组变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E4%BF%97%E6%9D%A5%E8%AE%B2%E5%B0%B1%E6%98%AF%E7%BB%99%E5%85%B3%E7%B3%BB%E8%B5%B7%E4%B8%AA%E5%88%AB%E5%90%8D"><span class="toc-number">12.0.0.1.</span> <span class="toc-text"> 通俗来讲就是给关系起个别名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8%E4%B8%80%E4%B8%AAselect-from-where%E8%AF%AD%E5%8F%A5%E4%B8%AD%E8%A6%81%E5%B0%86%E5%90%8C%E4%B8%80%E4%B8%AA%E5%85%B3%E7%B3%BB%E4%B8%AD%E7%9A%84%E4%B8%8D%E5%90%8C%E5%85%83%E7%BB%84%E8%BF%9B%E8%A1%8C%E6%AF%94%E8%BE%83%E7%9A%84%E6%97%B6%E5%80%99"><span class="toc-number">12.0.0.2.</span> <span class="toc-text"> 在一个select-from-where语句中，要将同一个关系中的不同元组进行比较的时候</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E7%9A%84%E7%BB%93%E6%9E%9C%E6%98%AF%E4%B8%80%E4%B8%AAbag%E5%8D%B3%E6%B2%A1%E6%9C%89%E4%B8%8D%E9%87%8D%E5%A4%8D%E6%80%A7"><span class="toc-number">13.</span> <span class="toc-text"> 查询的结果是一个Bag，即没有不重复性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%86%E6%98%AF%E5%BD%93%E8%BF%9B%E8%A1%8C%E6%9F%A5%E8%AF%A2%E7%9A%84%E5%B9%B6-%E4%BA%A4-%E5%B7%AE%E7%9A%84%E6%97%B6%E5%80%99%E4%BC%9A%E5%85%88%E5%8E%BB%E9%87%8D%E8%BD%AC%E6%8D%A2%E6%88%90%E4%B8%80%E4%B8%AA%E9%9B%86%E5%90%88%E5%9B%A0%E4%B8%BA%E8%BF%99%E6%A0%B7%E6%95%88%E7%8E%87%E9%AB%98"><span class="toc-number">13.0.0.1.</span> <span class="toc-text"> 但是当进行查询的并、交、差的时候会先去重，转换成一个集合，因为这样效率高。</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#controlling-duplicate-elimination%E6%8E%A7%E5%88%B6%E9%87%8D%E5%A4%8D%E6%B6%88%E9%99%A4"><span class="toc-number">14.</span> <span class="toc-text"> Controlling Duplicate Elimination控制重复消除</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E5%8E%BB%E9%87%8D"><span class="toc-number">14.0.0.1.</span> <span class="toc-text"> 强+&#x2F;制去重</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E5%B0%86%E9%9B%86%E5%90%88%E8%BD%AC%E6%8D%A2%E4%B8%BAbag%E5%9C%A8%E5%AD%90%E6%9F%A5%E8%AF%A2%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E4%B8%AD%E4%BD%BF%E7%94%A8all%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-number">14.0.0.2.</span> <span class="toc-text"> 强制将集合转换为Bag(在子查询关系运算中使用ALL关键字)</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E7%9A%84%E5%B9%B6-%E4%BA%A4-%E5%B7%AE"><span class="toc-number">15.</span> <span class="toc-text"> 查询的并、交、差</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#intersect-%E4%BA%A4"><span class="toc-number">15.0.0.1.</span> <span class="toc-text"> intersect 交</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#union-%E5%B9%B6"><span class="toc-number">15.0.0.2.</span> <span class="toc-text"> union 并</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#except-%E5%B7%AE"><span class="toc-number">15.0.0.3.</span> <span class="toc-text"> except 差</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%AD%90%E6%9F%A5%E8%AF%A2subquery%E7%9A%84%E6%83%85%E5%86%B5"><span class="toc-number">16.</span> <span class="toc-text"> 使用子查询(subquery)的情况</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BA%E7%8E%B0%E5%9C%A8from%E4%B8%AD"><span class="toc-number">16.0.0.1.</span> <span class="toc-text"> 出现在from中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BA%E7%8E%B0%E5%9C%A8where%E4%B8%AD"><span class="toc-number">16.0.0.2.</span> <span class="toc-text"> 出现在where中</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E7%9A%84%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%80%BC%E4%B8%8E%E5%85%B3%E7%B3%BB%E4%B9%8B%E9%97%B4"><span class="toc-number">17.</span> <span class="toc-text"> 关系的条件表达式(值与关系之间)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#exists"><span class="toc-number">17.0.0.1.</span> <span class="toc-text"> EXISTS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#in"><span class="toc-number">17.0.0.2.</span> <span class="toc-text"> IN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#any"><span class="toc-number">17.0.0.3.</span> <span class="toc-text"> ANY</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#all"><span class="toc-number">17.0.0.4.</span> <span class="toc-text"> ALL</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%83%E7%BB%84%E7%9A%84%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%85%83%E7%BB%84%E4%B8%8E%E5%85%B3%E7%B3%BB%E4%B9%8B%E9%97%B4"><span class="toc-number">18.</span> <span class="toc-text"> 元组的条件表达式(元组与关系之间)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E5%85%83%E7%BB%84%E4%B8%8E%E8%AF%A5%E5%85%B3%E7%B3%BB%E7%9A%84%E5%85%83%E7%BB%84%E4%B9%8B%E9%97%B4%E6%9C%89%E7%9B%B8%E5%90%8C%E7%9A%84%E7%BB%84%E6%88%90%E5%88%86%E9%87%8Fcomponent%E4%B8%AA%E6%95%B0%E9%82%A3%E4%B9%88%E8%BF%99%E4%B8%AA%E6%AF%94%E8%BE%83%E6%98%AF%E6%9C%89%E6%84%8F%E4%B9%89%E7%9A%84"><span class="toc-number">18.0.0.1.</span> <span class="toc-text"> 如果元组与该关系的元组之间有相同的组成分量(component)个数，那么这个比较是有意义的</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E5%AD%90%E6%9F%A5%E8%AF%A2%E7%9B%B8%E5%85%B3%E5%AD%90%E6%9F%A5%E8%AF%A2correlated-subquery"><span class="toc-number">19.</span> <span class="toc-text"> 关联子查询，相关子查询(correlated subquery)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8%E5%AD%90%E6%9F%A5%E8%AF%A2%E8%BF%87%E7%A8%8B%E4%B8%AD%E8%A6%81%E7%94%A8%E5%88%B0%E5%AD%90%E6%9F%A5%E8%AF%A2%E5%A4%96%E9%83%A8%E5%85%B3%E7%B3%BB%E7%9A%84%E5%85%83%E7%BB%84"><span class="toc-number">19.0.0.1.</span> <span class="toc-text"> 在子查询过程中要用到子查询外部关系的元组</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sql%E8%BF%9E%E6%8E%A5%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">20.</span> <span class="toc-text"> SQL连接表达式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#cross-join-%E7%AC%9B%E5%8D%A1%E5%B0%94%E4%B9%98%E7%A7%AF"><span class="toc-number">21.</span> <span class="toc-text"> cross join 笛卡尔乘积</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%87%AA%E7%84%B6%E8%BF%9E%E6%8E%A5natural-join"><span class="toc-number">22.</span> <span class="toc-text"> 自然连接Natural Join</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#theta-join"><span class="toc-number">23.</span> <span class="toc-text"> Theta Join</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#xxx-outer-joins"><span class="toc-number">24.</span> <span class="toc-text"> XXX Outer joins</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#natural-left-outer-join"><span class="toc-number">24.0.0.1.</span> <span class="toc-text"> natural left outer join</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#natural-right-outer-join"><span class="toc-number">24.0.0.2.</span> <span class="toc-text"> natural right outer join</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#natural-full-outer-join"><span class="toc-number">24.0.0.3.</span> <span class="toc-text"> natural full outer join</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%99%E5%85%B3%E7%B3%BB%E8%B5%B7%E5%88%AB%E5%90%8D%E5%90%8E%E4%B8%8D%E8%83%BD%E5%86%8Dfrom%E8%BF%99%E4%B8%AA%E5%88%AB%E5%90%8D"><span class="toc-number">25.</span> <span class="toc-text"> 给关系起别名后不能再from这个别名</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-number">26.</span> <span class="toc-text"> 例题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98"><span class="toc-number">27.</span> <span class="toc-text"> 习题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#homework1"><span class="toc-number">28.</span> <span class="toc-text"> homework1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sql%E4%BF%AE%E6%94%B9%E8%A1%A8%E4%B8%AD%E5%85%83%E7%BB%84%E4%B8%AD%E5%85%83%E7%B4%A0"><span class="toc-number">29.</span> <span class="toc-text"> SQL修改表中元组中元素</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sql%E5%88%A0%E9%99%A4%E8%A1%A8%E4%B8%AD%E5%85%83%E7%BB%84"><span class="toc-number">30.</span> <span class="toc-text"> SQL删除表中元组</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0%E5%B0%86%E5%A4%9A%E4%B8%AA%E5%80%BC%E8%81%9A%E5%90%88%E6%88%90%E4%B8%80%E4%B8%AA%E5%80%BC"><span class="toc-number">31.</span> <span class="toc-text"> 聚合函数（将多个值聚合成一个值）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%8B%A5%E4%BD%BF%E7%94%A8%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0select%E4%B8%AD-%E5%85%B6%E4%BB%96%E5%B1%9E%E6%80%A7%E8%A6%81%E4%B9%88%E4%BD%BF%E7%94%A8%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0%E8%A6%81%E4%B9%88%E4%BD%BF%E7%94%A8group-by"><span class="toc-number">32.</span> <span class="toc-text"> 若使用聚合函数，select中 其他属性要么使用聚合函数，要么使用group by</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#group-by%E5%88%86%E7%BB%84"><span class="toc-number">33.</span> <span class="toc-text"> GROUP BY分组</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#having-%E5%8F%AA%E8%83%BD%E5%AF%B9%E5%88%86%E7%BB%84%E6%95%B4%E4%BD%93%E8%BF%9B%E8%A1%8C%E9%99%90%E5%88%B6"><span class="toc-number">34.</span> <span class="toc-text"> having 只能对分组整体进行限制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0%E4%B8%8D%E8%83%BD%E5%87%BA%E7%8E%B0%E5%9C%A8where%E8%AF%AD%E5%8F%A5%E4%B8%AD"><span class="toc-number">35.</span> <span class="toc-text"> 聚合函数不能出现在where语句中</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0%E5%92%8C%E5%88%86%E7%BB%84%E4%B8%AD%E7%9A%84null%E5%80%BC"><span class="toc-number">36.</span> <span class="toc-text"> 聚合函数和分组中的NULL值</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="toc-number">37.</span> <span class="toc-text"> 属性的默认值</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A1%A8%E7%9A%84%E6%9B%B4%E6%96%B0"><span class="toc-number">38.</span> <span class="toc-text"> 表的更新</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#views%E8%A7%86%E5%9B%BE%E5%92%8Cindexes%E7%B4%A2%E5%BC%95"><span class="toc-number">39.</span> <span class="toc-text"> (views)视图和(indexes)索引</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sql-tuning-advisorsta"><span class="toc-number">40.</span> <span class="toc-text"> SQL Tuning Advisor(STA)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95"><span class="toc-number">41.</span> <span class="toc-text"> 索引</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%9E%8Bentity-relation-model"><span class="toc-number">42.</span> <span class="toc-text"> 实体关系模型(Entity-Relation Model)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E9%9B%86entity"><span class="toc-number">43.</span> <span class="toc-text"> 实体集Entity</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%81%94%E7%B3%BBrelationship%E4%BA%8C%E5%85%83"><span class="toc-number">44.</span> <span class="toc-text"> 联系relationship(二元)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%81%94%E7%B3%BB%E9%9B%86relationship-set"><span class="toc-number">45.</span> <span class="toc-text"> 联系集(relationship set)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%9A%E5%85%83%E8%81%94%E7%B3%BB%E5%A4%9A%E8%B7%AF%E8%81%94%E7%B3%BBmultiway-relationshiops"><span class="toc-number">46.</span> <span class="toc-text"> 多元联系(多路联系)(Multiway relationshiops)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%9A%E5%AF%B9%E5%A4%9A%E8%81%94%E7%B3%BBmany-many-relationships"><span class="toc-number">47.</span> <span class="toc-text"> 多对多联系(many-many relationships)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%9A%E5%AF%B9%E4%B8%80%E8%81%94%E7%B3%BBmany-one-relationships"><span class="toc-number">48.</span> <span class="toc-text"> 多对一联系(many-one relationships)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E5%AF%B9%E4%B8%80%E8%81%94%E7%B3%BBone-one-relationships"><span class="toc-number">49.</span> <span class="toc-text"> 一对一联系(one-one relationships)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%81%94%E7%B3%BB%E7%9A%84%E5%A4%9A%E6%A0%B7%E6%80%A7mltiplicity"><span class="toc-number">50.</span> <span class="toc-text"> 联系的多样性(mltiplicity)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%81%94%E7%B3%BB%E4%B8%8A%E5%8F%AF%E8%83%BD%E6%9C%89%E5%B1%9E%E6%80%A7attribute-on-relationship"><span class="toc-number">51.</span> <span class="toc-text"> 联系上可能有属性(attribute on relationship)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#rolestabels-of-one-way-relationships%E4%B8%80%E5%85%83%E8%81%94%E7%B3%BB"><span class="toc-number">52.</span> <span class="toc-text"> roles(tabels of one way relationships一元联系)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%90%E7%B1%BBsub-classes"><span class="toc-number">53.</span> <span class="toc-text"> 子类(sub classes)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#er%E5%9B%BE%E4%B8%AD%E7%9A%84%E4%B8%BB%E9%94%AEkeys"><span class="toc-number">54.</span> <span class="toc-text"> E&#x2F;R图中的主键(keys)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BA%A6%E7%9A%84%E7%BA%A6%E6%9D%9Fdegree-constaint"><span class="toc-number">55.</span> <span class="toc-text"> 度的约束(degree constaint)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%B1%E5%AE%9E%E4%BD%93%E9%9B%86weak-entity-set"><span class="toc-number">56.</span> <span class="toc-text"> 弱实体集(weak entity set)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7"><span class="toc-number">57.</span> <span class="toc-text"> 设计技巧</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%8Eer%E5%9B%BE%E5%88%B0%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">58.</span> <span class="toc-text"> 从E&#x2F;R图到数据库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9Fconstraint"><span class="toc-number">59.</span> <span class="toc-text"> 约束(constraint)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%96%E9%94%AE%E5%A4%96%E9%94%AE%E7%9A%84%E5%80%BC%E8%A6%81%E5%8F%82%E7%85%A7%E5%8F%A6%E5%A4%96%E4%B8%80%E4%B8%AA%E5%85%B3%E7%B3%BB%E4%B8%AD%E4%B8%BB%E9%94%AE%E6%88%96%E5%94%AF%E4%B8%80%E9%94%AE%E7%9A%84%E5%80%BC"><span class="toc-number">60.</span> <span class="toc-text"> 外键，外键的值要参照另外一个关系中主键或唯一键的值</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#check%E7%BA%A6%E6%9D%9F"><span class="toc-number">61.</span> <span class="toc-text"> check约束</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#modification-of-constraints"><span class="toc-number">62.</span> <span class="toc-text"> modification of Constraints</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#assertions%E6%96%AD%E8%A8%80"><span class="toc-number">63.</span> <span class="toc-text"> assertions(断言)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#triggers%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="toc-number">64.</span> <span class="toc-text"> triggers(触发器)</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://i.loli.net/2020/08/03/UrEu8Zcjb7CReX6.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">Komorebi</a></span><span class="pull-right menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">SQLStudy</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-09-19T11:09:02.000Z" title="发表于 2020-09-19 19:09:02">2020-09-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-11-17T09:40:26.654Z" title="更新于 2020-11-17 17:40:26">2020-11-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/SQL/">SQL</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">7.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>29分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="sql不区分大小写"><a class="markdownIt-Anchor" href="#sql不区分大小写"></a> SQL不区分大小写</h1>
+<blockquote>
+<p>sql是大小写无关的，他把大写和小写字母看作相同的字母。举个例子，对于保留字FROM，无论写成FROM、From或者FrOm都是正确的。</p>
+<p>关系名、属性名和别名都同样是大小写无关的。</p>
+<p>只有引号里面的字符才是区分大小写的。</p>
+</blockquote>
+<h1 id="语法"><a class="markdownIt-Anchor" href="#语法"></a> 语法</h1>
+<ul>
+<li>
+<h4 id="进入mysqldos窗口中"><a class="markdownIt-Anchor" href="#进入mysqldos窗口中"></a> 进入mysql(dos窗口中)</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql -h localhost -u root -p password</span><br><span class="line">//-h 为ip地址,本机为localhost或者127.0.0.1</span><br><span class="line">//-u 为user用户名</span><br><span class="line">//-p 小写，后面为密码 或者 不输入，因为不做隐藏的</span><br><span class="line">//-P 为Port端口号</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<h4 id="help命令"><a class="markdownIt-Anchor" href="#help命令"></a> help命令</h4>
+<p>使用help查看一些命令，这些命令在使用的时候都不用加分号。</p>
+</li>
+<li>
+<h4 id="数据库管理"><a class="markdownIt-Anchor" href="#数据库管理"></a> 数据库管理</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">databases</span>;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> dbname;</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">database</span> dbname;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<h4 id="使用某一个数据库"><a class="markdownIt-Anchor" href="#使用某一个数据库"></a> 使用某一个数据库</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="keyword">database</span> dbname;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<h4 id="数据表管理"><a class="markdownIt-Anchor" href="#数据表管理"></a> 数据表管理</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">tables</span>;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> tbname;</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> tbname;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<h4 id="sql数据类型"><a class="markdownIt-Anchor" href="#sql数据类型"></a> sql数据类型</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">tinyint         1byte</span><br><span class="line">smallint		2byte</span><br><span class="line">mediumint		3byte</span><br><span class="line">int/integer		4byte</span><br><span class="line">bigint			8byte</span><br><span class="line">float			4byte</span><br><span class="line">double			8byte</span><br><span class="line">decimal			</span><br><span class="line"><span class="comment">-----------------------------</span></span><br><span class="line">date		3byte 1000-01-01/9999-12-31</span><br><span class="line">time 		3byte -839:59:59/839:59:59</span><br><span class="line">year		1byte 1901/2155</span><br><span class="line">datetime 	8byte 1000-01-01 00:00:00/9999-12-31 23:59:59</span><br><span class="line">timestamp	4byte 0/2147483647(时间戳)</span><br><span class="line">//以字符串的形式&#x27;2020-01-01 15:30:02.5&#x27;</span><br><span class="line"><span class="comment">-----------------------------</span></span><br><span class="line">char		定长字符 					0-255byte</span><br><span class="line">varchar		变长字符 					0-65535byte</span><br><span class="line">tinyblob	二进制字符串 				   0-255byte</span><br><span class="line">tinytext	短文本字符串				   0-255byte</span><br><span class="line">blob		二进制形式长文本数据 			0-65535byte</span><br><span class="line">text		长文本数据 					0-65535byte</span><br><span class="line">mediumblob	二进制形式的中等长度文本数据	  0-16777215byte</span><br><span class="line">mediumtext	中等长度文本数据			  0-16777215byte</span><br><span class="line">longblob	二进制形式的极大文本数据	   0-4294967295byte</span><br><span class="line">longtext	极大文本数据				   0-4294967295byte</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<h4 id="约束类型"><a class="markdownIt-Anchor" href="#约束类型"></a> 约束类型</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">not null 用于限制该字段为必填项</span><br><span class="line">default 用于限制该字段没有显式插入值，则直接显示默认值</span><br><span class="line">primary key  用于限制该字段值不能重复，设置为主键列的字段默认不能为空，可以联合主键，但一个表只能有一个主键</span><br><span class="line">unique 用于限制该字段不能重复，字段可以为空，一个表可以有多个unique</span><br><span class="line"><span class="keyword">check</span>  用于限制该字段值必须满足指定条件</span><br><span class="line">       <span class="keyword">check</span>(age <span class="keyword">between</span> <span class="number">1</span> <span class="keyword">and</span> <span class="number">100</span>)</span><br><span class="line"><span class="keyword">foreign</span> <span class="keyword">key</span> 外键：用于限制两个表的关系，要求外键列的值必须来自主表的关联列</span><br><span class="line">		要求：</span><br><span class="line">		①主表的关联列和从表的关联列的类型必须一致，意思一样，名称无要求</span><br><span class="line">		②主表的关联列要求必须是主键</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<h4 id="创建数据表"><a class="markdownIt-Anchor" href="#创建数据表"></a> 创建数据表</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> tbname(</span><br><span class="line">	attribute1 <span class="built_in">varchar</span>(<span class="number">20</span>)/<span class="built_in">char</span>(<span class="number">20</span>),</span><br><span class="line">    attribute2 <span class="built_in">integer</span>/<span class="built_in">int</span>/<span class="built_in">smallint</span>,</span><br><span class="line">    attribute3 <span class="built_in">date</span>,</span><br><span class="line">    attribute4 <span class="built_in">time</span>,</span><br><span class="line">    attribute5 <span class="built_in">real</span>/<span class="built_in">float</span>,</span><br><span class="line">    attribute6 <span class="built_in">real</span>/<span class="built_in">float</span> <span class="keyword">default</span> <span class="number">0.1</span> //设置默认值为<span class="number">0.1</span></span><br><span class="line">);</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> tbname(</span><br><span class="line">	attribute1 <span class="built_in">varchar</span>(<span class="number">20</span>)/<span class="built_in">char</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">    attribute2 <span class="built_in">integer</span> primary <span class="keyword">key</span>//主键 默认不能为空</span><br><span class="line">    //attribute2 <span class="built_in">integer</span> <span class="keyword">unique</span> //逐渐 可以为空</span><br><span class="line">);</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> tbname(</span><br><span class="line">	attribute1 <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">    attribute2 <span class="built_in">real</span> <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">    primary <span class="keyword">key</span>(attribute1,attribute2)//联合主键 默认不能为空</span><br><span class="line">);</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> tbname(</span><br><span class="line">	attribute1 <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">    attribute2 <span class="built_in">float</span> <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">    <span class="keyword">unique</span>(attribute1,attribute2)//联合主键 默认可以为空</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<h4 id="unique约束和primary-key约束"><a class="markdownIt-Anchor" href="#unique约束和primary-key约束"></a> unique约束和primary key约束</h4>
+<ul>
+<li>在一个表中只能有一个primary key但是可以多个unique</li>
+<li>primary key 和 unique 约束都能约束某个属性值不能重复，primary key 约束的属性值不能为空，unique 约束的属性可以为空。</li>
+</ul>
+</li>
+<li>
+<h4 id="插入数据"><a class="markdownIt-Anchor" href="#插入数据"></a> 插入数据</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> tbname //这里不能加<span class="keyword">table</span>，不然执行不了</span><br><span class="line">(attribute1,attribute2,attribute3...)</span><br><span class="line">valuses</span><br><span class="line">(value1,value2,value3...)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<h4 id="修改表最好在加入数据前修改表"><a class="markdownIt-Anchor" href="#修改表最好在加入数据前修改表"></a> 修改表(最好在加入数据前修改表)</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tbname</span><br><span class="line"><span class="keyword">add</span>|<span class="keyword">modify</span>|<span class="keyword">change</span>|<span class="keyword">drop</span> <span class="keyword">column</span> 字段名 字符类型 字段约束;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tbname</span><br><span class="line"><span class="keyword">rename</span> <span class="keyword">to</span> newtbname; <span class="comment">--改表名</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tbname</span><br><span class="line"><span class="keyword">add</span> <span class="keyword">column</span> bir datetime <span class="keyword">not</span> <span class="literal">null</span>; <span class="comment">--添加属性</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tbname</span><br><span class="line"><span class="keyword">change</span> <span class="keyword">column</span> bir birthday datetime; <span class="comment">--修改属性名，类型必须要加，可以认为这里的修改就是删除原来的属性而添加一个新的属性，约束也可以改变。  </span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tbname</span><br><span class="line"><span class="keyword">modify</span> <span class="keyword">column</span> bir <span class="built_in">timestamp</span>; <span class="comment">--修改属性类型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tbname</span><br><span class="line"><span class="keyword">modify</span> <span class="keyword">column</span> bir <span class="built_in">timestamp</span> <span class="keyword">not</span> <span class="literal">null</span>;</span><br><span class="line"><span class="comment">--可以修改属性从空变为不空，或反之，相当于重新设置了一个属性</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tbname</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">column</span> bir; <span class="comment">--删除属性</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tbname</span><br><span class="line"><span class="keyword">drop</span> primary <span class="keyword">key</span>; <span class="comment">--删除主键</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tbname</span><br><span class="line"><span class="keyword">change</span> <span class="keyword">column</span> bir bir datetime <span class="keyword">unique</span>;<span class="comment">--添加约束</span></span><br><span class="line"><span class="keyword">change</span> <span class="keyword">column</span> bir bir datetime primary <span class="keyword">key</span>;<span class="comment">--如果此时该属性的值为not null则可以，否则应该先设置为not null,因为primary key默认not null</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tbname</span><br><span class="line"><span class="keyword">modify</span> <span class="keyword">column</span> bir bir datetime primary <span class="keyword">key</span>; <span class="comment">--若非空则可以设置称主键</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<h4 id="删除表"><a class="markdownIt-Anchor" href="#删除表"></a> 删除表</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">exists</span> tbname;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<h4 id="复制表"><a class="markdownIt-Anchor" href="#复制表"></a> 复制表</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> newtable <span class="keyword">like</span> oldtable;</span><br><span class="line">//只是赋值表结构</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> newtable <span class="keyword">select</span> * <span class="keyword">from</span> oldtable;</span><br><span class="line">//复制本库另一个表的内容</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> newtable <span class="keyword">select</span> * <span class="keyword">from</span> girls.<span class="string">&#x27;beauty&#x27;</span>;</span><br><span class="line">//复制别的库里面的内容，girls库里面的beauty表</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> newtable <span class="keyword">select</span> last_name,department_id <span class="keyword">from</span> myemployee.<span class="string">&#x27;employees&#x27;</span> <span class="keyword">where</span> <span class="number">1</span>=<span class="number">2</span>;</span><br><span class="line">//只复制myemployee库中的employees表中的last_name,department字段的结构，不包括具体数据</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="select-from-where-语句"><a class="markdownIt-Anchor" href="#select-from-where-语句"></a> select from where 语句</h1>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> drinkers</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">trim</span>(<span class="keyword">NAME</span>) <span class="keyword">LIKE</span> <span class="string">&#x27;% % %&#x27;</span>;</span><br><span class="line"><span class="comment">--去掉前后的空格，中间的空格不去,选出名字由三部分组成</span></span><br></pre></td></tr></table></figure>
+<h1 id="as-关键字"><a class="markdownIt-Anchor" href="#as-关键字"></a> AS 关键字</h1>
+<ul>
+<li>
+<h4 id="给关系起别名"><a class="markdownIt-Anchor" href="#给关系起别名"></a> 给关系起别名</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//给关系起别名，可认为原来是原名 as 原名</span><br><span class="line"><span class="keyword">SELECT</span> bar,beer</span><br><span class="line"><span class="keyword">from</span> bars [<span class="keyword">as</span>] ba,beers [<span class="keyword">as</span>] be //<span class="keyword">as</span>可省略    </span><br><span class="line"><span class="keyword">where</span> ba....   be....;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<h4 id="给属性起别名"><a class="markdownIt-Anchor" href="#给属性起别名"></a> 给属性起别名</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//给属性起别名</span><br><span class="line"><span class="keyword">SELECT</span> bar,beer,price <span class="keyword">as</span> priceInYen</span><br><span class="line"><span class="keyword">from</span> sells;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<h4 id="属性可以被表达式替代"><a class="markdownIt-Anchor" href="#属性可以被表达式替代"></a> 属性可以被表达式替代</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//属性可以被表达式替代</span><br><span class="line"><span class="keyword">SELECT</span> bar,beer,price*<span class="number">14</span> <span class="keyword">as</span> priceInYen</span><br><span class="line"><span class="keyword">from</span> sells;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<h4 id="将常量作为表达式在select语句中列出"><a class="markdownIt-Anchor" href="#将常量作为表达式在select语句中列出"></a> 将常量作为表达式在SELECT语句中列出</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> title,<span class="keyword">length</span>,<span class="string">&#x27;hrs.&#x27;</span> <span class="keyword">AS</span> inHours</span><br><span class="line"><span class="keyword">from</span> movies</span><br><span class="line"><span class="keyword">where</span> studioname = <span class="string">&#x27;Disney&#x27;</span> <span class="keyword">AND</span> <span class="keyword">year</span> = <span class="number">1990</span>;</span><br><span class="line"></span><br><span class="line">//则结果中会出现一列属性名为inHours的列，值都为&#x27;hrs.&#x27;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以理解为查询时，每次都是将关系中的元组赋值给select-from-where语句中的select中的属性，然后判断条件是否满足，所以那个常量就一直是这个而且保留了下来。</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="where语句中的运算符"><a class="markdownIt-Anchor" href="#where语句中的运算符"></a> where语句中的运算符</h1>
+<ul>
+<li>
+<h4 id="算术运算符"><a class="markdownIt-Anchor" href="#算术运算符"></a> 算术运算符</h4>
+<p>有+ - * /</p>
+</li>
+<li>
+<h4 id="字符串连接符"><a class="markdownIt-Anchor" href="#字符串连接符"></a> 字符串连接符</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;foo&#x27;||&#x27;bar&#x27;相当于&#x27;foobar&#x27;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<h4 id="比较运算符"><a class="markdownIt-Anchor" href="#比较运算符"></a> 比较运算符</h4>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;</span><br><span class="line">&lt;</span><br><span class="line">&gt;=</span><br><span class="line">&lt;=</span><br><span class="line">=</span><br><span class="line">&lt;&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<h4 id="逻辑运算符"><a class="markdownIt-Anchor" href="#逻辑运算符"></a> 逻辑运算符</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AND</span><br><span class="line">OR</span><br><span class="line">NOT</span><br><span class="line">//可以对返回值为布尔值的表达式进行取非</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="单引号中使用单引号"><a class="markdownIt-Anchor" href="#单引号中使用单引号"></a> 单引号中使用单引号</h1>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;i&#x27;&#x27;m liwei&#x27; =&gt; i&#x27;m liwei</span><br></pre></td></tr></table></figure>
+<h1 id="null"><a class="markdownIt-Anchor" href="#null"></a> NULL</h1>
+<ul>
+<li>
+<p>与其他进行运算值都是NULL</p>
+</li>
+<li>
+<p>与其他值比较结果为unknow</p>
+</li>
+<li>
+<p>判断是否为空</p>
+<p>where is now; / where is not null;</p>
+</li>
+</ul>
+<h1 id="字符串比较"><a class="markdownIt-Anchor" href="#字符串比较"></a> 字符串比较</h1>
+<ul>
+<li>
+<h4 id="注意这里进行字符串比较的时候会忽略sql为了保证字符串长度而填充的填充字符而sql串的模式匹配中不会忽略"><a class="markdownIt-Anchor" href="#注意这里进行字符串比较的时候会忽略sql为了保证字符串长度而填充的填充字符而sql串的模式匹配中不会忽略"></a> 注意这里进行字符串比较的时候会忽略SQL为了保证字符串长度而填充的填充字符，而SQL串的模式匹配中不会忽略。</h4>
+</li>
+<li>
+<h4 id="在sql模式匹配中使用trim函数取出字符串两端的空格"><a class="markdownIt-Anchor" href="#在sql模式匹配中使用trim函数取出字符串两端的空格"></a> 在SQL模式匹配中使用trim函数取出字符串两端的空格。</h4>
+</li>
+</ul>
+<h1 id="字符串模式匹配"><a class="markdownIt-Anchor" href="#字符串模式匹配"></a> 字符串模式匹配</h1>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">S LIKE P</span><br><span class="line">S NOT LIKE P</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>S是字符串</p>
+</li>
+<li>
+<p>P是模式(pattern)</p>
+</li>
+<li>
+<h4 id="模式匹配中的特殊字符"><a class="markdownIt-Anchor" href="#模式匹配中的特殊字符"></a> 模式匹配中的特殊字符</h4>
+<ul>
+<li>%，能匹配任意长度的串</li>
+<li>_ ，能匹配s中任何一个字符</li>
+</ul>
+</li>
+<li>
+<h4 id="模式匹配中使用和_使用转义字符"><a class="markdownIt-Anchor" href="#模式匹配中使用和_使用转义字符"></a> 模式匹配中使用%和_，使用转义字符</h4>
+<blockquote>
+<p>like表达式中的转移字符</p>
+<p>like表达式中没有固定的转移字符，而是通过 escape关键字指定转义字符。</p>
+<p>比如：WHERE beer LIKE ‘x%x%’ ESCAPE ‘x’;就是指定x为转义字符。</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="输出排序"><a class="markdownIt-Anchor" href="#输出排序"></a> 输出排序</h1>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ORDER BY &lt;list of attributes&gt;</span><br><span class="line"><span class="keyword">select</span> *</span><br><span class="line"><span class="keyword">from</span> movies</span><br><span class="line"><span class="keyword">where</span> studioName = <span class="string">&#x27;Disney&#x27;</span> <span class="keyword">AND</span> <span class="keyword">year</span> = <span class="number">1990</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">length</span>,title <span class="keyword">ASC</span>;</span><br><span class="line">//ORDER BY length,title DESC;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<h4 id="asc-desc指定是升序还是降序"><a class="markdownIt-Anchor" href="#asc-desc指定是升序还是降序"></a> ASC DESC指定是升序还是降序</h4>
+</li>
+<li>
+<h4 id="order语句后面也可以是表达式"><a class="markdownIt-Anchor" href="#order语句后面也可以是表达式"></a> ORDER语句后面也可以是表达式</h4>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> R</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> A+B <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="多表查询多关系查询"><a class="markdownIt-Anchor" href="#多表查询多关系查询"></a> 多表查询，多关系查询</h1>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> l1.drinker</span><br><span class="line"><span class="keyword">FROM</span> likes l1,likes l2,likes l3</span><br><span class="line"><span class="keyword">WHERE</span> l1.drinker = l2.drinker <span class="keyword">AND</span> l1.drinker = l3.drinker</span><br><span class="line"><span class="keyword">AND</span> l1.beer &lt; l2.beer <span class="keyword">AND</span> l2.beer &lt; l3.beer;</span><br></pre></td></tr></table></figure>
+<h1 id="元组变量"><a class="markdownIt-Anchor" href="#元组变量"></a> 元组变量</h1>
+<ul>
+<li>
+<h4 id="通俗来讲就是给关系起个别名"><a class="markdownIt-Anchor" href="#通俗来讲就是给关系起个别名"></a> 通俗来讲就是给关系起个别名</h4>
+</li>
+<li>
+<h4 id="在一个select-from-where语句中要将同一个关系中的不同元组进行比较的时候"><a class="markdownIt-Anchor" href="#在一个select-from-where语句中要将同一个关系中的不同元组进行比较的时候"></a> 在一个select-from-where语句中，要将同一个关系中的不同元组进行比较的时候</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> *</span><br><span class="line"><span class="keyword">from</span> likes l1,likes l2</span><br><span class="line"><span class="keyword">where</span> l1.name = l2.name <span class="keyword">and</span> l1.beer &lt;&gt; l2.beer;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="查询的结果是一个bag即没有不重复性"><a class="markdownIt-Anchor" href="#查询的结果是一个bag即没有不重复性"></a> 查询的结果是一个Bag，即没有不重复性</h1>
+<ul>
+<li>
+<h4 id="但是当进行查询的并-交-差的时候会先去重转换成一个集合因为这样效率高"><a class="markdownIt-Anchor" href="#但是当进行查询的并-交-差的时候会先去重转换成一个集合因为这样效率高"></a> 但是当进行查询的并、交、差的时候会先去重，转换成一个集合，因为这样效率高。</h4>
+</li>
+<li>
+<p>理论上的方法是先对两个查询结果进行一个排序，然后遍历一遍去重，然后在遍历进行集合运算。</p>
+</li>
+</ul>
+<h1 id="controlling-duplicate-elimination控制重复消除"><a class="markdownIt-Anchor" href="#controlling-duplicate-elimination控制重复消除"></a> Controlling Duplicate Elimination控制重复消除</h1>
+<ul>
+<li>
+<h4 id="强制去重"><a class="markdownIt-Anchor" href="#强制去重"></a> 强+/制去重</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">distinct</span> price</span><br><span class="line"><span class="keyword">from</span> sells;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<h4 id="强制将集合转换为bag在子查询关系运算中使用all关键字"><a class="markdownIt-Anchor" href="#强制将集合转换为bag在子查询关系运算中使用all关键字"></a> 强制将集合转换为Bag(在子查询关系运算中使用ALL关键字)</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">select</span> drinker <span class="keyword">from</span> frequents)</span><br><span class="line"><span class="keyword">union</span> <span class="keyword">all</span></span><br><span class="line">(<span class="keyword">select</span> drinker <span class="keyword">from</span> likes);</span><br><span class="line"></span><br><span class="line">(<span class="keyword">select</span> drinker <span class="keyword">from</span> frequents)</span><br><span class="line"><span class="keyword">intersect</span> <span class="keyword">all</span></span><br><span class="line">(<span class="keyword">select</span> drinker <span class="keyword">from</span> likes);</span><br><span class="line"></span><br><span class="line">(<span class="keyword">select</span> drinker <span class="keyword">from</span> frequents)</span><br><span class="line"><span class="keyword">except</span> <span class="keyword">all</span></span><br><span class="line">(<span class="keyword">select</span> drinker <span class="keyword">from</span> likes);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="查询的并-交-差"><a class="markdownIt-Anchor" href="#查询的并-交-差"></a> 查询的并、交、差</h1>
+<ul>
+<li>
+<h4 id="intersect-交"><a class="markdownIt-Anchor" href="#intersect-交"></a> intersect 交</h4>
+</li>
+<li>
+<h4 id="union-并"><a class="markdownIt-Anchor" href="#union-并"></a> union 并</h4>
+</li>
+<li>
+<h4 id="except-差"><a class="markdownIt-Anchor" href="#except-差"></a> except 差</h4>
+<blockquote>
+<p>这三个运算都是查询结果与查询结果之间进行的。两个subquery用小括号括起来，中间用这三个运算符连接。</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="使用子查询subquery的情况"><a class="markdownIt-Anchor" href="#使用子查询subquery的情况"></a> 使用子查询(subquery)的情况</h1>
+<ul>
+<li>
+<h4 id="出现在from中"><a class="markdownIt-Anchor" href="#出现在from中"></a> 出现在from中</h4>
+<blockquote>
+<p>若出现在from中则在子查询后面应该紧跟该子查询结果对应的元组变量(tuple variable)</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> likes.name</span><br><span class="line"><span class="keyword">from</span> (slect * <span class="keyword">from</span> bars) B,likes</span><br><span class="line"><span class="keyword">where</span> B.beer = likes.beer <span class="keyword">and</span> b.bar = likes.bar;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<h4 id="出现在where中"><a class="markdownIt-Anchor" href="#出现在where中"></a> 出现在where中</h4>
+<ul>
+<li>若子查询结果为一个元组，则这个元组的具体属性值就可以用来进行比较</li>
+<li>若子查询结果为一个关系，则可以在where以不同的方式使用，就和普通的关系类似。</li>
+</ul>
+</li>
+</ul>
+<h1 id="关系的条件表达式值与关系之间"><a class="markdownIt-Anchor" href="#关系的条件表达式值与关系之间"></a> 关系的条件表达式(值与关系之间)</h1>
+<ul>
+<li>
+<h4 id="exists"><a class="markdownIt-Anchor" href="#exists"></a> EXISTS</h4>
+<ul>
+<li>EXISTS R 若R不为空，则该值为true，反之为假</li>
+<li>NOT EXISTS R</li>
+</ul>
+</li>
+<li>
+<h4 id="in"><a class="markdownIt-Anchor" href="#in"></a> IN</h4>
+<ul>
+<li>IN R</li>
+<li>NOT IN R</li>
+</ul>
+</li>
+<li>
+<h4 id="any"><a class="markdownIt-Anchor" href="#any"></a> ANY</h4>
+<ul>
+<li>s &gt; ANY R</li>
+<li>NOT s &gt; ANY R</li>
+</ul>
+</li>
+<li>
+<h4 id="all"><a class="markdownIt-Anchor" href="#all"></a> ALL</h4>
+<ul>
+<li>s &gt; ALL R</li>
+<li>NOT s &gt; ALL R</li>
+</ul>
+</li>
+</ul>
+<h1 id="元组的条件表达式元组与关系之间"><a class="markdownIt-Anchor" href="#元组的条件表达式元组与关系之间"></a> 元组的条件表达式(元组与关系之间)</h1>
+<ul>
+<li>
+<h4 id="如果元组与该关系的元组之间有相同的组成分量component个数那么这个比较是有意义的"><a class="markdownIt-Anchor" href="#如果元组与该关系的元组之间有相同的组成分量component个数那么这个比较是有意义的"></a> 如果元组与该关系的元组之间有相同的组成分量(component)个数，那么这个比较是有意义的</h4>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">name</span></span><br><span class="line"><span class="keyword">from</span> MovieExec</span><br><span class="line"><span class="keyword">where</span> cert<span class="comment"># IN</span></span><br><span class="line">(<span class="keyword">select</span> producerC<span class="comment">#</span></span><br><span class="line"><span class="keyword">from</span> Movies</span><br><span class="line"><span class="keyword">where</span> (title,<span class="keyword">year</span>) <span class="keyword">IN</span></span><br><span class="line"> 	(<span class="keyword">select</span> movieTitle,movieYear</span><br><span class="line">    <span class="keyword">from</span> StarsIn</span><br><span class="line">     <span class="keyword">Where</span> starName = <span class="string">&#x27;Harrison Ford&#x27;</span></span><br><span class="line">    )</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h1 id="关联子查询相关子查询correlated-subquery"><a class="markdownIt-Anchor" href="#关联子查询相关子查询correlated-subquery"></a> 关联子查询，相关子查询(correlated subquery)</h1>
+<ul>
+<li>
+<h4 id="在子查询过程中要用到子查询外部关系的元组"><a class="markdownIt-Anchor" href="#在子查询过程中要用到子查询外部关系的元组"></a> 在子查询过程中要用到子查询外部关系的元组</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> title </span><br><span class="line"><span class="keyword">from</span> movies <span class="keyword">Old</span></span><br><span class="line"><span class="keyword">where</span> <span class="keyword">year</span> &lt; <span class="keyword">any</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">select</span> <span class="keyword">year</span></span><br><span class="line">    <span class="keyword">from</span> movies</span><br><span class="line">    <span class="keyword">where</span> title = Old.title</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>属性名子的作用范围，即就近原则，近的找不到关系中有该属性，则去远处找</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="sql连接表达式"><a class="markdownIt-Anchor" href="#sql连接表达式"></a> SQL连接表达式</h1>
+<h1 id="cross-join-笛卡尔乘积"><a class="markdownIt-Anchor" href="#cross-join-笛卡尔乘积"></a> cross join 笛卡尔乘积</h1>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> *</span><br><span class="line"><span class="keyword">from</span> likes <span class="keyword">cross</span> <span class="keyword">join</span> sells;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>列数相加，行数相乘</p>
+</blockquote>
+<h1 id="自然连接natural-join"><a class="markdownIt-Anchor" href="#自然连接natural-join"></a> 自然连接Natural Join</h1>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> likes.beer,drinker,bar,price</span><br><span class="line"><span class="keyword">from</span> likes,sells</span><br><span class="line"><span class="keyword">where</span> likes.beer = sells.beer;</span><br><span class="line">//先是做一个笛卡尔乘积，然后两个表中相同的属性值相同的元组成为连接结果，且同名属性值相同的合并。</span><br><span class="line">//下面这三种写法是等价的，只是nutural join结果会合并属性列</span><br><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> likes <span class="keyword">NATURAL</span> <span class="keyword">JOIN</span> sells;</span><br><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> likes <span class="keyword">JOIN</span> sells <span class="keyword">ON</span> likes.beer = sells.beer;</span><br><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> likes <span class="keyword">CROSS</span> <span class="keyword">JOIN</span> sells</span><br><span class="line"><span class="keyword">WHERE</span> likes.beer = sells.beer;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>先做一个 <strong>笛卡尔乘积</strong></p>
+<p>如果有多个同名的属性，则保留下来的成为结果的元组中的这些属性值都要相同。</p>
+<p><strong>且进行了合并</strong></p>
+</blockquote>
+<h1 id="theta-join"><a class="markdownIt-Anchor" href="#theta-join"></a> Theta Join</h1>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> *</span><br><span class="line"><span class="keyword">from</span> drinkers [<span class="keyword">inner</span>] <span class="keyword">join</span> frequents <span class="keyword">on</span> <span class="keyword">name</span> = drinker</span><br><span class="line">[<span class="keyword">where</span> ...]</span><br><span class="line">;</span><br><span class="line">//就是先做笛卡尔成绩，然后根据这个条件筛选,还可以继续根where</span><br><span class="line">//相当于与</span><br><span class="line"><span class="keyword">select</span> *</span><br><span class="line"><span class="keyword">from</span> drinkers,frequents</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">name</span> = drinker;</span><br></pre></td></tr></table></figure>
+<h1 id="xxx-outer-joins"><a class="markdownIt-Anchor" href="#xxx-outer-joins"></a> XXX Outer joins</h1>
+<blockquote>
+<p>注意outer join 是针对前面的natural join 和 join on的</p>
+<p>所以分为</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">natural left outer join</span><br><span class="line">natural right outer join</span><br><span class="line">natural full outer join</span><br><span class="line"></span><br><span class="line">left outer join on</span><br><span class="line">right outer join on</span><br><span class="line">full outer join on</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">natural LEFT OUTER JOIN</span><br><span class="line">//连接关键字左边的表中的所有的元组都会列出来，如果该元组不满足条件则列出NULL</span><br><span class="line">natural RIGHT OUTER JOIN</span><br><span class="line">natural FULL OUTER JOIN</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<h4 id="natural-left-outer-join"><a class="markdownIt-Anchor" href="#natural-left-outer-join"></a> natural left outer join</h4>
+<blockquote>
+<p><strong>包含nutural join的结果，如果查询结果中没有包含关键词左边的关系中的某个元素，则会把这个元素加入结果，没有和右边关系匹配上的属性值由NULL补全。</strong></p>
+</blockquote>
+</li>
+<li>
+<h4 id="natural-right-outer-join"><a class="markdownIt-Anchor" href="#natural-right-outer-join"></a> natural right outer join</h4>
+<blockquote>
+<p><strong>包含nutural join的结果，如果查询结果中没有包含关键词右边的关系中的某个元素，则会把这个元素加入结果，没有和左边关系匹配上的属性值由NULL补全。</strong></p>
+</blockquote>
+</li>
+<li>
+<h4 id="natural-full-outer-join"><a class="markdownIt-Anchor" href="#natural-full-outer-join"></a> natural full outer join</h4>
+<blockquote>
+<p><strong>包含nutural join的结果，如果查询结果中没有包含关键词左边或右边的关系中的某个元素，则会把这个元素加入结果，没有和右边或左边关系匹配上的属性值由NULL补全。</strong></p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>如果A natural join B的结果中，A 和 B的同名属性为attribute1，则如果结果中包含A中attribute1(转换成set)的所有值，且包含B中attribute1(转换成set)的所有值，则上面三种outer join查询出来的结果都一样。</p>
+</blockquote>
+<h1 id="给关系起别名后不能再from这个别名"><a class="markdownIt-Anchor" href="#给关系起别名后不能再from这个别名"></a> 给关系起别名后不能再from这个别名</h1>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> likes.drinker</span><br><span class="line"><span class="keyword">FROM</span> likes,(((<span class="keyword">select</span> <span class="keyword">name</span> <span class="keyword">from</span> bars)<span class="keyword">UNION</span>(<span class="keyword">select</span> <span class="keyword">name</span> <span class="keyword">from</span> beers))<span class="keyword">UNION</span>(<span class="keyword">select</span> <span class="keyword">name</span> <span class="keyword">from</span> drinkers))R</span><br><span class="line"><span class="keyword">WHERE</span> likes.beer <span class="keyword">IN</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="keyword">name</span></span><br><span class="line">	<span class="keyword">FROM</span> R</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>不能这样子</p>
+</blockquote>
+<h1 id="例题"><a class="markdownIt-Anchor" href="#例题"></a> 例题</h1>
+<ul>
+<li>找出具有相同口径火炮的船只中火炮数量最多的船只的名字</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">NAME</span></span><br><span class="line"><span class="keyword">FROM</span> Ships</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">CLASS</span> <span class="keyword">IN</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="keyword">CLASS</span></span><br><span class="line">	<span class="keyword">FROM</span> Classes c1</span><br><span class="line">	<span class="keyword">WHERE</span> numGuns &gt;= <span class="keyword">ALL</span></span><br><span class="line">	(</span><br><span class="line">		<span class="keyword">SELECT</span> numGuns</span><br><span class="line">		<span class="keyword">FROM</span> Classes c2</span><br><span class="line">		<span class="keyword">WHERE</span> c1.bore = c2.bore</span><br><span class="line">	);</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">NAME</span></span><br><span class="line"><span class="keyword">FROM</span> Ships</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">CLASS</span> = <span class="keyword">ANY</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="keyword">class</span></span><br><span class="line">	<span class="keyword">FROM</span> Classes c1</span><br><span class="line">	<span class="keyword">WHERE</span> <span class="keyword">NOT</span> <span class="keyword">exists</span></span><br><span class="line">	(</span><br><span class="line">		<span class="keyword">SELECT</span> *</span><br><span class="line">		<span class="keyword">FROM</span> Classes c2</span><br><span class="line">		<span class="keyword">WHERE</span> c1.bore = c2.bore <span class="keyword">AND</span> c1.numGuns &lt; c2.numGuns</span><br><span class="line">	)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h1 id="习题"><a class="markdownIt-Anchor" href="#习题"></a> 习题</h1>
+<ul>
+<li>
+<p>6.3.1</p>
+<ul>
+<li>
+<p>(1)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> maker</span><br><span class="line"><span class="keyword">FROM</span> Product</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">model</span> <span class="keyword">IN</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="keyword">model</span></span><br><span class="line">	<span class="keyword">FROM</span> PC</span><br><span class="line">	<span class="keyword">WHERE</span> speed &gt;= <span class="number">3</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> maker</span><br><span class="line"><span class="keyword">FROM</span> Product,(<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> PC <span class="keyword">WHERE</span> speed &gt;= <span class="number">3</span>) <span class="keyword">high</span></span><br><span class="line"><span class="keyword">WHERE</span> Product.model = high.model;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>(2)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">model</span></span><br><span class="line">    <span class="keyword">FROM</span> Printer</span><br><span class="line"><span class="keyword">WHERE</span> price &gt;= <span class="keyword">ALL</span> </span><br><span class="line">    (</span><br><span class="line">    	<span class="keyword">SELECT</span> price</span><br><span class="line">    	<span class="keyword">FROM</span> Printer</span><br><span class="line">    );</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">model</span></span><br><span class="line">    <span class="keyword">FROM</span> Printer l1</span><br><span class="line">    <span class="keyword">WHERE</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span></span><br><span class="line">    (</span><br><span class="line">    	<span class="keyword">SELECT</span> *</span><br><span class="line">    	<span class="keyword">FROM</span> Printer l2</span><br><span class="line">    	<span class="keyword">WHERE</span> l2.price &gt; l1.price</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>(3)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">model</span></span><br><span class="line"><span class="keyword">FROM</span> Laptop</span><br><span class="line"><span class="keyword">WHERE</span> speed &lt; <span class="keyword">ALL</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> speed</span><br><span class="line">	<span class="keyword">FROM</span> PC</span><br><span class="line">	<span class="keyword">WHERE</span> speed &lt;= <span class="keyword">All</span></span><br><span class="line">	(</span><br><span class="line">		<span class="keyword">SELECT</span> speed</span><br><span class="line">		<span class="keyword">FROM</span> PC</span><br><span class="line">	)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">model</span></span><br><span class="line"><span class="keyword">FROM</span> Laptop l1</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> *</span><br><span class="line">	<span class="keyword">FROM</span> PC</span><br><span class="line">	<span class="keyword">WHERE</span> speed &lt;= l1.speed</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>(4)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">SELECT</span> Product.model</span><br><span class="line">  <span class="keyword">FROM</span> Product</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">model</span> <span class="keyword">IN</span></span><br><span class="line">  (</span><br><span class="line">  	<span class="keyword">SELECT</span> <span class="keyword">model</span></span><br><span class="line">  	<span class="keyword">FROM</span> (((<span class="keyword">select</span> price <span class="keyword">from</span> pc)<span class="keyword">UNION</span>(<span class="keyword">select</span> price <span class="keyword">from</span> Laptop))<span class="keyword">UNION</span>(<span class="keyword">select</span> price <span class="keyword">from</span> Printer)) R</span><br><span class="line">  	<span class="keyword">WHERE</span> price &gt;= <span class="keyword">ALL</span></span><br><span class="line">  	(</span><br><span class="line">  		<span class="keyword">SELECT</span> price</span><br><span class="line">  		<span class="keyword">FROM</span> (((<span class="keyword">select</span> price <span class="keyword">from</span> pc)<span class="keyword">UNION</span>(<span class="keyword">select</span> price <span class="keyword">from</span> Laptop))<span class="keyword">UNION</span>(<span class="keyword">select</span> price <span class="keyword">from</span> Printer))</span><br><span class="line">  	)</span><br><span class="line">  );</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  <span class="keyword">SELECT</span> Product.model</span><br><span class="line">  <span class="keyword">FROM</span> Product</span><br><span class="line">  <span class="keyword">WHERE</span> <span class="keyword">model</span> <span class="keyword">IN</span></span><br><span class="line">  (</span><br><span class="line">  	<span class="keyword">SELECT</span> <span class="keyword">model</span></span><br><span class="line">  	<span class="keyword">FROM</span> (pc <span class="keyword">NATURAL</span> <span class="keyword">FULL</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> Laptop)<span class="keyword">NATURAL</span> <span class="keyword">FULL</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> Printer</span><br><span class="line">  	<span class="keyword">WHERE</span> price &gt;= <span class="keyword">ALL</span></span><br><span class="line">  	(</span><br><span class="line">  		<span class="keyword">SELECT</span> price</span><br><span class="line">  		<span class="keyword">FROM</span> (pc <span class="keyword">NATURAL</span> <span class="keyword">FULL</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> Laptop)<span class="keyword">NATURAL</span> <span class="keyword">FULL</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> Printer</span><br><span class="line">  	)</span><br><span class="line">  );</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>（5）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> maker</span><br><span class="line"><span class="keyword">FROM</span> product</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">model</span> <span class="keyword">IN</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="keyword">model</span></span><br><span class="line">	<span class="keyword">FROM</span> Printer</span><br><span class="line">	<span class="keyword">WHERE</span> price &lt;= <span class="keyword">all</span></span><br><span class="line">	(</span><br><span class="line">		<span class="keyword">SELECT</span> price</span><br><span class="line">		<span class="keyword">FROM</span> Printer</span><br><span class="line">	)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> maker</span><br><span class="line"><span class="keyword">FROM</span> product</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">model</span>=<span class="keyword">ANY</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="keyword">model</span></span><br><span class="line">	<span class="keyword">FROM</span> Printer p1</span><br><span class="line">	<span class="keyword">WHERE</span> <span class="keyword">NOT</span> <span class="keyword">exists</span></span><br><span class="line">	(</span><br><span class="line">		<span class="keyword">SELECT</span> *</span><br><span class="line">		<span class="keyword">FROM</span> Printer p2</span><br><span class="line">		<span class="keyword">WHERE</span> p2.price &lt; p1.price</span><br><span class="line">	)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>(6)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> maker</span><br><span class="line"><span class="keyword">FROM</span> product</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">model</span> <span class="keyword">IN</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="keyword">model</span></span><br><span class="line">	<span class="keyword">FROM</span> PC</span><br><span class="line">	<span class="keyword">WHERE</span> ram &lt;= <span class="keyword">ALL</span>(<span class="keyword">SELECT</span> ram <span class="keyword">FROM</span> PC) <span class="keyword">AND</span> speed &gt;= <span class="keyword">ALL</span>(<span class="keyword">SELECT</span> speed <span class="keyword">FROM</span> PC)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> maker</span><br><span class="line"><span class="keyword">FROM</span> product</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">model</span> =<span class="keyword">ANY</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="keyword">model</span></span><br><span class="line">	<span class="keyword">FROM</span> PC p1</span><br><span class="line">	<span class="keyword">WHERE</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> (<span class="keyword">SELECT</span> ram <span class="keyword">FROM</span> PC p2 <span class="keyword">WHERE</span> p2.ram &lt; p1.ram ) <span class="keyword">AND</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> (<span class="keyword">SELECT</span> speed <span class="keyword">FROM</span> PC p2 <span class="keyword">WHERE</span> p2.speed &gt; p1.speed)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>习题6.3.2</p>
+<ul>
+<li>
+<p>(1)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> country</span><br><span class="line"><span class="keyword">FROM</span> Classes</span><br><span class="line"><span class="keyword">WHERE</span> numGuns &gt;= <span class="keyword">ALL</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> numGuns</span><br><span class="line">	<span class="keyword">FROM</span> Classes</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> country</span><br><span class="line"><span class="keyword">FROM</span> Classes c1</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> </span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> *</span><br><span class="line">	<span class="keyword">FROM</span> Classes c2</span><br><span class="line">	<span class="keyword">WHERE</span> c2.numGuns &gt; c1.numGuns</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>（2）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="keyword">CLASS</span></span><br><span class="line"><span class="keyword">FROM</span> Ships</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NAME</span> <span class="keyword">IN</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> ship</span><br><span class="line">	<span class="keyword">FROM</span> Outcomes</span><br><span class="line">	<span class="keyword">WHERE</span> <span class="keyword">RESULT</span> = sunk</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="keyword">CLASS</span></span><br><span class="line"><span class="keyword">FROM</span> Ships s1</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> *</span><br><span class="line">	<span class="keyword">FROM</span> Outcomes o1</span><br><span class="line">	<span class="keyword">WHERE</span> s1.ship = o1.name <span class="keyword">AND</span> o1.result = <span class="string">&#x27;ok&#x27;</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>(3)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">NAME</span> </span><br><span class="line"><span class="keyword">FROM</span> Ships</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">CLASS</span> <span class="keyword">IN</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="keyword">class</span></span><br><span class="line">	<span class="keyword">FROM</span> Classes</span><br><span class="line">	<span class="keyword">WHERE</span> bore = <span class="number">16</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">NAME</span></span><br><span class="line"><span class="keyword">FROM</span> Ships s1</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> *</span><br><span class="line">	<span class="keyword">FROM</span> Classes c1</span><br><span class="line">	<span class="keyword">WHERE</span> s1.class = c1.class <span class="keyword">AND</span> c1.bore &lt;&gt; <span class="number">16</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>(4)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> battle</span><br><span class="line"><span class="keyword">FROM</span> Outcomes</span><br><span class="line"><span class="keyword">WHERE</span> ship <span class="keyword">IN</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="keyword">name</span></span><br><span class="line">	<span class="keyword">FROM</span> Ships</span><br><span class="line">	<span class="keyword">WHERE</span> <span class="keyword">CLASS</span> = <span class="string">&#x27;Kongo&#x27;</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> battle</span><br><span class="line"><span class="keyword">FROM</span> Outcomes o1</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">EXISTS</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> *</span><br><span class="line">	<span class="keyword">FROM</span> Ships s1</span><br><span class="line">	<span class="keyword">WHERE</span> o1.ship = s1.name <span class="keyword">AND</span> <span class="keyword">CLASS</span> = <span class="string">&#x27;Kongo&#x27;</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>(5)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">NAME</span></span><br><span class="line">    <span class="keyword">FROM</span> Ships</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">CLASS</span> <span class="keyword">IN</span></span><br><span class="line">    (</span><br><span class="line">    	<span class="keyword">SELECT</span> <span class="keyword">CLASS</span></span><br><span class="line">    	<span class="keyword">FROM</span> Classes c1</span><br><span class="line">    	<span class="keyword">WHERE</span> numGuns &gt;= <span class="keyword">ALL</span></span><br><span class="line">    	(</span><br><span class="line">    		<span class="keyword">SELECT</span> numGuns</span><br><span class="line">    		<span class="keyword">FROM</span> Classes c2</span><br><span class="line">    		<span class="keyword">WHERE</span> c1.bore = c2.bore</span><br><span class="line">    	);</span><br><span class="line">    );</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">NAME</span></span><br><span class="line">    <span class="keyword">FROM</span> Ships</span><br><span class="line">    <span class="keyword">WHERE</span> <span class="keyword">CLASS</span> = <span class="keyword">ANY</span></span><br><span class="line">    (</span><br><span class="line">    	<span class="keyword">SELECT</span> <span class="keyword">class</span></span><br><span class="line">    	<span class="keyword">FROM</span> Classes c1</span><br><span class="line">    	<span class="keyword">WHERE</span> <span class="keyword">NOT</span> <span class="keyword">exists</span></span><br><span class="line">    	(</span><br><span class="line">    		<span class="keyword">SELECT</span> *</span><br><span class="line">    		<span class="keyword">FROM</span> Classes c2</span><br><span class="line">    		<span class="keyword">WHERE</span> c1.bore = c2.bore <span class="keyword">AND</span> c1.numGuns &lt; c2.numGuns</span><br><span class="line">    	)</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="homework1"><a class="markdownIt-Anchor" href="#homework1"></a> homework1</h1>
+<blockquote>
+<p><strong>Homework</strong></p>
+<p>Consider the following schema:</p>
+<p>Supplier(sid: integer, sname: string, address: string)</p>
+<p>Part(pid: integer, pname: string, color: string)</p>
+<p>Catalog(sid: integer, pid: integer, cost: real)</p>
+<p>The relation Supplier stores suppliers and the key of that relation is sid.</p>
+<p>The relation Part  stores parts,  and pid is the key of that relation.</p>
+<p>Finally, Catalog stores which  supplier  supplies which part at which cost.  The key is the combination of the two attributes sid  and pid.</p>
+<p><strong>Write queries in SQL.</strong></p>
+<ol>
+<li>Find the names of suppliers who supply  some red part.</li>
+<li>Find the IDs  of suppliers who supply some  red part and some green part.</li>
+<li>Find pairs of IDs such that the supplier with the first ID charges more for some part  than the supplier  with the second ID.</li>
+<li>Find the IDs  of suppliers who supply  only red parts.</li>
+<li>Find the IDs  of suppliers who supply every part.</li>
+</ol>
+</blockquote>
+<ul>
+<li>
+<p>1</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">distinct</span> s.sname</span><br><span class="line"><span class="keyword">FROM</span> Supplier s,<span class="keyword">Catalog</span> c,part p</span><br><span class="line"><span class="keyword">WHERE</span> s.sid = c.sid <span class="keyword">AND</span> p.pid = c.pid <span class="keyword">AND</span> p.color = <span class="string">&#x27;red&#x27;</span>;	</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">distinct</span> sname</span><br><span class="line"><span class="keyword">FROM</span> Supplier</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">sid</span> <span class="keyword">IN</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="keyword">sid</span></span><br><span class="line">	<span class="keyword">FROM</span> <span class="keyword">Catalog</span> </span><br><span class="line">	<span class="keyword">WHERE</span> pid <span class="keyword">IN</span></span><br><span class="line">	(</span><br><span class="line">		<span class="keyword">SELECT</span> pid</span><br><span class="line">		<span class="keyword">FROM</span> Part</span><br><span class="line">		<span class="keyword">WHERE</span> color = <span class="string">&#x27;red&#x27;</span></span><br><span class="line">	)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">distinct</span> sname</span><br><span class="line"><span class="keyword">FROM</span> Supplier</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">sid</span> <span class="keyword">IN</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="keyword">sid</span></span><br><span class="line">	<span class="keyword">FROM</span> <span class="keyword">CATALOG</span> c1</span><br><span class="line">	<span class="keyword">WHERE</span> <span class="keyword">EXISTS</span> </span><br><span class="line">	(</span><br><span class="line">		<span class="keyword">SELECT</span> *</span><br><span class="line">		<span class="keyword">FROM</span> Part p1</span><br><span class="line">		<span class="keyword">WHERE</span> p1.pid = c1.pid <span class="keyword">AND</span> color = <span class="string">&#x27;red&#x27;</span></span><br><span class="line">	)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">distinct</span> sname</span><br><span class="line"><span class="keyword">FROM</span> ((Supplier <span class="keyword">NATURAL</span> <span class="keyword">JOIN</span> <span class="keyword">Catalog</span>)<span class="keyword">NATURAL</span> <span class="keyword">JOIN</span> Part)n</span><br><span class="line"><span class="keyword">WHERE</span> n.color = <span class="string">&#x27;red&#x27;</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>2</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">sid</span></span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">Catalog</span></span><br><span class="line"><span class="keyword">WHERE</span> pid <span class="keyword">IN</span> (<span class="keyword">SELECT</span> pid <span class="keyword">FROM</span> Part <span class="keyword">WHERE</span> color = <span class="string">&#x27;red&#x27;</span>) <span class="keyword">AND</span> pid <span class="keyword">IN</span> (<span class="keyword">SELECT</span> pid <span class="keyword">FROM</span> Part <span class="keyword">WHERE</span> color = <span class="string">&#x27;green&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(</span><br><span class="line">		<span class="keyword">SELECT</span> c.sid <span class="keyword">FROM</span> <span class="keyword">Catalog</span> c,Part p <span class="keyword">WHERE</span> c.pid = p.pid <span class="keyword">AND</span> color = <span class="string">&#x27;red&#x27;</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">INTERSECT</span></span><br><span class="line">(</span><br><span class="line">		<span class="keyword">SELECT</span> c.sid <span class="keyword">FROM</span> <span class="keyword">Catalog</span> c,Part p <span class="keyword">WHERE</span> c.pid = p.pid <span class="keyword">AND</span> color = <span class="string">&#x27;green&#x27;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">distinct</span> n1.sid</span><br><span class="line"><span class="keyword">FROM</span> (<span class="keyword">Catalog</span> <span class="keyword">NATURAL</span> <span class="keyword">JOIN</span> Part)n1 <span class="keyword">JOIN</span> (<span class="keyword">Catalog</span> <span class="keyword">NATURAL</span> <span class="keyword">JOIN</span> Part)n2 <span class="keyword">ON</span> n1.sid = n2.sid</span><br><span class="line"><span class="keyword">WHERE</span> n1.color = <span class="string">&#x27;red&#x27;</span> <span class="keyword">AND</span> n2.color = <span class="string">&#x27;green&#x27;</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>3</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">SELECT</span> c1.sid,c2.sid</span><br><span class="line">  <span class="keyword">FROM</span> <span class="keyword">Catalog</span> c1,<span class="keyword">Catalog</span> c2</span><br><span class="line"><span class="keyword">WHERE</span> c1.pid = c2.pid <span class="keyword">AND</span> c1.sid &lt;&gt; c2.sid <span class="keyword">AND</span> c1.cost &gt; c2.pid;</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  <span class="keyword">SELECT</span> c1.sid,c2.sid</span><br><span class="line">  <span class="keyword">FROM</span> <span class="keyword">Catalog</span> c1 <span class="keyword">JOIN</span> <span class="keyword">Catalog</span> c2 <span class="keyword">ON</span> (c1.pid = c2.pid <span class="keyword">AND</span> c1.sid &lt;&gt; c2.sid <span class="keyword">AND</span> c1.cost &gt; c2.cost);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>4</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">sid</span></span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">Catalog</span> c1</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">SELECT</span> *</span><br><span class="line">	<span class="keyword">FROM</span> Part p1</span><br><span class="line">	<span class="keyword">WHERE</span> p1.sid = c1.sid <span class="keyword">AND</span> p1.color &lt;&gt; <span class="string">&#x27;red&#x27;</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">sid</span></span><br><span class="line"><span class="keyword">FROM</span> Supplier s1</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span></span><br><span class="line">(</span><br><span class="line">	(<span class="keyword">Catalog</span> <span class="keyword">NATURAL</span> <span class="keyword">JOIN</span> Part)n1 <span class="keyword">JOIN</span> (<span class="keyword">Catalog</span> <span class="keyword">NATURAL</span> <span class="keyword">JOIN</span> Part)n2 <span class="keyword">ON</span> (s1.sid = n1.sid <span class="keyword">AND</span> n1.sid = n2.sid <span class="keyword">AND</span> (n1.color &lt;&gt; <span class="string">&#x27;red&#x27;</span> <span class="keyword">OR</span> n2.color &lt;&gt; <span class="string">&#x27;red&#x27;</span>))</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>5</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">SELECT</span> <span class="keyword">sid</span></span><br><span class="line">  <span class="keyword">FROM</span> Supplier s1</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> </span><br><span class="line">  (</span><br><span class="line">  	(</span><br><span class="line">  		<span class="keyword">SELECT</span> pid</span><br><span class="line">  		<span class="keyword">FROM</span> Part</span><br><span class="line">  	)</span><br><span class="line">  	<span class="keyword">except</span></span><br><span class="line">  	(</span><br><span class="line">  		<span class="keyword">SELECT</span> pid</span><br><span class="line">  		<span class="keyword">FROM</span> <span class="keyword">Catalog</span> c1</span><br><span class="line">  		<span class="keyword">WHERE</span> c1.pid = s1.pid</span><br><span class="line">  	)</span><br><span class="line">  );</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="sql修改表中元组中元素"><a class="markdownIt-Anchor" href="#sql修改表中元组中元素"></a> SQL修改表中元组中元素</h1>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> tablename</span><br><span class="line"><span class="keyword">set</span> attribute1=value1,attribute2=value2,....</span><br><span class="line"><span class="keyword">where</span> 更新条件表达式;</span><br></pre></td></tr></table></figure>
+<h1 id="sql删除表中元组"><a class="markdownIt-Anchor" href="#sql删除表中元组"></a> SQL删除表中元组</h1>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> tablename</span><br><span class="line"><span class="keyword">where</span> 删除条件表达式;</span><br></pre></td></tr></table></figure>
+<h1 id="聚合函数将多个值聚合成一个值"><a class="markdownIt-Anchor" href="#聚合函数将多个值聚合成一个值"></a> 聚合函数（将多个值聚合成一个值）</h1>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sum(attribute) avg(attribute) count(attribute) min(attribute) max(attribute)</span><br><span class="line">count()<span class="comment">--不会数null</span></span><br><span class="line">count(*) --查找的是元组的数量</span><br></pre></td></tr></table></figure>
+<h1 id="若使用聚合函数select中-其他属性要么使用聚合函数要么使用group-by"><a class="markdownIt-Anchor" href="#若使用聚合函数select中-其他属性要么使用聚合函数要么使用group-by"></a> 若使用聚合函数，select中 其他属性要么使用聚合函数，要么使用group by</h1>
+<ul>
+<li>错误代码</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> bar, <span class="keyword">MIN</span>(price)</span><br><span class="line"><span class="keyword">FROM</span> Sells</span><br><span class="line"><span class="keyword">WHERE</span> beer = <span class="string">&#x27;喜力&#x27;</span>;</span><br><span class="line"><span class="comment">--这个代码是错误的</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>正确代码</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> bar, price <span class="keyword">FROM</span> Sells</span><br><span class="line"><span class="keyword">WHERE</span> beer = <span class="string">&#x27;喜 力&#x27;</span> </span><br><span class="line"><span class="keyword">AND</span> price = ( </span><br><span class="line">	<span class="keyword">SELECT</span> <span class="keyword">MIN</span>(price) <span class="keyword">FROM</span> Sells</span><br><span class="line">	<span class="keyword">WHERE</span> beer = <span class="string">&#x27;喜力&#x27;</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="group-by分组"><a class="markdownIt-Anchor" href="#group-by分组"></a> GROUP BY分组</h1>
+<ul>
+<li>
+<p>对查询结果中的元组的性质有限制的话，在where语句中进行限制</p>
+</li>
+<li>
+<p>对group by分组的整体的性质有限制的话，在group by语句后面加上having限制</p>
+</li>
+<li>
+<p>分完组后select对每一组分别进行统计。</p>
+</li>
+</ul>
+<blockquote>
+<p>一个关系中任何一个属性使用了聚合函数，则其他属性要么也使用聚合函数，要么使用Group by</p>
+</blockquote>
+<blockquote>
+<p>使用group by后，select的作用对象就成了<strong>每个分组</strong></p>
+</blockquote>
+<h1 id="having-只能对分组整体进行限制"><a class="markdownIt-Anchor" href="#having-只能对分组整体进行限制"></a> having 只能对分组整体进行限制</h1>
+<ul>
+<li>若出现having 则必须放在group by后面，对每个分组进行判断，将分组当成一个整体，不是一个一个元组判断。</li>
+</ul>
+<h1 id="聚合函数不能出现在where语句中"><a class="markdownIt-Anchor" href="#聚合函数不能出现在where语句中"></a> 聚合函数不能出现在where语句中</h1>
+<ul>
+<li>因为where中式 **一个一个元组 **带进去判断where条件的，但是聚合函数用到了整个属性</li>
+</ul>
+<h1 id="聚合函数和分组中的null值"><a class="markdownIt-Anchor" href="#聚合函数和分组中的null值"></a> 聚合函数和分组中的NULL值</h1>
+<ul>
+<li>NULL对平均值、求和、最大值、最小值、计数都不做贡献</li>
+<li>分组中对NULL值没有要求，可以出现NULL</li>
+<li>如果对空包(只有null)计数，则为零，其他聚合运算结果为null</li>
+</ul>
+<h1 id="属性的默认值"><a class="markdownIt-Anchor" href="#属性的默认值"></a> 属性的默认值</h1>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> tablename</span><br><span class="line">(</span><br><span class="line">	attribute1 type1 <span class="keyword">default</span> defaultvalue</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h1 id="表的更新"><a class="markdownIt-Anchor" href="#表的更新"></a> 表的更新</h1>
+<ul>
+<li>
+<p>insert</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> likes(beer,drinker)</span><br><span class="line"><span class="keyword">values</span>();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>忘记表中attribute的顺序，可以指定插入值对应的属性</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> drinkers(<span class="keyword">name</span>)</span><br><span class="line"><span class="keyword">values</span>();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>插入部分的值</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> tablename</span><br><span class="line">(</span><br><span class="line">	subquery</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>插入多个元组</p>
+</blockquote>
+</li>
+<li>
+<p>delete</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> </span><br><span class="line"><span class="keyword">from</span> tablename</span><br><span class="line"><span class="keyword">where</span> condition;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> *</span><br><span class="line"><span class="keyword">FROM</span> Beers b</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">EXISTS</span> (</span><br><span class="line">			<span class="keyword">SELECT</span> <span class="keyword">name</span> <span class="keyword">FROM</span> Beers</span><br><span class="line">			<span class="keyword">WHERE</span> manf = b.manf <span class="keyword">AND</span></span><br><span class="line">			<span class="keyword">name</span> &lt;&gt; b.name);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>删除时先给满足条件的元组进行标记，而不是边删边查</p>
+</blockquote>
+</li>
+<li>
+<p>update</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> tablename</span><br><span class="line"><span class="keyword">set</span> attribute1 = <span class="keyword">value</span></span><br><span class="line"><span class="keyword">where</span> conditions;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="views视图和indexes索引"><a class="markdownIt-Anchor" href="#views视图和indexes索引"></a> (views)视图和(indexes)索引</h1>
+<ul>
+<li>a view is a relation defined in terms of stored tables(called base tables) and other views</li>
+</ul>
+<blockquote>
+<p>视图依赖于其它的表或者其它的视图，所以 必须要有表</p>
+</blockquote>
+<ul>
+<li>
+<p>two kinds:</p>
+<ul>
+<li>
+<p>virtual = not stored in the database;(默认情况)</p>
+<p>just a query for constructing the relation</p>
+<blockquote>
+<p>不会创建表，一个表中有敏感信息，要提供有选择性的服务，这时候就能提供视图，通过视图进行部分信息展示。</p>
+<p>对多个表的复杂查询定义成一个视图，然后之后的复杂查询可直接对这个视图进行查询</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--virtual</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> &lt;<span class="keyword">name</span>&gt; [<span class="keyword">attributes</span>](为<span class="keyword">select</span>选择的内容重命名，可省略，否则用<span class="keyword">query</span>中的属性名)</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line">	&lt;<span class="keyword">query</span>&gt;;</span><br><span class="line">	</span><br><span class="line"><span class="comment">--materialized</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">materialized</span> <span class="keyword">view</span> &lt;viewname&gt;[<span class="keyword">attributes</span>]</span><br><span class="line"><span class="keyword">as</span> </span><br><span class="line">	&lt;<span class="keyword">query</span>&gt;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> CanDrink(drinker,beer)<span class="comment">--没有指定属性，则用query中的drinker,beer属性</span></span><br><span class="line"><span class="keyword">as</span></span><br><span class="line">	<span class="keyword">select</span> drinker,beer</span><br><span class="line">	<span class="keyword">from</span> frequents,sells</span><br><span class="line">	<span class="keyword">where</span> frequents.bar = sells.bar;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>materialized(物化的) = actually constructed and stored</p>
+</li>
+</ul>
+</li>
+<li>
+<p>对视图的查询</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> beer </span><br><span class="line"><span class="keyword">from</span> CanDrink</span><br><span class="line"><span class="keyword">where</span> drinker = <span class="string">&#x27;Tony Hoare&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--相当于</span></span><br><span class="line"><span class="keyword">select</span> beer </span><br><span class="line"><span class="keyword">from</span> </span><br><span class="line">(</span><br><span class="line">	<span class="keyword">select</span> drinker,beer</span><br><span class="line">	<span class="keyword">from</span> frequents,sells</span><br><span class="line">	<span class="keyword">where</span> frequents.bar = sells.bar</span><br><span class="line">) CanDrink</span><br><span class="line"><span class="keyword">where</span> drinker = <span class="string">&#x27; &#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--系统优化成</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> beer</span><br><span class="line"><span class="keyword">from</span> frequents,sells</span><br><span class="line"><span class="keyword">where</span> frequents.bar = sells.bar <span class="keyword">and</span> drinker = <span class="string">&#x27; &#x27;</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>对视图的修改</p>
+<blockquote>
+<p>类似于对视图的查询</p>
+<p>opengauss中禁止对视图的修改，因为视图的目的就是给客户进行信息的展示</p>
+<p>sqlserver中支持</p>
+</blockquote>
+<ul>
+<li>
+<p>重命名视图</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">rename</span> <span class="keyword">view</span> viewname1 <span class="keyword">to</span> viewname2;<span class="comment">--sql中</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>删除视图</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">view</span> viewname;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>物化的视图</p>
+<blockquote>
+<p>物化的视图查询快，但是</p>
+<p>如果数据源的表改变了，视图应该保持一致(阶段性更新)</p>
+<p>但是如果表变化的频率太快，则不太适合</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="sql-tuning-advisorsta"><a class="markdownIt-Anchor" href="#sql-tuning-advisorsta"></a> SQL Tuning Advisor(STA)</h1>
+<ul>
+<li>sql自动优化</li>
+</ul>
+<h1 id="索引"><a class="markdownIt-Anchor" href="#索引"></a> 索引</h1>
+<ul>
+<li>
+<p>加速数据的访问</p>
+<p>数据结构使用的是B-tree</p>
+</li>
+<li>
+<p>创建索引</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--一个索引对应很多值</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">index</span> indname <span class="keyword">on</span> realtion(<span class="keyword">attribute</span>);  </span><br><span class="line"><span class="keyword">create</span> <span class="keyword">index</span> indname <span class="keyword">on</span> realtion(attribute1,attribute2,...);</span><br><span class="line"></span><br><span class="line"><span class="comment">--一个索引对应一个值</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">unique</span> <span class="keyword">index</span> indname <span class="keyword">on</span> relation(<span class="keyword">attribute</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>索引使用</p>
+<ul>
+<li>
+<p>只有当数据量很大的时候，定义索引后才会使用</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">index</span> beerind <span class="keyword">on</span> beers(manf);  </span><br><span class="line"><span class="keyword">create</span> <span class="keyword">index</span> sellind <span class="keyword">on</span> sells(bar,beer);  </span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> price</span><br><span class="line"><span class="keyword">from</span> beers,sells</span><br><span class="line"><span class="keyword">where</span> manf = <span class="string">&#x27;pete&#x27;&#x27;s&#x27;</span>  <span class="comment">--根据索引查找</span></span><br><span class="line"><span class="keyword">and</span> beers.name = sells.beer <span class="comment">--根据索引查找</span></span><br><span class="line"><span class="keyword">and</span> bar = <span class="string">&#x27;joe&#x27;&#x27;s bar&#x27;</span>; <span class="comment">--根据索引查找</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>运算符只能使用=</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p>我们定义了索引后</p>
+<p>如果经常进行更新操作，索引会降低速率，因为更新后索引也要更新</p>
+</li>
+<li>
+<p>如果不进行查询，则建立索引会降低效率</p>
+</li>
+<li>
+<p>创建primary key或unique key后会自动创建索引，故我们要自己创建索引时要先把主键或者unique key删除掉</p>
+</li>
+</ul>
+<h1 id="实体关系模型entity-relation-model"><a class="markdownIt-Anchor" href="#实体关系模型entity-relation-model"></a> 实体关系模型(Entity-Relation Model)</h1>
+<ul>
+<li>包含约束，不包含操作</li>
+</ul>
+<h1 id="实体集entity"><a class="markdownIt-Anchor" href="#实体集entity"></a> 实体集Entity</h1>
+<ul>
+<li>类似于面向对象中的类</li>
+<li>包含简单的属性(属性不能是集合)</li>
+</ul>
+<h1 id="联系relationship二元"><a class="markdownIt-Anchor" href="#联系relationship二元"></a> 联系relationship(二元)</h1>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/11/IOCKgjGbWM3ZLsD.png" alt="image-20201103164015576.png" /></p>
+<h1 id="联系集relationship-set"><a class="markdownIt-Anchor" href="#联系集relationship-set"></a> 联系集(relationship set)</h1>
+<ul>
+<li>两个有联系的实体集的集合</li>
+</ul>
+<h1 id="多元联系多路联系multiway-relationshiops"><a class="markdownIt-Anchor" href="#多元联系多路联系multiway-relationshiops"></a> 多元联系(多路联系)(Multiway relationshiops)</h1>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/11/KfivRtzYW1MCcAS.png" alt="image-20201103164640201.png" /></p>
+<h1 id="多对多联系many-many-relationships"><a class="markdownIt-Anchor" href="#多对多联系many-many-relationships"></a> 多对多联系(many-many relationships)</h1>
+<ul>
+<li>
+<p>联系关联的任一实体集中的一个实体可以对应其它实体集中的多个实体</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/14/Z9WdYKRjqE1iFAI.png" alt="image.png" /></p>
+</li>
+</ul>
+<h1 id="多对一联系many-one-relationships"><a class="markdownIt-Anchor" href="#多对一联系many-one-relationships"></a> 多对一联系(many-one relationships)</h1>
+<ul>
+<li>
+<p>前一个实体集中的多个实体对应后一个实体集中的至多一个实体</p>
+</li>
+<li>
+<p>后一个实体集中的一个实体对应前一个实体集中的零个、一个、多个实体</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/14/f1FdX2KmrU5T4R3.png" alt="image.png" /></p>
+</li>
+</ul>
+<h1 id="一对一联系one-one-relationships"><a class="markdownIt-Anchor" href="#一对一联系one-one-relationships"></a> 一对一联系(one-one relationships)</h1>
+<ul>
+<li>
+<p>一对一</p>
+<p><img src= "/img/loading.gif" data-lazy-src="G:%5Ctyporaimages%5Cimage-20201114204101921.png" alt="image-20201114204101921" /></p>
+</li>
+</ul>
+<h1 id="联系的多样性mltiplicity"><a class="markdownIt-Anchor" href="#联系的多样性mltiplicity"></a> 联系的多样性(mltiplicity)</h1>
+<ul>
+<li>
+<p>再E/R图中表示联系的多样性</p>
+</li>
+<li>
+<p>多对多</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/11/tEYbOUDJGv78Zfi.png" alt="image-20201103165501064.png" /></p>
+<p>或者在横线上加m,n</p>
+</li>
+<li>
+<p>多对一</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/11/YV5isDBduEX4fKG.png" alt="image-20201103165522220.png" /></p>
+<p>或者在横线上加m,1</p>
+<blockquote>
+<p>如果是尖尖的箭头，则每个人之多有一个最喜欢的啤酒，可以没有</p>
+<p>可以为空</p>
+<p>如果是圆的箭头，则每个人必须有一个最喜欢的啤酒</p>
+<p>not null</p>
+</blockquote>
+</li>
+<li>
+<p>一对一</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/11/DHBsgyJhz5Zxe4C.png" alt="image-20201103170031650.png" /></p>
+<blockquote>
+<p>该联系中，每个厂商必须有销售最好的啤酒，而啤酒不一定能对应上厂商</p>
+<p>所以指向Beer的箭头是圆圆的箭头，表示每个厂商必须要有，而指向厂商的箭头是尖尖的箭头</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="联系上可能有属性attribute-on-relationship"><a class="markdownIt-Anchor" href="#联系上可能有属性attribute-on-relationship"></a> 联系上可能有属性(attribute on relationship)</h1>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/11/uC84gqTfRi6K9ZA.png" alt="image-20201103170329104.png" /></p>
+<ul>
+<li>
+<p>可以将联系的属性做成一个实体集</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/11/QzdowAFmRgPTNSq.png" alt="image-20201103170437300.png" /></p>
+</li>
+</ul>
+<blockquote>
+<p>上图是多对多对一的联系，应该指出哪个是联系对应属性的实体</p>
+<p>推荐使用上面不变成实体集的</p>
+</blockquote>
+<h1 id="rolestabels-of-one-way-relationships一元联系"><a class="markdownIt-Anchor" href="#rolestabels-of-one-way-relationships一元联系"></a> roles(tabels of one way relationships一元联系)</h1>
+<ul>
+<li>一元联系的标签</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/11/3A9jGDOPMB16zaU.png" alt="image-20201103171437911.png" /></p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/14/SsnhIo2y7mCRDQl.png" alt="image.png" /></p>
+<blockquote>
+<p>对称的联系</p>
+</blockquote>
+<h1 id="子类sub-classes"><a class="markdownIt-Anchor" href="#子类sub-classes"></a> 子类(sub classes)</h1>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/11/u4ObFKoJaZRYLS6.png" alt="image-20201103171521797.png" /></p>
+<ul>
+<li>
+<p>在面向对象过程中，一个对象只能属于一个类</p>
+</li>
+<li>
+<p>但在E/R图中，一个对象可以属于好几个类，即如果实体e在一个子类中被描述，则在父类中也有相应的描述，并可以递归向上。也就是这两个表里面都有对e的描述的元组。</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/11/NbkOSD5hr1U4p3u.png" alt="image-20201103173139102.png" /></p>
+</li>
+</ul>
+<h1 id="er图中的主键keys"><a class="markdownIt-Anchor" href="#er图中的主键keys"></a> E/R图中的主键(keys)</h1>
+<ul>
+<li>
+<p>在属性下面加下划线</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/11/lYkWxSViDm8AsqB.png" alt="image-20201103173257755.png" /></p>
+<blockquote>
+<p>所有子类<strong>继承</strong>父类的<strong>属性包括约束</strong></p>
+</blockquote>
+</li>
+<li>
+<p>multi-attributes key</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/11/sxM7YDIqnuAlciw.png" alt="image-20201103173349216.png" /></p>
+</li>
+</ul>
+<h1 id="度的约束degree-constaint"><a class="markdownIt-Anchor" href="#度的约束degree-constaint"></a> 度的约束(degree constaint)</h1>
+<ul>
+<li>
+<p>一个酒吧最多销售10种啤酒</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/11/WeNzrZdjCu79xfp.png" alt="image-20201103173528095.png" /></p>
+</li>
+</ul>
+<h1 id="弱实体集weak-entity-set"><a class="markdownIt-Anchor" href="#弱实体集weak-entity-set"></a> 弱实体集(weak entity set)</h1>
+<ul>
+<li>
+<p>要唯一识别E中的实体，要借助从E出发的联系的相关联的实体集的主键</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/11/wX6gZydfIjCBl1T.png" alt="image-20201103174056411.png" /></p>
+</li>
+</ul>
+<blockquote>
+<p>队员中的name和number都不能作为主键，因为不同队伍的不同队员可能有相同名字和编号，所以要借助队伍这个实体集来帮助区分</p>
+<p>这个联系称为支撑联系，且这个联系必须是多对一的，每个队员必须属于一个队伍，所以为圆圆箭头。</p>
+<p>支撑联系可以有多个</p>
+<p>弱实体集用双边框矩形来表示，联系也是双框</p>
+<p>从弱实体集出发的联系不一定都是支撑联系</p>
+<p>弱实体集的主键为：自身的属性和支撑联系对应的实体的主键联合形成主键</p>
+</blockquote>
+<h1 id="设计技巧"><a class="markdownIt-Anchor" href="#设计技巧"></a> 设计技巧</h1>
+<ul>
+<li>
+<p>避免冗余</p>
+<p>saying the same thing in two different ways</p>
+<ul>
+<li>
+<p>可能会造成数据不一致</p>
+<p>描述同一种东西的两个描述如果只改了一个不改另一个，会造成</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/11/R7Yh6tqLcXVr81x.png" alt="image-20201110163419938.png" /></p>
+</li>
+<li>
+<p>浪费空间</p>
+</li>
+</ul>
+</li>
+<li>
+<p>避免使用弱实体集</p>
+</li>
+<li>
+<p>能用属性就不用实体集</p>
+<ul>
+<li>实体集应该包含很多属性，除了key以外还有很多不是key的属性</li>
+<li>多对多联系和多对一联系中的“多”的一方，则用实体集</li>
+</ul>
+</li>
+<li>
+<p>例子</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/14/wptJchr8TNl1qsd.png" alt="image.png" /></p>
+<p>因为Beers时多对一联系中多的一方，所以用实体集。</p>
+<p>而manfs作为多对一联系中一的一方，而且只有一个name键属性，没有其它非主键属性，所以不适合做成一个实体集。</p>
+<p>应为：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/14/3o78B6MPCAH4jDn.png" alt="image.png" /></p>
+<p>再如下例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/14/7rEJwsOXnzT1ZMB.png" alt="image.png" /></p>
+<p>这里beers的manf和manfs的addr存储的是相同的内容.出现了内容冗余</p>
+<p>正确的应为:</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2020/11/14/3SOA785ZmCjFnMG.png" alt="image.png" /></p>
+</li>
+</ul>
+<h1 id="从er图到数据库"><a class="markdownIt-Anchor" href="#从er图到数据库"></a> 从E/R图到数据库</h1>
+<ul>
+<li>
+<p>实体集到关系</p>
+</li>
+<li>
+<p>联系转换成关系，联系的属性为相关联的实体集的key</p>
+<ul>
+<li>多对多联系，联合主键</li>
+<li>多对一联系，多的实体集的key为主键，从而联系的关系和多的那个关系合并</li>
+<li>一对一联系，一个为主键，另一个unique约束
+<ul>
+<li>可看成多对一的特殊情况，有时候可以将联系和关系合并，而有时候不能合并，看具体情况。</li>
+<li>一般来说联系所关联的两个实体集中那个属性少，那个和联系进行合并</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>处理若实体集</p>
+<ul>
+<li>支撑联系不用转换，除非有属性</li>
+</ul>
+</li>
+<li>
+<p>子类转换(三种方法)</p>
+<ul>
+<li>
+<p>面向对象的方式：每个子类都转换成一个关系，这个关系包含子类所有的属性(包括从父类继承来的)</p>
+</li>
+<li>
+<p>use nulls：父类转换成关系，也包括所有子类的属性，有些元组不包含该属性则值为null</p>
+<p>可能空值会比较多</p>
+</li>
+<li>
+<p>E/R style：子类全部转换成关系，只包括子类的key和特有的属性</p>
+</li>
+</ul>
+<blockquote>
+<p>不同的转换方式，可能有的查询不利，有的查询有利，看具体情况</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="约束constraint"><a class="markdownIt-Anchor" href="#约束constraint"></a> 约束(constraint)</h1>
+<ul>
+<li>
+<p>主键(实体完整性约束) primary-key</p>
+</li>
+<li>
+<p>外键(参照完整性约束) foreign-key</p>
+</li>
+<li>
+<p>value-based constraints(用户自定义完整性约束)</p>
+</li>
+<li>
+<p>tuple-based constraint</p>
+</li>
+<li>
+<p>assertions</p>
+</li>
+<li>
+<p>主键和唯一键不能重复，自动建立索引</p>
+</li>
+</ul>
+<h1 id="外键外键的值要参照另外一个关系中主键或唯一键的值"><a class="markdownIt-Anchor" href="#外键外键的值要参照另外一个关系中主键或唯一键的值"></a> 外键，外键的值要参照另外一个关系中主键或唯一键的值</h1>
+<ul>
+<li>与primary key 类似</li>
+</ul>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Beers (</span><br><span class="line">	<span class="keyword">name</span>	  <span class="built_in">VARCHAR</span>(<span class="number">20</span>) PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line">	manf  <span class="built_in">VARCHAR</span>(<span class="number">30</span>) </span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>after an attribute</li>
+</ul>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">references &lt;relation&gt; (&lt;attributes&gt;)</span><br><span class="line"><span class="comment">--example</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Sells (</span><br><span class="line">	bar    <span class="built_in">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">	beer   <span class="built_in">VARCHAR</span>(<span class="number">20</span>) <span class="keyword">REFERENCES</span> Beers(<span class="keyword">name</span>),</span><br><span class="line">	price  <span class="built_in">REAL</span> </span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>一系列</li>
+</ul>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">foreign key(&lt;list of attributes&gt;)</span><br><span class="line">references &lt;relation&gt; (&lt;attributes&gt;)</span><br><span class="line"><span class="comment">--example</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Sells (</span><br><span class="line">	bar		<span class="built_in">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">	beer	<span class="built_in">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">	price	<span class="built_in">REAL</span>,</span><br><span class="line">	<span class="keyword">FOREIGN</span> <span class="keyword">KEY</span>(beer) <span class="keyword">REFERENCES</span> Beers(<span class="keyword">name</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>外键的作用</p>
+<ul>
+<li>
+<p>If there is a foreign-key constraint from relation <em>R</em> to relation <em>S</em>, two violations are possible:</p>
+<ul>
+<li>An insert or update to <em>R</em> introduces values not found in <em>S</em>.</li>
+</ul>
+</li>
+<li>
+<p>conflict to the foreign key</p>
+<ul>
+<li>A deletion or update to S causes some tuples of <em>R</em> to “dangle.”
+<ul>
+<li>conflict to the reference</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>设置参数</p>
+<ul>
+<li>
+<p>default</p>
+<p>若违反约束，则直接拒绝执行</p>
+</li>
+<li>
+<p>cascade(集联)</p>
+<p>同步修改</p>
+</li>
+<li>
+<p>set null</p>
+<p>设置为null</p>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Sells (</span><br><span class="line">	bar		<span class="built_in">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">	beer	<span class="built_in">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">	price	<span class="built_in">REAL</span>,</span><br><span class="line">	<span class="keyword">FOREIGN</span> <span class="keyword">KEY</span>(beer) <span class="keyword">REFERENCES</span> Beers(<span class="keyword">name</span>)<span class="comment">--后面的on是指对beers表进行删除或修改时的操作</span></span><br><span class="line">		<span class="keyword">ON</span> <span class="keyword">DELETE</span> <span class="keyword">SET</span> <span class="literal">NULL</span></span><br><span class="line">		<span class="keyword">ON</span> <span class="keyword">UPDATE</span> <span class="keyword">CASCADE</span></span><br><span class="line">);</span><br><span class="line"><span class="comment">--没有on insert 因为对beersinsert不违反约束</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果在beers中删除，则sells中啤酒为null</p>
+<p>如果在beers中更新，则sells同步更新</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="check约束"><a class="markdownIt-Anchor" href="#check约束"></a> check约束</h1>
+<ul>
+<li>
+<p>示例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Sells (</span><br><span class="line">	bar		<span class="built_in">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">	beer	<span class="built_in">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">	price	<span class="built_in">REAL</span> <span class="keyword">CHECK</span> ( price &lt;= <span class="number">35.00</span> )</span><br><span class="line">);</span><br><span class="line"><span class="comment">--check约束在insert或update时候进行判断</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>还有基于元组的check约束</p>
+<p>check约束还可以基于其它关系的属性(但是一些dbm没有实现该功能)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Sells (</span><br><span class="line">		bar		<span class="built_in">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">		beer		<span class="built_in">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">		price	<span class="built_in">REAL</span>,</span><br><span class="line">		<span class="keyword">CHECK</span> (bar = <span class="string">&#x27;HardRock&#x27;</span> <span class="keyword">OR</span> price &lt;= <span class="number">35.00</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="modification-of-constraints"><a class="markdownIt-Anchor" href="#modification-of-constraints"></a> modification of Constraints</h1>
+<h1 id="assertions断言"><a class="markdownIt-Anchor" href="#assertions断言"></a> assertions(断言)</h1>
+<ul>
+<li>
+<p>完成前面约束不能完成的功能</p>
+</li>
+<li>
+<p>实例</p>
+<ul>
+<li>酒吧平均价格不能高于$5</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">ASSERTION</span> NoRipoffBars <span class="keyword">CHECK</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">NOT</span> <span class="keyword">EXISTS</span> (</span><br><span class="line">		<span class="keyword">SELECT</span> bar <span class="keyword">FROM</span> Sells</span><br><span class="line">		<span class="keyword">GROUP</span> <span class="keyword">BY</span> bar</span><br><span class="line">		<span class="keyword">HAVING</span> <span class="number">5.00</span> &lt; <span class="keyword">AVG</span>(price)</span><br><span class="line">));</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果有操作会改变断言中的条件中的内容，则要进行判断，所以有时候比较耗时。</li>
+</ul>
+</li>
+</ul>
+<h1 id="triggers触发器"><a class="markdownIt-Anchor" href="#triggers触发器"></a> triggers(触发器)</h1>
+<ul>
+<li>
+<p>别名:event-condition-action rule (ECA Rule)</p>
+<ul>
+<li>
+<p>event</p>
+<p>typically a type of database modification, e.g., “insert on Sells.”</p>
+</li>
+<li>
+<p>condition</p>
+<p>Any SQL boolean-valued expression.</p>
+</li>
+<li>
+<p>action</p>
+<p>Any SQL statements.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>实例</p>
+<p>Instead of using a foreign-key constraint and rejecting insertions into Sells(bar, beer, price) with unknown beers, a trigger can add that beer to Beers, with a NULL manufacturer.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TRIGGER</span> BeerTrig</span><br><span class="line">	<span class="keyword">AFTER</span> <span class="keyword">INSERT</span> <span class="keyword">ON</span> Sells  <span class="comment">--也可以为before在这个事件执行之前，执行触发器</span></span><br><span class="line">	<span class="keyword">REFERENCING</span></span><br><span class="line">		<span class="keyword">NEW</span> <span class="keyword">ROW</span> <span class="keyword">AS</span> NewTuple</span><br><span class="line">	<span class="keyword">FOR</span> <span class="keyword">EACH</span> <span class="keyword">ROW</span></span><br><span class="line">	<span class="keyword">WHEN</span> (NewTuple.beer <span class="keyword">NOT</span> <span class="keyword">IN</span></span><br><span class="line">		(<span class="keyword">SELECT</span> <span class="keyword">name</span> <span class="keyword">FROM</span> Beers))</span><br><span class="line">	   <span class="keyword">INSERT</span> <span class="keyword">INTO</span> Beers(<span class="keyword">name</span>)</span><br><span class="line">		<span class="keyword">VALUES</span>(NewTuple.beer);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SQL/">SQL</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/08/03/UrEu8Zcjb7CReX6.jpg" data-sites="wechat,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/09/20/XMLStudy/"><img class="prev-cover" data-lazy-src="https://i.loli.net/2020/08/07/GBcki6rT4lJ5sxE.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">XMLStudy</div></div></a></div><div class="next-post pull-right"><a href="/2020/09/14/CssStudy/"><img class="next-cover" data-lazy-src="https://i.loli.net/2020/08/07/YVH8nK4ycNZRCsk.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CssStudy</div></div></a></div></nav></article></main><footer id="footer" style="background-image: url(https://i.loli.net/2020/08/03/UrEu8Zcjb7CReX6.jpg)" data-type="photo"><div id="footer-wrap"><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">hi~ welcome to my blog</div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script>$(function () {
+  $('span.katex-display').wrap('<div class="katex-wrap"></div>')
+})</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><canvas class="fireworks"></canvas><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="/js/third-party/fireworks.js"></script></div></body></html>
