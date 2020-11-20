@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		#zuoju{
+			width:400;
+			height:400;
+			display: none;
+			justify-content: center;
+			align-items:center;
+			position:absolute;
+			top:150px;
+			left:200px;
+			display: none;
+		}
+		#zuoju img{
+			width:auto;
+			height:auto;
+			max-width: 400px;
+			max-height: 400px;
+			text-align: center;
+		}
+		#youju{
+			width:400;
+			height:400;
+			display: none;
+			justify-content: center;
+			align-items:center;
+			position:absolute;
+			top:150px;
+			right:200px;
+			display: none;
+		}
+		#youju img{
+			width:auto;
+			height:auto;
+			max-width: 400px;
+			max-height: 400px;
+			text-align: center;
+		}
+		#main{
+			width:200px;
+			height:220px;
+			margin:250px auto;
+			position: relative;
+			bottom:1480px;
+			animation: mymove 2s infinite;
+			display: none;
+			justify-content: center;
+			align-items:center;
+		}
+		#main img{
+			width:auto;
+			height: auto;
+			max-width: 200px;
+			max-height: 220px;
+			text-align: center;
+		}
+		#love1{
+			width:50px;
+			height:50px;
+			margin:300px auto;
+			position: relative;
+			bottom:1050px;
+			animation: mymove 2s infinite;
+		}
+		#love2{
+			width:50px;
+			height:50px;
+			bottom: 700px;
+			margin:300px auto;
+			position: relative;
+			animation: mymove 2s infinite;
+		}
+		#love3{
+			width:50px;
+			height:50px;
+			top:-350px;
+			margin:300px auto;
+			position: relative;
+			animation: mymove 2s infinite;
+		}
+		#love4{
+			width:50px;
+			height:50px;
+			margin:300px auto;
+			position: relative;
+			animation: mymove 2s infinite;
+		}
+		.l{
+			width:30px;
+			height:30px;
+			background:red;
+			border-radius:50%;
+			left:0px;
+			top:0px;
+			position:absolute;
+		}
+		.r{
+			width:30px;
+			height:30px;
+			background:red;
+			position:absolute;
+			border-radius:50%;
+			right: 0px;
+			top:0px;
+		}
+		.z{
+			width:30px;
+			height:30px;
+			background:red;
+			transform:translate(10px,10px) rotate(45deg);
+		}
+		@keyframes mymove{
+			0%{
+				transform:scale(1.2);
+			}
+			50%{
+				transform:scale(1.7);
+			}
+			100%{
+				transform:scale(1.2);
+			}
+		}
+		@keyframes mymove1{
+			from{
+				left:0px;
+				transform:scale(1.2);
+			}
+			to{
+				left:-250px;
+				transform:scale(1.2);
+			}
+		}
+		@keyframes mymove2{
+			from{
+				bottom:700px;
+				transform:scale(1.2);
+			}
+			to{
+				bottom:950px;
+				transform:scale(1.2);
+			}
+		}
+		@keyframes mymove3{
+			from{
+				left:0px;
+				transform:scale(1.2);
+			}
+			to{
+				left:250px;
+				transform:scale(1.2);
+			}
+		}
+		@keyframes mymove4{
+			from{
+				bottom:0px;
+				transform:scale(1.2);
+			}
+			to{
+				bottom:-250px;
+				transform:scale(1.2);
+			}
+		}
+	</style>
+</head>
+<body>
+	<div id = "love4">
+		<div class="l"></div><div class="r"></div>
+		<div class="z"></div>
+	</div>
+	<div id = "love3">
+		<div class="l"></div><div class="r"></div>
+		<div class="z"></div>
+	</div>
+	<div id = "love2">
+		<div class="l"></div><div class="r"></div>
+		<div class="z"></div>
+	</div>
+	<div id = "love1">
+		<div class="l"></div><div class="r"></div>
+		<div class="z"></div>
+	</div>
+	<div id = "main">
+		<span>
+			<img id = "myimg" src="img/1(1).jpg" />
+		</span>
+	</div>
+	<div id = "zuoju">
+		<img src="https://i.loli.net/2020/11/20/dxUKwhlspqWjBS4.png" />
+	</div>
+	<div id = "youju">
+		<img src="https://i.loli.net/2020/11/20/AEMDyUF8ONreIWh.png" />
+	</div>
+	<script type="text/javascript">
+		document.getElementById("love1").onclick=function(){
+			document.getElementById("love1").style.animation="mymove1 2s 1";
+			window.setTimeout("next1()",2000);
+			document.getElementById("love2").style.animation="mymove2 2s 1";
+			window.setTimeout("next2()",2000);
+			document.getElementById("love3").style.animation="mymove3 2s 1";
+			window.setTimeout("next3()",2000);
+			document.getElementById("love4").style.animation="mymove4 2s 1";
+			window.setTimeout("next4()",2000);
+			document.getElementById("zuoju").style.display="flex";
+			document.getElementById("youju").style.display="flex";
+			window.setTimeout("show()",2000);
+			window.setTimeout("change()",4000);
+		}
+		var imgarr = ['https://i.loli.net/2020/11/20/2C4tayJOz68s9qZ.jpg','https://i.loli.net/2020/11/20/SZsYRwLulG2TFrV.jpg','https://i.loli.net/2020/11/20/GpAmqoxfej4klFz.jpg','https://i.loli.net/2020/11/20/318EoiUfnhqVvAY.jpg','https://i.loli.net/2020/11/20/x2QrmDPUwuehF57.jpg','https://i.loli.net/2020/11/20/gANJnhvbeKyX1ck.jpg','https://i.loli.net/2020/11/20/tH38XU5rfqPbpZE.jpg','https://i.loli.net/2020/11/20/kxThYq9H5aI7Gzs.jpg','https://i.loli.net/2020/11/20/fPSDwJx3RMEpBni.jpg','https://i.loli.net/2020/11/20/shWkILBflrOyejZ.jpg','https://i.loli.net/2020/11/20/Z95q2A8DBhwfTba.jpg','https://i.loli.net/2020/11/20/Lg4OtZjkhD7mERr.jpg','https://i.loli.net/2020/11/20/agWfvxbB1XHytNE.jpg','https://i.loli.net/2020/11/20/kOszQhZWPgy1JLA.jpg','https://i.loli.net/2020/11/20/H9jzvmXZGtWygJK.jpg','https://i.loli.net/2020/11/20/kOszQhZWPgy1JLA.jpg','https://i.loli.net/2020/11/20/H9jzvmXZGtWygJK.jpg','https://i.loli.net/2020/11/20/dIPLM2z5DHfWl13.jpg','https://i.loli.net/2020/11/20/eaCKXngFzj6h2L5.jpg'];
+		window.change=function(){
+				var index = Math.floor((Math.random()*imgarr.length));
+				var imgsrc = imgarr[index];
+				document.getElementById("myimg").setAttribute('src',imgsrc);
+				setTimeout("change()",4000);
+		}
+		window.show=function(){
+			document.getElementById("main").style.display="flex";
+		}
+		window.next1=function(){
+			document.getElementById("love1").style.animation="mymove 2s infinite";
+			document.getElementById("love1").style.left="-250px";
+		}
+		window.next2=function(){
+			document.getElementById("love2").style.animation="mymove 2s infinite";
+			document.getElementById("love2").style.bottom="950px";
+		}
+		window.next3=function(){
+			document.getElementById("love3").style.animation="mymove 2s infinite";
+			document.getElementById("love3").style.left="250px";
+		}
+		window.next4=function(){
+			document.getElementById("love4").style.animation="mymove 2s infinite";
+			document.getElementById("love4").style.bottom="-250px";
+		}
+	</script>
+	
+</body>
+</html>

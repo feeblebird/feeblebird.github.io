@@ -15,103 +15,6 @@ categories: SQL
 
   **SQL** 作为结构化查询语言，是标准的关系型数据库通用的标准语言；**T-SQL**是在 **SQL** 基础上扩展了延伸的函数、系统预存程序以及**程序设计** 结构的 **SQL Server** 中使用的语言
 
-# T-SQL常量
-
-* 字符串常量
-
-  ```sql
-  'sql','数据库'
-  ```
-
-* 时间值常量
-
-  ```sql
-  '2020-11-09'
-  ```
-
-* 货币常量
-
-  ```sql
-  $124.5
-  ```
-
-* 数值型常量
-
-  ```sql
-  123,1.2,3
-  ```
-
-# T-SQL变量
-
-* 局部变量
-
-  ```sql
-  @var
-  ```
-
-* 全局变量
-
-  ```sql
-  @@var
-  ```
-
-# T-SQL日期函数
-
-* 返回相应字段的整数值
-
-  * 方式1
-
-  ```sql
-  day(date_expression)
-  month(date_expression)
-  year(date_expression)
-  --返回日期常量中的相应字段的整数值
-  ```
-
-  * 方式2
-
-  ```sql
-  datepart(<datepart>,<date>)
-  datepart(dd,date)--等同于day(date)
-  datepart(mm,date)--等同于month(date)
-  datepart(yy,date)--等同于year(date)
-  ```
-
-  > 注意方式一和方式二的返回值都为整数值
-
-* 返回相应字符的字符串形式
-
-  ```sql
-  datename(<datepart>,<date>)
-  --形式和datepart一样
-  ```
-
-* 返回当前的日期和时间
-
-  ```sql
-  getdate()
-  ```
-  
-* 通过加减日期和时间间隔来计算并显示日期和时间
-
-  ```sql
-  dateadd(datepart,number,datecolumnname)
-  --datepart计算的单位，为day,month,year还是其它
-  --number相应值
-  --datecolumnname就是基准时间
-  --例如
-  select dateadd(day,10,getdate());
-  --返回当前日期时间后10天的日期和时间
-  ```
-
-* 返回两个指定时间之间的间隔，返回值为一个带正负号的整数
-
-  ```sql
-  datediff(datepart,startdate,enddate);
-  --例如
-  select datediff(year,'2015',getdate());
-  ```
-
 # SQLServer中修改列表属性的语句
 
 ```sql
@@ -135,7 +38,7 @@ alter table tablename drop constraint 主键名称;
 --主键名称在表中查看，或者执行sp_help tablename;命令查询。
 ```
 
->注意SQL Server中的主键名字中是两个下划线连着的。
+>注意SQL Server中的主键名字中是**两个下划线连着的**。
 
 # SQLServer添加一列
 
@@ -173,7 +76,7 @@ alter table tablename
 add primary key();
 
 alter table tablename
-add constraint primary key();--设置主键名字
+add constraint name primary key();--设置主键名字
 ```
 
 # SQL 设置约束名称
@@ -445,9 +348,428 @@ order by attribute1 ASC,attribute DESC;
 
 # SQL SERVER中的视图
 
+* 虚拟视图
 
+  ```sql
+  create view viewname[(attribute1,attribute2...)]
+  as 
+  	select attribute1,attribute2...
+  	from tablename
+  	where condition;
+  ```
+
+  > 可以指定及给子查询结果列的重命名，不指定则根据结果列名进行填充
+
+* 物化视图(索引视图)
+
+  ```sql
+  create view V_Computer[(attribute1,attribute2...)]
+  with schemabinding
+  as
+  	select attribute1,attribute2...
+  	from tablename
+  	where condition;
+  ```
+
+* 两者区别
+
+  > 虚拟视图进行查询和修改的时候DBM会将我们的语句转换成对基本表的语句。
+  >
+  > 因为虚拟视图不是设计存储在数据库中
+  >
+  > 而
+  >
+  > 物化视图则是实际存储在数据库中的一个视图，所以查询时不用进行语句转换
+  >
+  > 但是更改的时候还是要在基本表中进行插入，删除等等
 
 # SQL SERVER中的索引
 
+```sql
+CREATE [ UNIQUE ] [ CLUSTERED | NONCLUSTERED ] INDEX index_name   
+    ON <object> ( column_name [ ASC | DESC ] [ ,...n ] )   
+    [ WITH <backward_compatible_index_option> [ ,...n ] ]  
+    [ ON { filegroup_name | "default" } ]  
+--unique参数：为表或视图创建唯一索引。唯一索引不允许两行具有相同的索引键值。视图索引必须唯一。如果要建唯一索引的列有重复值，必须先删除重复值。
+--clustered参数：表示指定创建的索引为聚集索引。创建索引时，键值的逻辑顺序决定表中对应行的物理顺序。聚集索引的底层(或称叶级别)包含该表的实际数据行。
+--nonclustered：表示指定创建的索引为非聚集索引。创建一个指定表的逻辑排序的索引。对于非聚集索引，数据行的物理排序独立于索引排序。
+--[ ASC | DESC]参数：表示指定特定索引列的升序或降序排序方向。 默认值为 ASC。
+<object> ::=  
+{  
+    [ database_name. [ owner_name ] . | owner_name. ]   
+    table_or_view_name  
+}  
+  
+<backward_compatible_index_option> ::=  
+{   
+    PAD_INDEX  
+  | FILLFACTOR = fillfactor  
+  | SORT_IN_TEMPDB  
+  | IGNORE_DUP_KEY  
+  | STATISTICS_NORECOMPUTE   
+  | DROP_EXISTING   
+}
+```
 
+* 创建索引
+
+  ```sql
+  create index ind_sname on student(sname DESC);
+  create unique index ind_cname on course(cname);
+  --因为创建表时，创建主键自动创建聚集索引，所以在其它列上创建聚集索引，要先把主键删除掉
+  alter table student_course
+  drop constraint PK__student___63D81FA334066AB2;
+  --只要是更改表，都要指出是哪个表
+  --表的属性的修改都是
+  --alter table tablename
+  --表的列的值修改都是
+  --update tablename
+  --这个删除表的索引
+  --drop index indexname on tablename;
+  --删除表，删除视图，则知名数据库就可,use dbname
+  create clustered index ind_sno on student_course(sno);
+  alter table student_course
+  add constraint PK_snotcid primary key(sno,tcid);
+  create index ind_snotcidscore on student_course(sno ASC,tcid ASC,score DESC);
+  drop index ind_sno on student_course;
+  ```
+```
+  
+
+# SQL SERVER中的架构
+
+* 类似于C++中的namespace
+* 如果不指定登录用户的话，默认的是dbo即database owner
+* 我们创建的表、视图等等都会在架构中，所以如果一些语句不指定架构，则dbm不知到该去找哪个表。
+
+
+
+# T-SQL常量
+
+* 字符串常量
+
+  ```sql
+  'sql','数据库'
+```
+
+* 时间值常量
+
+  ```sql
+  '2020-11-09'
+  ```
+
+* 货币常量
+
+  ```sql
+  $124.5
+  ```
+
+* 数值型常量
+
+  ```sql
+  123,1.2,3
+  ```
+
+# T-SQL变量
+
+* 局部变量
+
+  ```sql
+  @var
+  ```
+
+* 全局变量
+
+  ```sql
+  @@var
+  ```
+
+* T-SQL内置全局变量
+
+  * @@ERROR
+
+    **返回最后执行的**Transact-SQL语句的错误代码。没有错误则为零
+
+  * @@ROWCOUNT
+
+    返回受上一语句影响的行数，任何不返回行的语句将这一变量设置为0
+
+  * @@SERVERNAME
+
+    返回本地服务器的名称
+
+  * @@VERSION
+
+    返回SQL Server当前安装的日期、版本和处理器类型
+
+* 打印输出变量
+
+  ```sql
+  print @@VERSION;
+  select @@SERVERNAME;
+  ```
+
+* 变量的声明
+
+  变量在使用前必须先声明才能使用
+
+  * 声明局部变量的语法
+
+    ```sql
+    declare @varname datatype;
+    --例如
+    declare @A INT;
+    ```
+
+* 变量的赋值
+
+  * 局部变量有两种方式赋值
+
+    * set
+
+      ```sql
+      set @varname = value
+      --例如
+      set @A = 3
+      ```
+
+    * select
+
+      ```sql
+      select @varname1 = value1,@varname2 = value2
+      --例如
+      set @A = attribute1,@B = attribute2
+      from tablename;
+      ```
+
+    * 区别
+
+      set只能给一个变量进行赋值，select可以给多个变量赋值
+
+# if-else语句
+
+* 语法格式
+
+  ```sql
+  if(condition)
+  	begin
+  		...
+  	end
+  else
+  	begin
+  		...
+  	end
+  ```
+
+  > **begin…end**相当于**c**语言中的大括号，有多条语句才使用**begin…end**，相当于**begin…end**之间的语句就是一个语句块
+  
+  ```sql
+  --判断是否是闰年
+  declare @year int;
+  set @year=1900;
+  if(@year%4 = 0 and @year%100 <>0 or @year%400 = 0)
+  	begin
+  		 print(cast(@year as varchar)+'是闰年');
+  	end
+  else
+  	begin
+  		print(cast(@year as varchar)+'不是闰年');
+  	end
+  ```
+
+# case-end多分支语句
+
+* 语法格式
+
+  ```sql
+  case
+  	when 条件1 then 结果1
+  	when 条件2 then 结果2
+  	else 其它结果
+  end
+  ```
+
+  例如
+
+  ```sql
+  select stuNo,成绩= case
+           when writtenExam<60 then 'E'
+           when writtenExam between 60 and 69 then 'D'
+           when writtenExam between 70 and 79 then 'C'
+           when writtenExam between 80 and 89 then 'B'
+           else  'A'
+  end    --或者end 成绩 如下：
+  from stuMarks;
+  select stuNo,case
+           when writtenExam<60 then 'E'
+           when writtenExam between 60 and 69 then 'D'
+           when writtenExam between 70 and 79 then 'C'
+           when writtenExam between 80 and 89 then 'B'
+           else  'A'
+  end '成绩'
+  from stuMarks;
+  ```
+  
+  ```sql
+  select name,publisher,author,
+  	case
+  		when cost>50 then '定价太高，不适合作教材'
+  		else '定价'+cast(cost as varchar(10))+'，可以作教材'
+  	end '是否可以作为教材'
+  from books b1;
+  --或者
+  select name,publisher,author,'是否可以作为教材'= case
+  		when cost>50 then '定价太高，不适合作教材'
+  		else '定价'+cast(cost as varchar(10))+'，可以作教材'
+  	end 
+  from books b1;
+  ```
+  
+  > 相当于使用case定义了一列属性
+
+# 循环结构while
+
+* 语法格式
+
+  ```sql
+  while(conditon)
+  	begin
+  		语句或语句块
+  	end
+  ```
+
+* continue,break,return关键字
+
+  * continue
+  * break
+  * return
+
+* 例如
+
+  ```sql
+  declare @sum int,@i int;
+  select @i=1,@sum=0;
+  while @i <= 100
+  begin
+  	select @sum = @sum + @i;
+  	select @i = @i + 1;
+  end
+  print '1...100的和为：'+convert(char(4),@sum);
+  
+  declare @jie int,@i2 int;
+  select @jie=1,@i2=1;
+  while @i2 <= 10
+  begin
+  	select @jie = @jie*@i2;
+  	select @i2 = @i2+1;
+  end
+  print '10的阶乘为：'+convert(char(10),@jie);
+  
+  --筛选素数
+  declare @i3 int,@i4 int,@flag int;
+  select @i3 = 2,@i4 = 2,@flag=0;
+  while @i3 <= 100
+  begin
+  	select @i4 = 2;
+  	while(@i4<@i3)
+  	begin
+  		select @flag=0;
+  		if(@i3%@i4=0)
+  		begin
+  			select @flag=1;
+  			break;
+  		end
+  		select @i4 = @i4 + 1;
+  	end
+  	if(@flag=0)
+  	begin
+  		print @i3;
+  	end
+  	select @i3 = @i3 + 1;
+  end
+  ```
+
+# T-SQL类型转换函数
+
+* cast函数
+
+  ```sql
+  cast(expression as date_type[(length)])
+  select cast(@price1 as int)
+  select cast(定价 as varchar(5))
+  ```
+
+* convert函数
+
+  ```sql
+  convert(data_type[(length)],expresion[,style])
+  select convert(int,@price1)
+  print convert(char(4),@SUM)
+  select convert(varchar(100),getdate(),1);
+  ```
+
+* > 输出变量+字符串时，要先把变量转换为字符串
+
+# T-SQL日期函数
+
+* 返回相应字段的整数值
+
+  * 方式1
+
+  ```sql
+  day(date_expression)
+  month(date_expression)
+  year(date_expression)
+  --返回日期常量中的相应字段的整数值
+  ```
+
+  * 方式2
+
+  ```sql
+  datepart(<datepart>,<date>)
+  datepart(dd,date)--等同于day(date)
+  datepart(mm,date)--等同于month(date)
+  datepart(yy,date)--等同于year(date)
+  ```
+
+  > 注意方式一和方式二的返回值都为整数值
+
+* 返回相应字符的字符串形式
+
+  ```sql
+  datename(<datepart>,<date>)
+  --形式和datepart一样
+  ```
+
+* 返回当前的日期和时间
+
+  ```sql
+  getdate()
+  ```
+
+* 通过加减日期和时间间隔来计算并显示日期和时间
+
+  ```sql
+  dateadd(datepart,number,datecolumnname)
+  --datepart计算的单位，为day,month,year还是其它
+  --number相应值
+  --datecolumnname就是基准时间
+  --例如
+  select dateadd(day,10,getdate());
+  --返回当前日期时间后10天的日期和时间
+  ```
+
+* 返回两个指定时间之间的间隔，返回值为一个带正负号的整数
+
+  ```sql
+  datediff(datepart,startdate,enddate);
+  --例如
+  select datediff(year,'2015',getdate());
+  ```
+
+# T-SQL存储过程(Stored Procedure)
+
+*  存储过程是一组为了完成特定功能的SQL语句集，经编译后存储在数据库中。
+* 用户通过指定存储过程的名字并给出参数(如果该存储过程带有参数)来执行它。
+* 
 

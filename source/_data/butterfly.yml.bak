@@ -109,7 +109,7 @@ index_img:
 default_top_img: https://i.loli.net/2020/08/02/mcWUI589pbTLSYn.png
 
 # the banner image of archive page
-archive_img:
+archive_img: https://i.loli.net/2020/08/07/BMQmi25yfNgILhv.jpg
 
 # the banner image of tag page
 # note: tag page, not tags page (子標籤頁面的 top_img)
@@ -199,7 +199,7 @@ wordcount:
 # 2: both (if the description exists, it will show description, or show the auto_excerpt)
 # 3: auto_excerpt (default)
 index_post_content:
-  method: 3
+  method: 2
   length: 500 # if you set method to 2 or 3, the length need to config
 
 # Post

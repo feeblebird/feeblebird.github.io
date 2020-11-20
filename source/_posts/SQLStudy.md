@@ -1113,11 +1113,10 @@ AND price = (
 #  having 只能对分组整体进行限制
 
 * 若出现having 则必须放在group by后面，对每个分组进行判断，将分组当成一个整体，不是一个一个元组判断。
-* 
 
 # 聚合函数不能出现在where语句中
 
-*  因为where中式 **一个一个元组 **带进去判断条件的，但是聚合函数用到了整个属性
+*  因为where中式 **一个一个元组 **带进去判断where条件的，但是聚合函数用到了整个属性
 
 # 聚合函数和分组中的NULL值
 
@@ -1230,32 +1229,26 @@ create table tablename
 
   ```sql
   select beer 
-  
   from CanDrink
-  
   where drinker = 'Tony Hoare';
   
   --相当于
   select beer 
-  
   from 
   (
   	select drinker,beer
   	from frequents,sells
   	where frequents.bar = sells.bar
   ) CanDrink
-  
   where drinker = ' ';
   
   --系统优化成
   
   select beer
-  
   from frequents,sells
-  
   where frequents.bar = sells.bar and drinker = ' ';
   ```
-
+  
 * 对视图的修改
 
   > 类似于对视图的查询
@@ -1283,6 +1276,10 @@ create table tablename
   > 如果数据源的表改变了，视图应该保持一致(阶段性更新)
   >
   > 但是如果表变化的频率太快，则不太适合
+
+# SQL Tuning Advisor(STA)
+
+* sql自动优化
 
 # 索引
 
@@ -1330,7 +1327,6 @@ create table tablename
 
 * 包含约束，不包含操作
 
-* 
 
 # 实体集Entity
 
@@ -1351,15 +1347,23 @@ create table tablename
 
 # 多对多联系(many-many relationships)
 
-* 联系关联的任一实体集中的一个实体对应其它实体集中的多个实体
+* 联系关联的任一实体集中的一个实体可以对应其它实体集中的多个实体
+
+  ![image.png](https://i.loli.net/2020/11/14/Z9WdYKRjqE1iFAI.png)
 
 # 多对一联系(many-one relationships)
 
-* 一个实体集中的多个实体对应另一个实体集中的一个实体
+* 前一个实体集中的多个实体对应后一个实体集中的至多一个实体
+
+* 后一个实体集中的一个实体对应前一个实体集中的零个、一个、多个实体
+
+  ![image.png](https://i.loli.net/2020/11/14/f1FdX2KmrU5T4R3.png)
 
 # 一对一联系(one-one relationships)
 
 * 一对一
+
+  ![image-20201114204101921](G:\typoraimages\image-20201114204101921.png)
 
 # 联系的多样性(mltiplicity)
 
@@ -1406,13 +1410,13 @@ create table tablename
 >
 > 推荐使用上面不变成实体集的
 
-# roles(tabels of one way relationships)
-
-![image-20201103170734067](C:\Users\liwei\AppData\Roaming\Typora\typora-user-images\image-20201103170734067.png)
+# roles(tabels of one way relationships一元联系)
 
 * 一元联系的标签
 
 ![image-20201103171437911.png](https://i.loli.net/2020/11/11/3A9jGDOPMB16zaU.png)
+
+![image.png](https://i.loli.net/2020/11/14/SsnhIo2y7mCRDQl.png)
 
 > 对称的联系
 
@@ -1420,7 +1424,9 @@ create table tablename
 
 ![image-20201103171521797.png](https://i.loli.net/2020/11/11/u4ObFKoJaZRYLS6.png)
 
-* 一个对象可以属于好几个类
+* 在面向对象过程中，一个对象只能属于一个类
+
+* 但在E/R图中，一个对象可以属于好几个类，即如果实体e在一个子类中被描述，则在父类中也有相应的描述，并可以递归向上。也就是这两个表里面都有对e的描述的元组。
 
   ![image-20201103173139102.png](https://i.loli.net/2020/11/11/NbkOSD5hr1U4p3u.png)
 
@@ -1430,7 +1436,7 @@ create table tablename
 
   ![image-20201103173257755.png](https://i.loli.net/2020/11/11/lYkWxSViDm8AsqB.png)
 
-  > 所有子类继承父类的属性包括约束
+  > 所有子类**继承**父类的**属性包括约束**
 
 * multi-attributes key
 
@@ -1481,6 +1487,30 @@ create table tablename
 
   * 实体集应该包含很多属性，除了key以外还有很多不是key的属性
   * 多对多联系和多对一联系中的“多”的一方，则用实体集
+  
+* 例子
+
+  ![image.png](https://i.loli.net/2020/11/14/wptJchr8TNl1qsd.png)
+
+  因为Beers时多对一联系中多的一方，所以用实体集。
+
+  而manfs作为多对一联系中一的一方，而且只有一个name键属性，没有其它非主键属性，所以不适合做成一个实体集。
+
+  应为：
+
+  ![image.png](https://i.loli.net/2020/11/14/3o78B6MPCAH4jDn.png)
+
+  再如下例：
+
+  ![image.png](https://i.loli.net/2020/11/14/7rEJwsOXnzT1ZMB.png)
+
+  这里beers的manf和manfs的addr存储的是相同的内容.出现了内容冗余
+
+  正确的应为:
+
+  ![image.png](https://i.loli.net/2020/11/14/3SOA785ZmCjFnMG.png)
+
+  
 
 # 从E/R图到数据库
 
@@ -1505,7 +1535,179 @@ create table tablename
 
     可能空值会比较多
 
-  * E/R style：子类全部转换成关系，包括子类的key和特有的属性
+  * E/R style：子类全部转换成关系，只包括子类的key和特有的属性
   
   > 不同的转换方式，可能有的查询不利，有的查询有利，看具体情况
 
+# 约束(constraint)
+
+* 主键(实体完整性约束) primary-key
+
+* 外键(参照完整性约束) foreign-key
+
+* value-based constraints(用户自定义完整性约束)
+
+* tuple-based constraint
+
+* assertions
+
+* 主键和唯一键不能重复，自动建立索引
+
+# 外键，外键的值要参照另外一个关系中主键或唯一键的值
+
+  * 与primary key 类似
+
+  ```sql
+  CREATE TABLE Beers (
+  	name	  VARCHAR(20) PRIMARY KEY,
+  	manf  VARCHAR(30) 
+  );
+  ```
+
+  * after an attribute
+
+  ```sql
+  references <relation> (<attributes>)
+  --example
+  CREATE TABLE Sells (
+  	bar    VARCHAR(20),
+  	beer   VARCHAR(20) REFERENCES Beers(name),
+  	price  REAL 
+  );
+  ```
+
+  * 一系列
+
+  ```sql
+  foreign key(<list of attributes>)
+  references <relation> (<attributes>)
+  --example
+  CREATE TABLE Sells (
+  	bar		VARCHAR(20),
+  	beer	VARCHAR(20),
+  	price	REAL,
+  	FOREIGN KEY(beer) REFERENCES Beers(name)
+  );
+  ```
+
+* 外键的作用
+
+  * If there is a foreign-key constraint from relation *R* to relation *S*, two violations are possible:
+
+    * An insert or update to *R* introduces values not found in *S*.
+  * conflict to the foreign key
+    * A deletion or update to S causes some tuples of *R* to “dangle.”
+      * conflict to the reference
+
+* 设置参数
+
+  * default
+
+    若违反约束，则直接拒绝执行
+
+  * cascade(集联)
+
+    同步修改
+
+  * set null
+
+    设置为null
+
+  ```sql
+  CREATE TABLE Sells (
+  	bar		VARCHAR(20),
+  	beer	VARCHAR(20),
+  	price	REAL,
+  	FOREIGN KEY(beer) REFERENCES Beers(name)--后面的on是指对beers表进行删除或修改时的操作
+  		ON DELETE SET NULL
+  		ON UPDATE CASCADE
+  );
+  --没有on insert 因为对beersinsert不违反约束
+  ```
+
+  > 如果在beers中删除，则sells中啤酒为null
+  >
+  > 如果在beers中更新，则sells同步更新
+
+# check约束
+
+* 示例
+
+  ```sql
+  CREATE TABLE Sells (
+  	bar		VARCHAR(20),
+  	beer	VARCHAR(20),
+  	price	REAL CHECK ( price <= 35.00 )
+  );
+  --check约束在insert或update时候进行判断
+  ```
+
+* 还有基于元组的check约束
+
+  check约束还可以基于其它关系的属性(但是一些dbm没有实现该功能)
+
+  ```sql
+  CREATE TABLE Sells (
+  		bar		VARCHAR(20),
+  		beer		VARCHAR(20),
+  		price	REAL,
+  		CHECK (bar = 'HardRock' OR price <= 35.00)
+  );
+  ```
+
+# modification of Constraints
+
+
+
+# assertions(断言)
+
+* 完成前面约束不能完成的功能
+
+* 实例
+
+  * 酒吧平均价格不能高于$5
+
+  ```sql
+  CREATE ASSERTION NoRipoffBars CHECK
+  (
+  	NOT EXISTS (
+  		SELECT bar FROM Sells
+  		GROUP BY bar
+  		HAVING 5.00 < AVG(price)
+  ));
+  ```
+
+  * 如果有操作会改变断言中的条件中的内容，则要进行判断，所以有时候比较耗时。
+
+# triggers(触发器)
+
+* 别名:event-condition-action rule (ECA Rule)
+  * event
+
+     typically a type of database modification, e.g., “insert on Sells.”
+
+  * condition
+
+    Any SQL boolean-valued expression.
+
+  * action
+
+    Any SQL statements.
+
+* 实例
+
+  Instead of using a foreign-key constraint and rejecting insertions into Sells(bar, beer, price) with unknown beers, a trigger can add that beer to Beers, with a NULL manufacturer.
+
+  ```sql
+  CREATE TRIGGER BeerTrig
+  	AFTER INSERT ON Sells  --也可以为before在这个事件执行之前，执行触发器
+  	REFERENCING
+  		NEW ROW AS NewTuple
+  	FOR EACH ROW
+  	WHEN (NewTuple.beer NOT IN
+  		(SELECT name FROM Beers))
+  	   INSERT INTO Beers(name)
+  		VALUES(NewTuple.beer);
+  ```
+
+  

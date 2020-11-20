@@ -41,7 +41,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
@@ -109,7 +109,7 @@ deploy:
 
 markdown_it_plus:
 	plugins:
-		- plugin:
+	- plugin:
 		name: '@neilsustc/markdown-it-katex'
 		enable: true
 		options:

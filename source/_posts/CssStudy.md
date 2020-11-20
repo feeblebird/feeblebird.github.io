@@ -2,7 +2,7 @@
 title: CssStudy
 date: 2020-09-14 08:11:19
 tags: css
-categories: Web前端第三个第四个
+categories: Web前端
 ---
 
 # [参考手册](https://www.w3school.com.cn/cssref/index.asp)
@@ -410,6 +410,45 @@ border : 边框厚度 边框样式 边框颜色
 
 * margin属性设置外边距
 
+* ![image.png](https://i.loli.net/2020/11/19/mUZj3siSBoEtPFJ.png)
+
+* h1 {margin : 10px 0px 15px 5px;}
+
+  与内边距的设置相同，这些值的顺序是从上外边距 (top) 开始围着元素顺时针旋转的：
+
+  margin: top right bottom left
+
+* 有时，我们会输入一些重复的值：
+
+  p {margin: 0.5em 1em 0.5em 1em;}
+
+  通过值复制，您可以不必重复地键入这对数字。上面的规则与下面的规则是等价的：
+
+  p {margin: 0.5em 1em;}
+
+  这两个值可以取代前面 4 个值。这是如何做到的呢？CSS 定义了一些规则，允许为外边距指定少于 4 个值。规则如下：
+
+  如果缺少左外边距的值，则使用右外边距的值。
+
+  如果缺少下外边距的值，则使用上外边距的值。
+
+  如果缺少右外边距的值，则使用上外边距的值。
+
+  下图提供了更直观的方法来了解这一点：
+
+  ![image.png](https://i.loli.net/2020/11/19/A3Ft5sWijYXadOq.png)
+
+  换句话说，如果为外边距指定了 3 个值，则第 4 个值（即左外边距）会从第 2 个值（右外边距）复制得到。如果给定了两个值，第 4 个值会从第 2 个值复制得到，第 3 个值（下外边距）会从第 1 个值（上外边距）复制得到。最后一个情况，如果只给定一个值，那么其他 3 个外边距都由这个值（上外边距）复制得到。
+
+* 一个规则中可以使用多个这种单边属性，例如：
+
+  h2 {
+   margin-top: 20px;
+   margin-right: 30px;
+   margin-bottom: 30px;
+   margin-left: 20px;
+   }
+
 [做完题来补笔记](https://www.w3school.com.cn/cssref/index.asp)
 
 # css font 属性(一定写在color属性前)
@@ -466,7 +505,7 @@ border : 边框厚度 边框样式 边框颜色
 * 只设置一个值，即给四个边框设置统一的值
 
   * ```css
-    #test1 {
+    test1 {
         border: 3px solid red;
         height: 100px;
         width: 200px;
@@ -512,3 +551,367 @@ h4{text-decoration:blink;}
 * 效果如下：
 
 ![image.png](https://i.loli.net/2020/11/11/cLqpTCzktai8f1J.png)
+
+# position 属性
+关于CSS position，来自MDN的描述：
+> CSS position属性用于指定一个元素在文档中的定位方式。top、right、bottom、left 属性则决定了该元素的最终位置。
+然后来看看什么是文档流(normal flow)，下面是 [www.w3.org](https://www.w3.org/TR/CSS21/visuren.html#) 的描述：
+> **Normal flow**
+>
+> Boxes in the normal flow belong to a formatting context, which may be block or inline, but not both simultaneously. [Block-level](https://www.w3.org/TR/CSS21/visuren.html#block-level) boxes participate in a [block formatting](https://www.w3.org/TR/CSS21/visuren.html#block-formatting) context. [Inline-level boxes](https://www.w3.org/TR/CSS21/visuren.html#inline-level) participate in an [inline formatting](https://www.w3.org/TR/CSS21/visuren.html#inline-formatting) context.
+
+个人补充（此处参考[FungLeo](https://blog.csdn.net/fungleo)的博客文章，[原文点此](https://blog.csdn.net/fungleo/article/details/50056111)）：
+
+1. normal flow直译为常规流、正常流，国内不知何原因大多译为文档流；
+2. 窗体自上而下分成一行一行，并在每行中按从左至右的顺序排放元素；
+3. 每个非浮动块级元素都独占一行， 浮动元素则按规定浮在行的一端，若当前行容不下，则另起新行再浮动；
+4. 内联元素也不会独占一行，几乎所有元素(包括块级，内联和列表元素）均可生成子行，用于摆放子元素；
+5. 有三种情况将使得元素脱离normal flow而存在，分别是 float，absolute ，fixed，但是在IE6中浮动元素也存在于normal flow中。
+
+### 一、position: static
+
+MDN的描述：
+
+> 该关键字指定元素使用正常的布局行为，即元素在文档常规流中当前的布局位置。此时 top、right、bottom、left 属性无效。
+
+个人补充：static是position的默认值。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS-position-static</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/normalize/8.0.0/normalize.css">
+    <style>
+        .container{
+            background-color: #868686;
+            width: 100%;
+            height: 300px;
+        }
+        .content{
+            background-color: yellow;
+            width: 100px;
+            height: 100px;
+            position: static;
+            left: 10px;/* 这个left没有起作用 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+        </div>
+    </div>
+</body>
+</html>
+```
+
+![image.png](https://i.loli.net/2020/11/19/C2V8unlPwJsSOqp.png)
+
+对 content 的 position 设定 static 后，left就失效了，而元素（content）就以正常的 normal flow 形式呈现。
+
+### 二、position: relative
+
+MDN的描述：
+
+> 该关键字下，元素先放置在未添加定位时的位置，再在不改变页面布局的前提下调整元素位置（因此会在此元素未添加定位时所在位置留下空白）。position:relative 对 table-*-group, table-row, table-column, table-cell, table-caption 元素无效。
+
+个人理解：相对于normal flow中的原位置来定位。
+
+*  position: relative
+
+![image.png](https://i.loli.net/2020/11/19/MsfKL9UjIkGoJg7.png)
+
+这是没有设置left、top等属性时，正常出现在normal flow中的位置。
+
+接着添加left、top：
+
+```css
+.content_1{
+                background-color: red;
+                width: 100px;
+                height: 100px;
+                position: relative;/* 这里使用了relative  */
+                left: 20px;/* 这里设置了left和top */
+                top: 20px;
+            }
+```
+
+![image.png](https://i.loli.net/2020/11/19/bNsuw7PgE1oMcYj.png)
+
+可以看到，元素（content_1）的位置相对于其原位置（normal flow中的正常位置）进行了移动。
+
+### 三、position: absolute
+
+MDN的描述
+
+> 不为元素预留空间，通过指定元素相对于最近的非 static 定位祖先元素的偏移，来确定元素位置。绝对定位的元素可以设置外边距（margin），且不会与其他边距合并。
+
+个人理解：生成绝对定位的元素，其相对于 static 定位以外的第一个父元素进行定位,会脱离normal flow。**注意：是除了static外**
+
+* position: absolute
+
+![image.png](https://i.loli.net/2020/11/19/jP1gXywiFScLKCD.png)
+
+因为 content 的父元素 container 没有设置 position，默认为 static，所以找到的第一个父元素是 body（\<body\>\</body\>），可以看成是元素（content）相对于 body 向下移动10px。
+
+### 四、position: fixed
+
+MDN的描述
+
+> 不为元素预留空间，而是通过指定元素相对于屏幕视口（viewport）的位置来指定元素位置。元素的位置在屏幕滚动时不会改变。打印时，元素会出现在的每页的固定位置。fixed属性会创建新的层叠上下文。当元素祖先的 transform 属性非 none 时，容器由视口改为该祖先。
+
+个人理解：fixed相对于window固定，滚动浏览器窗口并不会使其移动，会脱离normal flow。
+
+* position: fixed
+
+这里就不上图了，看一下代码或者自己动手码一下就能理解。
+
+### 五、position: sticky
+
+MDN的描述
+
+> 盒位置根据正常流计算(这称为正常流动中的位置)，然后相对于该元素在流中的 flow root（BFC）和 containing block（最近的块级祖先元素）定位。在所有情况下（即便被定位元素为 table`时`），该元素定位均不对后续元素造成影响。当元素 B 被粘性定位时，后续元素的位置仍按照 B 未定位时的位置来确定。position: sticky对 table元素的效果与 position: relative 相同。
+
+因为各大浏览器对于sticky的兼容问题，而且JS也可以实现这个功能，在这里就不进行深入了，了解一下就好。
+
+### 六、position: inherit
+
+[w3school.com](http://www.w3school.com.cn/cssref/pr_class_position.asp)的 描述
+
+> 规定应该从父元素继承 position 属性的值。
+
+inherit 继承父元素，这个用得不多，所以也不继续深入了。
+
+# @keyframes 与 css animation属性配合
+
+* 实例
+
+  ```css
+  @keyframes mymove
+  {
+  from {top:0px;}
+  to {top:200px;}
+  }
+  /*要在要移动的标签的css中加上animation属性*/
+  div{
+      width:100px;
+  	height:100px;
+  	background:red;
+  	position:relative;
+  	animation:mymove 5s infinite;
+  }
+  ```
+
+* 可以利用@keyframes实现动画播放效果
+
+  ```html
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<title></title>
+  	<style type="text/css">
+  		#love1{
+  			width:50px;
+  			height:50px;
+  			margin:300px auto;
+  			position: relative;
+  			/*bottom:1050px;*/
+  			animation: mymove 2s infinite;
+  		}
+  		#love2{
+  			width:50px;
+  			height:50px;
+  			bottom:700px;
+  			margin:300px auto;
+  			position: relative;
+  			animation: mymove 2s infinite;
+  		}
+  		#love3{
+  			width:50px;
+  			height:50px;
+  			bottom:350px;
+  			margin:300px auto;
+  			position: relative;
+  			animation: mymove 2s infinite;
+  		}
+  		#love4{
+  			width:50px;
+  			height:50px;
+  			margin:300px auto;
+  			position: relative;
+  			animation: mymove 2s infinite;
+  		}
+  		.l{
+  			width:30px;
+  			height:30px;
+  			background:red;
+  			border-radius:50%;
+  			left:0px;
+  			top:0px;
+  			position:absolute;
+  		}
+  		.r{
+  			width:30px;
+  			height:30px;
+  			background:red;
+  			position:absolute;
+  			border-radius:50%;
+  			right: 0px;
+  			top:0px;
+  		}
+  		.z{
+  			width:30px;
+  			height:30px;
+  			background:red;
+  			transform:translate(10px,10px) rotate(45deg);
+  		}
+  		@keyframes mymove{
+  			0%{
+  				transform:scale(1);
+  			}
+  			50%{
+  				transform:scale(1.5);
+  			}
+  			100%{
+  				transform:scale(1);
+  			}
+  		}
+  		@keyframes mymove2{
+  			from{
+  				left:0px;
+  				transform:scale(1);
+  			}
+  			to{
+  				left:-100px;
+  				transform:scale(1);
+  			}
+  		}
+  	</style>
+  </head>
+  <body>
+  	<div id = "love4">
+  		<div class="l"></div><div class="r"></div>
+  		<div class="z"></div>
+  	</div>
+  	<div id = "love3">
+  		<div class="l"></div><div class="r"></div>
+  		<div class="z"></div>
+  	</div>
+  	<div id = "love2">
+  		<div class="l"></div><div class="r"></div>
+  		<div class="z"></div>
+  	</div>
+  	<div id = "love1">
+  		<div class="l"></div><div class="r"></div>
+  		<div class="z"></div>
+  	</div>
+  
+  	<script type="text/javascript">
+  		document.getElementById("love1").onclick=function(){
+  			document.getElementById("love1").style.animation="mymove2 2s 1";
+  			window.setTimeout("next()",2000);
+  		}
+  		window.next=function(){
+  			document.getElementById("love1").style.animation="mymove 2s infinite";
+  			document.getElementById("love1").style.left="-100px";
+  		}
+  	</script>
+  </body>
+  </html>
+  ```
+
+# transform scale
+
+**scaleX()**
+
+***\*scaleY()\****
+
+　　缩放该元素，>1 放大， <1 缩小 默认值是 1；
+
+![image.png](https://i.loli.net/2020/11/19/jBlNuJaeRgTO2c5.png)
+
+ 
+
+看了上面的图，你可能会觉得，好像是100px 变成了200px  但是实际上，并不是。变的不是 元素的 宽高。
+
+![image.png](https://i.loli.net/2020/11/19/b5hTr6NlHQFtqf7.png)
+
+其实，他改变的不是元素的宽高，而是x 和 y 轴的刻度 ↓ 
+
+![image.png](https://i.loli.net/2020/11/19/piM4JYums9ra61L.png)
+
+ 
+
+**scale()**
+
+这个呢，是上面两个的合体，也就是 参数 第一个是x 第二个是y
+
+![image.png](https://i.loli.net/2020/11/19/gc4osJ2wRALIFmD.png)
+
+![image.png](https://i.loli.net/2020/11/19/h8DInViNWxuX35v.png)
+
+ 
+
+**scale3d()**
+
+第一个参数是 x 第二个参数是y 第三个参数是z ，也就是scalex scaley scalez 的结合体。
+
+scalez吧，这个值原本就是3D的，所以可能会有点难理解， 像上面这个图， 本来就是2D 的图，你再怎么拉伸他的Z 轴，也是看不出效果的。前提是你的图，是3D的才能拉伸，2D的是拉伸不了的。 如果有不知道Z轴在哪里的朋友，请点这里→ [
+](https://www.cnblogs.com/yanggeng/p/11277199.html#Z)
+
+**探索：**
+
+首先，我们来思考一个问题，使用 rotate进行旋转，那么 X 和 Y 轴是会跟着旋转而变化的，那么这个时候加上 scaleX 和 Y，那么旋转的过程中，会不会带上scale 的效果？
+
+先来观察一下， 先rotate 再 scale 的效果：
+
+[看图](https://img2018.cnblogs.com/blog/1609428/201907/1609428-20190731163906364-1545153301.gif)
+
+看完上面的图，是不是觉得，旋转的时候，会带着scale的效果一起旋转。 但是！ 如果把他俩位置换了，那结果是截然不同的，先scale 再 rotate
+
+[看图](https://img2018.cnblogs.com/blog/1609428/201907/1609428-20190731164301719-2014901299.gif)
+
+对比两张图，你就会发现，第一张的效果，确实是带上了scale的效果一起旋转的，怎么 换了个位置，就不一样呢？
+
+其实呢，先rotate，再scale(先旋转，后缩放) 是会把效果带上旋转的，但是 先scale 再rotate(先缩放，后旋转) 是不会把缩放的效果带上旋转的，缩放的效果，会留在原地，等你经过的时候，就会生效。看下面的图解，缩放的比例，会留在原地，经过的时候，就会恢复比例。
+
+[看图](https://img2018.cnblogs.com/blog/1609428/201907/1609428-20190731165325626-360527648.gif)
+
+# display属性
+
+* none为不显示
+* block为显示为块级别，后面带换行符
+
+[补笔记](https://www.w3school.com.cn/cssref/pr_class_display.asp)
+
+# css实现图片等比例缩放并居中
+
+```css
+#main{
+			width:200px;
+			height:220px;
+			margin:250px auto;
+			border: 1px solid red;
+			display: flex;
+			justify-content: center;
+			align-items:center;
+		}
+		#main img{
+			width:auto;
+			height: auto;
+			max-width: 200px;
+			max-height: 220px;
+			text-align: center;
+		}
+```
+
+[参考](https://blog.csdn.net/qq_43258252/article/details/88895337)
+
+
+
+
+
+
+

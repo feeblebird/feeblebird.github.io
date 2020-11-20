@@ -1,5 +1,5 @@
 ---
-otitle: phpStudy
+title: phpStudy
 date: 2020-09-22 08:36:55
 tags: php
 categories: php
@@ -1652,6 +1652,102 @@ mysql_close(数据资源);
   </html>
   ```
 
+# php会话控制(cookie&session)
 
-# 
+* 会话控制是为了解决什么问题
 
+  http为无状态协议，为了让服务器跟踪同一个客户端发出的连续请求，而使用会话控制
+
+* 绘画控制用到哪两种技术
+
+  * 将用户状态信息，存放在客户端上，cookie
+    * cookie是一种由服务器发送给客户端的片段信息，存储在客户端浏览器的内存或者硬盘上。
+    * 常用于保存用户名，密码，个性化设置，个人偏好记录等
+    * 当用户访问服务器时，服务器可以设置和访问cookie的信息
+    * cookie存放的位置取决于浏览器
+  * 将用户状态信息，存放再服务器中，session
+    * 
+
+* 这两种技术有什么特点
+
+# cookie
+
+* 设置cookie
+
+  ```php
+  setcookie("username","sky",time()+60*60*24*7);
+  //向客户端发送一个Cookie，将变量username值为sky，保存一周时间
+  //直接写数字，以秒为单位，不行
+  //以time()为基准
+  //不设置存在时间，则只会存放在客户端内存中，当关闭会话后，不会存储在客户端上
+  ```
+
+* 访问$_COOKIE
+
+  ```php+HTML
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<title></title>
+  </head>
+  <body>
+  	<?php
+  		setcookie("testcookie","My first cookie",time()+24*60*60*30);
+  		setcookie("username","admin111",time()+60*60*24*7);
+  		print_r($_COOKIE);
+  		if(isset($_COOKIE['username']))
+  		{
+  			echo "欢迎回家";
+  			echo $_COOKIE['username']."来访<br/>";
+  		}else
+  		{
+  			echo "欢迎你首次访问本网站";
+  		}
+  	?>
+  </body>
+  </html>
+  ```
+
+* 修改username的值时，第一次刷新不改变，第二次刷新才改变
+
+  因为第一次刷新的时候，执行setcookie语句，将设置内容发送给服务器，但是我们本地还没有被服务器写入，后面访问本地cookie时还是原来的值，第二次刷新的时候服务器写入了，所以本地cookie也更新了。
+
+* 删除cookie
+
+  * 忽略setcookie参数，只指定第一个参数
+
+    ```php
+    setcookie("username");
+    ```
+
+  * 设置已经过期
+
+    ```php
+    setcookie("username","",time()-1);
+    ```
+
+# session
+
+* session把cookie存放在服务器信息上
+
+* 客户端上只需要一个唯一的session id，session id往往以cookie的形式存放在客户端上
+
+* 如果客户端禁止cookie，则可以通过attach在url上的方式
+
+* 使用方式
+
+  * ```php
+    session_start();
+    //一般写在最前面
+    ```
+
+  * 直接以数组的方式使用
+
+  * ```php
+    unset($_SESSION['key']);
+    //删除某个key值对
+    session_destory();
+    //销毁整个session
+    ```
+
+  * 

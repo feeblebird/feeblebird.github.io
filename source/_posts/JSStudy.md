@@ -1072,3 +1072,73 @@ document.write("嗨！你好吗？")
 
   `href="#"` 的时候就是回到顶部
 
+# windo.setTimeout()函数(T要大写)
+
+```js
+<script type="text/javascript">
+		document.getElementById("love1").onclick=function(){
+			document.getElementById("love1").style.animation="mymove2 2s 1";
+			window.setTimeout("next()",2000);
+		}
+		window.next=function(){
+			document.getElementById("love1").style.animation="mymove 2s infinite";
+			document.getElementById("love1").style.left="-100px";
+		}
+	</script>
+```
+
+* 从如上代码看出在js函数中修改标签css属性的方法
+
+* 在js中调用setTimeout()函数时最好的方式是：
+
+  ```js
+  window.setTimeout(function() { alert('Hello world!') }, 60);
+  ```
+
+* 次之的方式是
+
+  ```js
+  window.helloworld = function() {
+      alert('Hello world!');
+  }
+  
+  window.setTimeout("helloworld()", 60);
+  ```
+
+* 不推荐的方式是
+
+  ```js
+  function helloworld() {
+      alert('Hello world!');
+  }
+  
+  window.setTimeout("helloworld()", 60);
+  ```
+
+# js实现点击利用css播放动画
+
+```js
+<script type="text/javascript">
+		document.getElementById("love1").onclick=function(){
+			document.getElementById("love1").style.animation="mymove2 2s 1";
+			window.setTimeout("next()",2000);
+		}
+		window.next=function(){
+			document.getElementById("love1").style.animation="mymove 2s infinite";
+			document.getElementById("love1").style.left="-100px";
+		}
+	</script>
+```
+
+# js实现随机图片
+
+```js
+window.change=function(){
+				var index = Math.floor((Math.random()*imgarr.length));
+				var imgsrc = imgarr[index];
+				document.getElementById("myimg").setAttribute('src',imgsrc);
+				setTimeout("change()",4000);
+		}
+//一直不断更换
+```
+
